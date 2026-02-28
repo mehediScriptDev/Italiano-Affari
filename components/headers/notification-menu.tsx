@@ -43,53 +43,55 @@ export default function NotificationMenu({ anchorEl, open, onClose, notification
         transformOrigin={{ vertical: "top", horizontal: "right" }}
       >
         <div className="p-2">
-          <h3>Notifiche</h3>
-          <div className="flex gap-1 mb-0">
-            <Button
-              className={`rounded-[20px] ${notificationsFlag === "all" ? "text-white" : "text-black"}`}
-              variant={notificationsFlag === "all" ? "contained" : "outlined"}
-              onClick={() => setNotificationFlag("all")}
-            >
-              Tutte
-            </Button>
-            <Button
-              className={`rounded-[20px] ${notificationsFlag === "pending" ? "text-white" : "text-black"}`}
-              variant={notificationsFlag === "pending" ? "contained" : "outlined"}
-              onClick={() => setNotificationFlag("pending")}
-            >
-              In Attesa
-            </Button>
-          </div>
-          <div className="flex justify-end my-1">
-            <p onClick={() => router.push("/notification-percentage")} className="font-bold underline cursor-pointer">
-              Mostra tutto
-            </p>
-          </div>
-          {Array.isArray(notifications) && notifications.length > 0 ? (
-            notifications
-              .filter((n) => notificationsFlag === "all" || !n.is_read)
-              .map((notification) => (
-                <div key={notification.id} className="mb-4">
-                  <p>{notification.message}</p>
-                  <p className="mt-0">
-                    <strong>{notification.current_percentage}% → {notification.proposed_percentage}%</strong>
-                  </p>
-                  <div className="flex justify-between mt-1">
-                    <div className="flex gap-2 items-center">
-                      <Button size="small" variant="contained" onClick={() => handleOpenDialog(notification)}>Sì</Button>
-                      <Button size="small" variant="outlined" onClick={() => handleConfirm()}>No</Button>
-                    </div>
-                    <div className="flex items-center">
-                      {!notification.is_read && (
-                        <span className="inline-block w-3 h-3 bg-black rounded-full" />
-                      )}
+          <div>
+            <h3>Notifiche</h3>
+            <div className="d-flex gap-1 mb-0">
+              <Button
+                style={{ borderRadius: "20px", color: notificationsFlag === "all" ? "white" : "black" }}
+                variant={notificationsFlag === "all" ? "contained" : "outlined"}
+                onClick={() => setNotificationFlag("all")}
+              >
+                Tutte
+              </Button>
+              <Button
+                style={{ borderRadius: "20px", color: notificationsFlag === "pending" ? "white" : "black" }}
+                variant={notificationsFlag === "pending" ? "contained" : "outlined"}
+                onClick={() => setNotificationFlag("pending")}
+              >
+                In Attesa
+              </Button>
+            </div>
+            <div className="d-flex justify-end my-1">
+              <p onClick={() => router.push("/notification-percentage")} style={{ textDecoration: "underline", cursor: "pointer" }} className="fw-bold">
+                Mostra tutto
+              </p>
+            </div>
+            {Array.isArray(notifications) && notifications.length > 0 ? (
+              notifications
+                .filter((n) => notificationsFlag === "all" || !n.is_read)
+                .map((notification) => (
+                  <div key={notification.id} className="mb-4">
+                    <p>{notification.message}</p>
+                    <p className="mt-0">
+                      <strong>{notification.current_percentage}% → {notification.proposed_percentage}%</strong>
+                    </p>
+                    <div className="d-flex justify-between mt-1">
+                      <div className="d-flex gap-2 align-center">
+                        <Button size="small" variant="contained" onClick={() => handleOpenDialog(notification)}>Sì</Button>
+                        <Button size="small" variant="outlined" onClick={() => handleConfirm()}>No</Button>
+                      </div>
+                      <div className="d-flex align-center">
+                        {!notification.is_read && (
+                          <span style={{ display: "inline-block", width: "12px", height: "12px", backgroundColor: "black", borderRadius: "50%" }} />
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))
-          ) : (
-            <p>Non ci sono notifiche.</p>
-          )}
+                ))
+            ) : (
+              <p>Non ci sono notifiche.</p>
+            )}
+          </div>
         </div>
       </Menu>
 

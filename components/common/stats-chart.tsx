@@ -178,9 +178,9 @@ export default function StatsChart({ label, chartType, fetchData }: StatsChartPr
     labels: datasets[0]?.labels ?? [],
     datasets: datasets.map((ds) => ({
       ...ds,
-      borderColor: ds.borderColor ?? "blue",
-      backgroundColor: ds.backgroundColor ?? "rgba(0, 0, 255, 0.2)",
-      fill: ds.fill ?? true,
+      borderColor: "blue",
+      backgroundColor: "rgba(0, 0, 255, 0.2)",
+      fill: true,
     })),
   } as ChartData<typeof chartType>;
 

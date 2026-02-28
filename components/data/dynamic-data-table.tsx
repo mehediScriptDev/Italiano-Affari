@@ -106,7 +106,7 @@ export default function DynamicDataTable({ columns, data }: DynamicDataTableProp
 
         {hasSubagents && (
           <TableRow>
-            <TableCell className="p-0" colSpan={columns.length + 1}>
+            <TableCell style={{ padding: 0 }} colSpan={columns.length + 1}>
               <Collapse in={expandedRows[row.id]} timeout="auto" unmountOnExit>
                 <Box>
                   <Table size="small" sx={{ width: "100%", tableLayout: "auto" }}>

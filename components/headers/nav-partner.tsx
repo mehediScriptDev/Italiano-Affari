@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import type { CSSProperties } from "react";
 
 const navLinks = [
   { href: "/dashboard", label: "Dashboard" },
@@ -12,27 +13,62 @@ const navLinks = [
   { href: "/wallet", label: "Portafoglio" },
 ];
 
-const linkClass = "no-underline text-sm text-[#333] font-medium py-2 px-3 rounded-none transition-[background] duration-200";
-const activeLinkClass = "border-b-2 border-black !text-black !font-bold";
+const styles: Record<string, CSSProperties> = {
+  navContainer: {
+    backgroundColor: "white",
+    padding: "15px 16px",
+    borderBottom: "1px solid #ddd",
+  },
+  navList: {
+    display: "flex",
+    gap: "20px",
+    listStyle: "none",
+    margin: 0,
+    padding: 0,
+  },
+  navItem: {
+    position: "relative",
+  },
+  navLink: {
+    textDecoration: "none",
+    fontSize: "14px",
+    color: "#333",
+    fontWeight: "500",
+    padding: "8px 12px",
+    borderRadius: "0px",
+    transition: "background 0.2s",
+  },
+  activeLink: {
+    borderBottom: "2px solid black",
+    color: "#000",
+    fontWeight: "bold",
+  },
+};
 
 export default function NavPartner() {
   const pathname = usePathname();
 
   return (
-    <nav className="bg-white py-3.75 px-4 border-b border-[#ddd]">
-      <div className="max-w-300 mx-auto">
-        <ul className="flex gap-5 list-none m-0 p-0">
+    <nav className="nav-container" style={styles.navContainer}>
+      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+        <ul className="nav-list" style={styles.navList}>
           {navLinks.map(({ href, label }) => (
-            <li key={href} className="relative">
-              <Link href={href} className={`${linkClass} ${pathname === href ? activeLinkClass : ""}`}>
+            <li key={href} style={styles.navItem}>
+              <Link
+                href={href}
+                style={{
+                  ...styles.navLink,
+                  ...(pathname === href ? styles.activeLink : {}),
+                }}
+              >
                 {label}
               </Link>
             </li>
           ))}
-          <li className="relative">
+          <li style={styles.navItem}>
             <a
               href="https://contents.psicopatici.com/"
-              className={linkClass}
+              style={styles.navLink}
               target="_blank"
               rel="noopener noreferrer"
             >

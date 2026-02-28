@@ -46,7 +46,7 @@ export default function ProfilePage({ index = 0 }: ProfilePageProps) {
       <TabPanel value={value} index={1}><PaymentAssets /></TabPanel>
       <TabPanel value={value} index={2}><TransactionHistory /></TabPanel>
       <TabPanel value={value} index={3}><Discounts /></TabPanel>
-      <TabPanel value={value} index={4}><SecurityComponent /></TabPanel>
+      {/*<TabPanel value={value} index={4}><SecurityComponent /></TabPanel>*/}
     </Box>
   );
 }

@@ -8,10 +8,11 @@ export const metadata: Metadata = {
 
 export default function ReportPage() {
   return (
-    <div className="flex justify-center px-2">
+    <div className="d-flex justify-center px-2">
       <div
         id="dashboard-partner"
-        className="w-full max-w-[1200px] flex flex-col justify-center p-0"
+        className="w-100 d-flex flex-column justify-center p-0"
+        style={{ maxWidth: "1200px" }}
       >
         <StatsPage />
       </div>

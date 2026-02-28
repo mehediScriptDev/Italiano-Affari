@@ -137,6 +137,12 @@ export default function DataTable<T extends { id: string | number }>({
           <Select
             value={rowsPerPage}
             onChange={(e: SelectChangeEvent<number>) => setRowsPerPage(Number(e.target.value))}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "black" },
+                "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "black" },
+              },
+            }}
           >
             <MenuItem value={10}>10</MenuItem>
             <MenuItem value={25}>25</MenuItem>
