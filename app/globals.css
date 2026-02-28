@@ -24,3 +24,113 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* =========================================================
+   Bootstrap → Tailwind compatibility shim
+   Maps Bootstrap utility class names to Tailwind equivalents
+   so existing className strings continue to work.
+   ========================================================= */
+@layer utilities {
+  /* Display */
+  .d-flex        { display: flex; }
+  .d-none        { display: none; }
+  .d-block       { display: block; }
+  .d-inline      { display: inline; }
+  .d-inline-flex { display: inline-flex; }
+  .d-grid        { display: grid; }
+
+  /* Flex direction */
+  .flex-column    { flex-direction: column; }
+  .flex-row       { flex-direction: row; }
+  .flex-sm-column { flex-direction: column; }
+
+  /* Flex / sizing */
+  .flex-1  { flex: 1 1 0%; }
+  .flex-grow-1 { flex-grow: 1; }
+
+  /* Width / Height */
+  .w-100  { width: 100%; }
+  .h-100  { height: 100%; }
+  .min-h-300px { min-height: 300px; }
+
+  /* Position */
+  .position-relative { position: relative; }
+  .position-absolute { position: absolute; }
+  .position-sticky   { position: sticky; }
+  .position-fixed    { position: fixed; }
+  /* UniCore helper: cover entire parent */
+  .position-cover    { position: absolute; inset: 0; }
+
+  /* Logical inset aliases (Bootstrap 5 uses start/end for LTR) */
+  .start-0 { left: 0; }
+  .end-0   { right: 0; }
+
+  /* Font weight */
+  .fw-bold     { font-weight: 700; }
+  .fw-semibold { font-weight: 600; }
+  .fw-medium   { font-weight: 500; }
+  .fw-normal   { font-weight: 400; }
+  .fw-light    { font-weight: 300; }
+
+  /* Font size (Bootstrap 5 scale) */
+  .fs-1 { font-size: 2.5rem; }
+  .fs-2 { font-size: 2rem; }
+  .fs-3 { font-size: 1.75rem; }
+  .fs-4 { font-size: 1.5rem; }
+  .fs-5 { font-size: 1.25rem; }
+  .fs-6 { font-size: 0.875rem; }
+
+  /* Margin inline-end / inline-start (Bootstrap 5 logical spacing) */
+  .me-0 { margin-right: 0; }
+  .me-1 { margin-right: 0.25rem; }
+  .me-2 { margin-right: 0.5rem; }
+  .me-3 { margin-right: 1rem; }
+  .me-4 { margin-right: 1.5rem; }
+  .me-5 { margin-right: 3rem; }
+  .me-auto { margin-right: auto; }
+
+  .ms-0 { margin-left: 0; }
+  .ms-1 { margin-left: 0.25rem; }
+  .ms-2 { margin-left: 0.5rem; }
+  .ms-3 { margin-left: 1rem; }
+  .ms-4 { margin-left: 1.5rem; }
+  .ms-5 { margin-left: 3rem; }
+  .ms-auto { margin-left: auto; }
+
+  /* Padding inline-end / inline-start */
+  .pe-0 { padding-right: 0; }
+  .pe-1 { padding-right: 0.25rem; }
+  .pe-2 { padding-right: 0.5rem; }
+  .pe-3 { padding-right: 1rem; }
+  .pe-4 { padding-right: 1.5rem; }
+  .pe-5 { padding-right: 3rem; }
+
+  .ps-0 { padding-left: 0; }
+  .ps-1 { padding-left: 0.25rem; }
+  .ps-2 { padding-left: 0.5rem; }
+  .ps-3 { padding-left: 1rem; }
+  .ps-4 { padding-left: 1.5rem; }
+  .ps-5 { padding-left: 3rem; }
+
+  /* Alignment helpers (align-center / justify-* used as direct classes) */
+  .align-center   { align-items: center; }
+  .align-start    { align-items: flex-start; }
+  .align-end      { align-items: flex-end; }
+  .align-stretch  { align-items: stretch; }
+
+  .justify-center  { justify-content: center; }
+  .justify-between { justify-content: space-between; }
+  .justify-end     { justify-content: flex-end; }
+  .justify-start   { justify-content: flex-start; }
+  .justify-around  { justify-content: space-around; }
+
+  /* Bootstrap row (basic flex container fallback) */
+  .row { display: flex; flex-wrap: wrap; }
+
+  /* UniCore / template helpers referenced in components */
+  .gap-narrow { gap: 0.25rem; }
+  .opacity1   { opacity: 1; }
+  .border-0   { border-width: 0; }
+  .card-shadow { box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.1); }
+  .paddingContainer { padding: 0 1rem; }
+}

@@ -1,0 +1,42 @@
+.card, .card1 {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  min-height: 200px;
+}
+
+.custom-grid {
+  justify-content: end;
+}
+
+/* Below lg */
+@media (max-width: 1024px) {
+  .card1 {
+    min-height: 110px;
+  }
+  .paddingContainer {
+    padding: 0px 20px;
+  }
+  .custom-grid {
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+  }
+}
+
+/* Above lg */
+@media (min-width: 1024px) {
+  .paddingContainer {
+    padding: 0px 70px;
+  }
+}
+
+@media (max-width: 600px) {
+}
+
+.price {
+  color: #64748b;
+  font-weight: 500;
+}
+
+.align-center {
+  align-items: center;
+}

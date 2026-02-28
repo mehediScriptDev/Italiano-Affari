@@ -1,0 +1,17 @@
+.customHover:hover {
+  background-color: black;
+}
+
+.signup-textarea {
+  width: 100%;
+  border-color: grey;
+  border-radius: 4px;
+  background-color: transparent;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.signup-textarea:focus {
+  border-color: black;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
+}

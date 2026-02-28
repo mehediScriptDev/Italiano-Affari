@@ -1,0 +1,32 @@
+.card, .card1 {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  min-height: 200px;
+}
+
+@media (max-width: 1024px) {
+  .card1 {
+    min-height: 110px;
+  }
+  .paddingContainer {
+    padding: 0px 20px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .paddingContainer {
+    padding: 0px 70px;
+  }
+}
+
+.price {
+  color: #64748b;
+  font-weight: 500;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.card-shadow {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
