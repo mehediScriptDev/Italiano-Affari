@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
-  Box, Grid, Typography, TextField, Button, CircularProgress,
+  Box, Typography, TextField, Button, CircularProgress,
   CardMedia, useTheme, useMediaQuery,
 } from "@mui/material";
 import { useAuth } from "@/lib/context/auth-context";
@@ -119,14 +119,16 @@ export default function SignIn() {
 
   return (
     <Box sx={{ width: "100vw", height: "100vh", overflow: "hidden", bgcolor: "#f6f8fb", display: "flex" }}>
-      <Grid container sx={{ height: "100%", width: "100%" }}>
-        <Grid size={{ xs: 0, lg: 6 }} sx={{ position: "relative", display: { xs: "none", lg: "block" }, height: "100%" }}>
+      <Box sx={{ display: "flex", flexWrap: "wrap", height: "100%", width: "100%" }}>
+        {/* Left side - Hero Image */}
+        <Box sx={{ flexBasis: { xs: "0%", lg: "50%" }, maxWidth: { xs: "0%", lg: "50%" }, position: "relative", display: { xs: "none", lg: "block" }, height: "100%" }}>
           <CardMedia component="img" sx={{ height: "100%", width: "100%", objectFit: "cover" }} image="/assets/images/common/Homepage_Partner_.jpg" alt="Hero login image" />
-        </Grid>
+        </Box>
 
-        <Grid size={{ xs: 12, lg: 6 }} sx={{ height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", position: "relative" }}>
-          <Box sx={{ position: "absolute", top: isMobile ? 40 : 60, textAlign: "center" }}>
-            <img width={isMobile ? "60%" : "50%"} src="/assets/images/logo_psicopatici.png" alt="Logo" />
+        {/* Right side - Login Form */}
+        <Box sx={{ flexBasis: { xs: "100%", lg: "50%" }, maxWidth: { xs: "100%", lg: "50%" }, height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", position: "relative" }}>
+          <Box sx={{ position: "absolute", top: isMobile ? 40 : 60, left: "50%", transform: "translateX(-50%)", textAlign: "center", width: { xs: "60%", lg: "50%" } }}>
+            <img style={{ width: "100%" }} src="/assets/images/logo_psicopatici.png" alt="Logo" />
           </Box>
 
           <Box component="form" onSubmit={handleSubmit} sx={{ width: "100%", maxWidth: 350, mx: "auto", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", px: 3 }}>
@@ -180,8 +182,8 @@ export default function SignIn() {
               <Typography sx={{ textDecoration: "underline", fontWeight: "bolder" }} component="span" variant="body2" color="primary">Registrati</Typography>
             </Link>
           </Typography>
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
     </Box>
   );
 }
