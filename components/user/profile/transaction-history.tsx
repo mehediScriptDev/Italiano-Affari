@@ -1,10 +1,42 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Card, CardContent, Typography } from "@mui/material";
 import DataTable from "@/components/data/data-table";
+import { fetchTransactionHistory } from "@/lib/api/partners";
 
 export default function TransactionHistory() {
-  const transactions: { id: string | number; [key: string]: unknown }[] = [];
+  const [transactions, setTransactions] = useState<
+    { id: string | number; [key: string]: unknown }[]
+  >([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await fetchTransactionHistory();
+        const data = res?.data ?? res ?? [];
+        setTransactions(
+          Array.isArray(data)
+            ? data.map((t: Record<string, unknown>, i: number) => ({
+                id: (t.id as string | number) ?? i,
+                date: t.date ?? t.created_at ?? "",
+                IBAN: t.iban ?? t.IBAN ?? "",
+                nomeBenificiario: t.beneficiary_name ?? t.nomeBenificiario ?? "",
+                codiceFiscale: t.fiscal_code ?? t.codiceFiscale ?? "",
+                importo: t.amount ?? t.importo ?? "",
+                state: t.status ?? t.state ?? "",
+              }))
+            : []
+        );
+      } catch {
+        // API may not be available yet — show empty table
+        setTransactions([]);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, []);
 
   const columns = [
     { label: "Data e Ora", field: "date" },
@@ -26,7 +58,11 @@ export default function TransactionHistory() {
         <div className="mt-1">
           <div className="d-flex justify-between align-center"><h5 className="mb-1">Storico Pagamenti</h5></div>
         </div>
-        <DataTable columns={columns} data={transactions} showCheckbox />
+        {loading ? (
+          <Typography align="center" sx={{ mt: 4 }}>Caricamento...</Typography>
+        ) : (
+          <DataTable columns={columns} data={transactions} showCheckbox />
+        )}
       </CardContent>
     </Card>
   );

@@ -11,7 +11,8 @@ export const menuItems: MenuItem[] = [
   { id: 3, href: "/agent-management", label: "Gestione Agenti" },
   { id: 4, href: "/orders", label: "Ordini / Report" },
   { id: 5, href: "/contacts", label: "Contatti" },
-  { id: 6, href: "https://contents.psicopatici.com/", label: "Libreria Contenuti" },
+  { id: 6, href: "/wallet", label: "Portafoglio" },
+  { id: 7, href: "/media-library", label: "Libreria Contenuti" },
 ];
 
 export const icons = [

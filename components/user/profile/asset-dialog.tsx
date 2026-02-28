@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box, Button, Dialog, DialogActions, DialogContent, DialogTitle,
   Grid, IconButton, Slider, TextField, Typography,
@@ -14,14 +14,26 @@ interface AssetDialogProps {
   onAdd: (data: Record<string, unknown>) => void;
   freePercentage: number;
   entity?: string | null;
+  initialData?: Record<string, unknown> | null;
+  isEditing?: boolean;
 }
 
-export default function AssetDialog({ open, onClose, onAdd, freePercentage, entity = null }: AssetDialogProps) {
+export default function AssetDialog({ open, onClose, onAdd, freePercentage, entity = null, initialData = null, isEditing = false }: AssetDialogProps) {
   const [step, setStep] = useState(1);
   const [entityType, setEntityType] = useState<string | null>(entity);
   const [sliderValue, setSliderValue] = useState(100);
 
-  const handleReset = () => { setStep(1); setEntityType(null); };
+  useEffect(() => {
+    if (open && initialData) {
+      setEntityType(initialData.entityType as string);
+      setStep(2);
+    } else if (open && entity) {
+      setEntityType(entity);
+      setStep(2);
+    }
+  }, [open, initialData, entity]);
+
+  const handleReset = () => { setStep(1); setEntityType(null); setSliderValue(100); };
   const handleClose = () => { onClose(); setSliderValue(100); };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -33,7 +45,7 @@ export default function AssetDialog({ open, onClose, onAdd, freePercentage, enti
     if (entityType === "individual") json.step = "initial";
     else json.fullAddress = `${json.address}, ${json.city}, ${json.zipCode}`;
     onAdd(json);
-    showToast("Dati aggiunti con successo!", "success");
+    showToast(isEditing ? "Asset aggiornato con successo!" : "Dati aggiunti con successo!", "success");
     handleClose();
   };
 
@@ -43,7 +55,7 @@ export default function AssetDialog({ open, onClose, onAdd, freePercentage, enti
     <Dialog open={open} onClose={handleClose} maxWidth="sm"
       slotProps={{ transition: { onExited: handleReset }, paper: { component: "form" as const, onSubmit: handleSubmit } as Record<string, unknown> }}>
       <DialogTitle className="fw-bold" align="center">
-        {step === 1 ? "Seleziona Tipologia" : entityType === "company" ? "Dati Aziendali" : "Dati Personali"}
+        {step === 1 ? "Seleziona Tipologia" : entityType === "company" ? (isEditing ? "Modifica Dati Aziendali" : "Dati Aziendali") : (isEditing ? "Modifica Dati Personali" : "Dati Personali")}
       </DialogTitle>
       <DialogContent>
         {step === 1 ? (
@@ -61,17 +73,17 @@ export default function AssetDialog({ open, onClose, onAdd, freePercentage, enti
           <Grid container spacing={2} sx={{ mt: 1 }} className="d-flex justify-center">
             {entityType === "company" ? (
               <>
-                <Grid size={12}><TextField required fullWidth name="companyName" label="Nome" variant="outlined" /></Grid>
-                <Grid size={{ xs: 12, sm: 6 }}><TextField required fullWidth name="vatNumber" label="Partita IVA" variant="outlined" /></Grid>
-                <Grid size={{ xs: 12, sm: 6 }}><TextField required fullWidth name="fiscalCode" label="Codice Fiscale" variant="outlined" /></Grid>
-                <Grid size={12}><TextField required fullWidth name="address" label="Indirizzo Sede Legale" variant="outlined" /></Grid>
-                <Grid size={{ xs: 12, sm: 6 }}><TextField required fullWidth name="city" label="Città" variant="outlined" /></Grid>
-                <Grid size={{ xs: 12, sm: 6 }}><TextField required fullWidth name="zipCode" label="CAP" variant="outlined" /></Grid>
-                <Grid size={12}><TextField required fullWidth name="iban" label="IBAN" variant="outlined" /></Grid>
+                <Grid size={12}><TextField required fullWidth name="companyName" label="Nome" variant="outlined" defaultValue={initialData?.companyName ?? ""} /></Grid>
+                <Grid size={{ xs: 12, sm: 6 }}><TextField required fullWidth name="vatNumber" label="Partita IVA" variant="outlined" defaultValue={initialData?.vatNumber ?? ""} /></Grid>
+                <Grid size={{ xs: 12, sm: 6 }}><TextField required fullWidth name="fiscalCode" label="Codice Fiscale" variant="outlined" defaultValue={initialData?.fiscalCode ?? ""} /></Grid>
+                <Grid size={12}><TextField required fullWidth name="address" label="Indirizzo Sede Legale" variant="outlined" defaultValue={initialData?.address ?? ""} /></Grid>
+                <Grid size={{ xs: 12, sm: 6 }}><TextField required fullWidth name="city" label="Città" variant="outlined" defaultValue={initialData?.city ?? ""} /></Grid>
+                <Grid size={{ xs: 12, sm: 6 }}><TextField required fullWidth name="zipCode" label="CAP" variant="outlined" defaultValue={initialData?.zipCode ?? ""} /></Grid>
+                <Grid size={12}><TextField required fullWidth name="iban" label="IBAN" variant="outlined" defaultValue={initialData?.iban ?? ""} /></Grid>
               </>
             ) : (
               <>
-                <Grid size={12}><TextField required fullWidth name="email" label="Email" variant="outlined" /></Grid>
+                <Grid size={12}><TextField required fullWidth name="email" label="Email" variant="outlined" defaultValue={initialData?.email ?? ""} /></Grid>
                   <div className="d-flex justify-center w-100">
                   <Slider color="secondary" sx={{ width: "85%", mt: 3 }} defaultValue={sliderValue} onChange={(_, v) => setSliderValue(v as number)} valueLabelFormat={formatValue} step={100 / freePercentage} valueLabelDisplay="auto" marks={[{ value: 0, label: "0%" }, { value: 100, label: `${freePercentage}%` }]} />
                 </div>
@@ -83,7 +95,7 @@ export default function AssetDialog({ open, onClose, onAdd, freePercentage, enti
       {step === 2 && (
         <DialogActions sx={{ px: 3, pb: 2 }}>
           <Button variant="outlined" onClick={handleClose}>Cancella</Button>
-          <Button variant="contained" color="secondary" type="submit">Aggiungi</Button>
+          <Button variant="contained" color="secondary" type="submit">{isEditing ? "Salva" : "Aggiungi"}</Button>
         </DialogActions>
       )}
     </Dialog>

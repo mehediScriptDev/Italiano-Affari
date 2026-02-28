@@ -23,6 +23,8 @@ export default function PaymentAssets() {
   const [assets, setAssets] = useState<Asset[]>([]);
   const [freePercentage, setFreePercentage] = useState(100);
   const [openDialog, setOpenDialog] = useState(false);
+  const [editingAsset, setEditingAsset] = useState<Record<string, unknown> | null>(null);
+  const [editingIndex, setEditingIndex] = useState<number | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -38,8 +40,30 @@ export default function PaymentAssets() {
   }, []);
 
   const handleOpenDialog = () => {
-    if (freePercentage > 0) setOpenDialog(true);
+    if (freePercentage > 0) {
+      setEditingAsset(null);
+      setEditingIndex(null);
+      setOpenDialog(true);
+    }
     else showToast("Non c'è piu percentuale disponibile!", "error");
+  };
+
+  const handleEditAsset = (index: number) => {
+    const asset = assets[index];
+    setEditingAsset({
+      entityType: asset.entityType,
+      companyName: asset.companyName ?? "",
+      vatNumber: asset.vatNumber ?? "",
+      fiscalCode: asset.fiscalCode ?? "",
+      iban: asset.iban,
+      email: "",
+      address: "",
+      city: "",
+      zipCode: "",
+    });
+    setEditingIndex(index);
+    setFreePercentage((prev) => prev + Number(asset.percentage));
+    setOpenDialog(true);
   };
 
   const handleDeleteAsset = (index: number) => {
@@ -51,6 +75,13 @@ export default function PaymentAssets() {
   };
 
   const handleSubmit = (formData: Record<string, unknown>) => {
+    // If editing, delete old asset first
+    if (editingIndex !== null) {
+      const oldAsset = assets[editingIndex];
+      deleteAsset(oldAsset.id);
+      setAssets((prev) => prev.filter((_, i) => i !== editingIndex));
+    }
+
     setFreePercentage((p) => p - Number(formData.percentage));
     if (formData.entityType === "individual") {
       createAssetWithEmail(formData.email as string, formData.percentage as number);
@@ -64,6 +95,8 @@ export default function PaymentAssets() {
         last_name: formData.lastName as string,
       });
     }
+    setEditingAsset(null);
+    setEditingIndex(null);
   };
 
   const renderAsset = (asset: Asset, index: number) => (
@@ -82,7 +115,7 @@ export default function PaymentAssets() {
           <p className="mt-1">{asset.entityType === "company" ? asset.companyName : `${asset.firstName} ${asset.lastName}`}</p>
           <div className="d-flex justify-end position-absolute top-0 end-0">
             <IconButton style={{ padding: "5px 5px" }} color="error" onClick={() => handleDeleteAsset(index)}><Delete /></IconButton>
-            <IconButton style={{ padding: "5px 5px", color: "white" }} onClick={() => {}}><Edit /></IconButton>
+            <IconButton style={{ padding: "5px 5px", color: "white" }} onClick={() => handleEditAsset(index)}><Edit /></IconButton>
           </div>
         </CardContent>
       </Card>
@@ -99,7 +132,23 @@ export default function PaymentAssets() {
         <Box sx={{ mt: 2 }}>
           <div className="d-flex justify-end me-3">
             <Button variant="contained" color="secondary" onClick={handleOpenDialog}>Aggiungi</Button>
-            <AssetDialog open={openDialog} onAdd={handleSubmit} onClose={() => setOpenDialog(false)} freePercentage={freePercentage} />
+            <AssetDialog
+              open={openDialog}
+              onAdd={handleSubmit}
+              onClose={() => {
+                setOpenDialog(false);
+                if (editingIndex !== null) {
+                  // Restore the percentage if dialog is canceled during edit
+                  const asset = assets[editingIndex];
+                  if (asset) setFreePercentage((prev) => prev - Number(asset.percentage));
+                  setEditingAsset(null);
+                  setEditingIndex(null);
+                }
+              }}
+              freePercentage={freePercentage}
+              initialData={editingAsset}
+              isEditing={editingIndex !== null}
+            />
           </div>
           {assets.length === 0 && (
             <Box sx={{ position: "absolute", width: "97%", textAlign: "center", top: "50%" }}>

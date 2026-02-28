@@ -3,19 +3,18 @@
 import { Autocomplete, Box, CircularProgress, TextField } from "@mui/material";
 import { useState, useEffect, Fragment } from "react";
 
+const ACTIVITIES: Record<string, string> = {
+  boutique: "Negozio",
+  content_creator: "Content Creator",
+  fashion_design: "Fashion e Design Addicted",
+  tech: "Tech e Innovazione",
+  campaigns: "Campaign Creators",
+  events: "Event Creators",
+  community: "Community",
+};
+
 function fetchActivities(): Promise<Record<string, string>> {
-  return new Promise((resolve) => {
-    const activities: Record<string, string> = {
-      boutique: "Negozio",
-      content_creator: "Content Creator",
-      fashion_design: "Fashion e Design Addicted",
-      tech: "Tech e Innovazione",
-      campaigns: "Campaign Creators",
-      events: "Event Creators",
-      community: "Community",
-    };
-    setTimeout(() => resolve(activities), 3000);
-  });
+  return Promise.resolve(ACTIVITIES);
 }
 
 interface ActivityDropdownProps {

@@ -85,35 +85,8 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  useEffect(() => {
-    axios.defaults.baseURL = API_URL;
-    axios.defaults.withCredentials = true;
-
-    const interceptorId = axios.interceptors.response.use(
-      (res) => res,
-      async (error) => {
-        const originalRequest = error.config;
-        if (error.response?.status === 401 && !originalRequest._retry) {
-          originalRequest._retry = true;
-          try {
-            const refreshRes = await axios.post("/refresh-token");
-            const newToken = refreshRes.data.access_token;
-            axios.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
-            originalRequest.headers["Authorization"] = `Bearer ${newToken}`;
-            return axios(originalRequest);
-          } catch {
-            setToken();
-            return Promise.reject(error);
-          }
-        }
-        return Promise.reject(error);
-      }
-    );
-
-    return () => {
-      axios.interceptors.response.eject(interceptorId);
-    };
-  }, [setToken]);
+  // Note: The 401 refresh interceptor is handled exclusively in lib/api/client.ts
+  // to avoid duplicate interceptors causing race conditions.
 
   const contextValue = useMemo(
     () => ({ token, setToken, getDecodedToken, updateProfile }),

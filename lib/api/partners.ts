@@ -209,3 +209,20 @@ export async function downloadAssetFile() {
     window.URL.revokeObjectURL(downloadUrl);
   }
 }
+
+export async function fetchTransactionHistory() {
+  const response = await api.get(`${API_URL}/transactions`);
+  if (response.status === 200) return response.data;
+  throw new Error(`Errore: ${response.status}`);
+}
+
+export async function fetchContents(params?: {
+  tag?: string;
+  category?: string;
+  gender?: string;
+  type?: string;
+}) {
+  const response = await api.get(`${API_URL}/contents`, { params });
+  if (response.status === 200) return response.data;
+  throw new Error(`Errore: ${response.status}`);
+}

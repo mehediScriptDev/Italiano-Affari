@@ -66,14 +66,15 @@ export default function NavPartner() {
             </li>
           ))}
           <li style={styles.navItem}>
-            <a
-              href="https://contents.psicopatici.com/"
-              style={styles.navLink}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/media-library"
+              style={{
+                ...styles.navLink,
+                ...(pathname === "/media-library" ? styles.activeLink : {}),
+              }}
             >
               Libreria Contenuti
-            </a>
+            </Link>
           </li>
         </ul>
       </div>
