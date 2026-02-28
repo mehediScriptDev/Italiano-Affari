@@ -7,4 +7,39 @@ const api = axios.create({
   withCredentials: true,
 });
 
+// Attach JWT token from localStorage on every request
+api.interceptors.request.use((config) => {
+  if (typeof window !== "undefined") {
+    const token = localStorage.getItem("token");
+    if (token) {
+      config.headers = config.headers ?? {};
+      config.headers["Authorization"] = `Bearer ${token}`;
+    }
+  }
+  return config;
+});
+
+// Handle 401 → attempt token refresh, otherwise redirect to sign-in
+api.interceptors.response.use(
+  (res) => res,
+  async (error) => {
+    const original = error.config;
+    if (error.response?.status === 401 && !original._retry) {
+      original._retry = true;
+      try {
+        const refreshRes = await api.post("/refresh-token");
+        const newToken = refreshRes.data.access_token;
+        localStorage.setItem("token", newToken);
+        original.headers["Authorization"] = `Bearer ${newToken}`;
+        return api(original);
+      } catch {
+        localStorage.removeItem("token");
+        localStorage.removeItem("profile");
+        if (typeof window !== "undefined") window.location.href = "/sign-in";
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
 export default api;

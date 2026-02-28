@@ -105,56 +105,68 @@ export default function DashboardPartner() {
   };
 
   return (
-    <div className="flex justify-center px-2 bg-[#f6f8fb]">
-      <div className="mt-5 w-full max-w-[1200px] flex flex-col justify-center px-4 p-0">
-        <div className="flex justify-between items-center mb-2"><h5 className="mb-0">Dashboard</h5></div>
+    <>
+      <div className="d-flex justify-center px-2" style={{ backgroundColor: "#f6f8fb" }}>
+        <div style={{ maxWidth: "1200px" }} className="mt-5 w-100 d-flex flex-column justify-center paddingContainer p-0">
+          <div className="d-flex justify-between align-center mb-2">
+            <h5 className="mb-0">Dashboard</h5>
+          </div>
 
-        <Grid container justifyContent="center" spacing={2}>
-          <Grid size={{ xs: 12, lg: 4 }}>
-            <Box className="card" sx={{ backgroundColor: "black", borderRadius: "10px", p: 3, color: "white", justifyContent: "space-between" }}>
-              <div>
-                <Typography variant="h5">{profile?.name}</Typography>
-                <Typography sx={{ color: "#b2b2b2" }}>{profile?.activity}</Typography>
-                <Button size="small" variant="contained" color="secondary" sx={{ mt: 2 }} onClick={handleAssetButtonClick}>Mostra Assets</Button>
-                <Dialog open={openAssetsDialog} maxWidth="lg" onClose={() => setOpenAssetsDialog(false)}>
-                  <DialogContent className="p-0"><PaymentAssets /></DialogContent>
-                </Dialog>
-                <Dialog open={openShareDialog} onClose={() => setOpenShareDialog(false)}>
-                  <DialogContent sx={{ textAlign: "center", p: 4 }}>
-                    <Typography variant="h6" sx={{ mb: 2 }}>Condividi il tuo codice</Typography>
-                    <ReactQRCode value={couponToShare} size={150} marginSize={0} dataModulesSettings={{ color: "#000000", style: "rounded", randomSize: false }} finderPatternOuterSettings={{ style: "rounded" }} finderPatternInnerSettings={{ style: "rounded-sm" }} />
-                    <Box sx={{ display: "flex", alignItems: "center", mt: 3, gap: 1 }}>
-                      <TextField variant="outlined" value={couponToShare} fullWidth slotProps={{ input: { readOnly: true } }} />
-                      <Tooltip title={copySuccess ? "Copiato!" : "Copia"}><IconButton onClick={handleCopyLink}><ContentCopy /></IconButton></Tooltip>
-                    </Box>
-                  </DialogContent>
-                </Dialog>
-              </div>
-              <div className="flex items-center">
-                <Typography>Condividi il tuo codice QR</Typography>
-                <IconButton className="relative bottom-[4px]" onClick={handleOpenShare}>
-                  <IosShareOutlined color="secondary" />
-                </IconButton>
-              </div>
-            </Box>
+          <Grid container justifyContent="center" spacing={2}>
+            <Grid size={{ xs: 12, lg: 4 }}>
+              <Box className="card" sx={{ backgroundColor: "black", borderRadius: "10px", p: 3, color: "white", justifyContent: "space-between" }}>
+                <div>
+                  <Typography variant="h5">{profile?.name}</Typography>
+                  <Typography sx={{ color: "#b2b2b2" }}>{profile?.activity}</Typography>
+                  <Button size="small" variant="contained" color="secondary" sx={{ mt: 2 }} onClick={handleAssetButtonClick}>Mostra Assets</Button>
+                  <Dialog className="p-0" open={openAssetsDialog} maxWidth="lg" onClose={() => setOpenAssetsDialog(false)}>
+                    <DialogContent className="p-0"><PaymentAssets /></DialogContent>
+                  </Dialog>
+                  <Dialog open={openShareDialog} onClose={() => setOpenShareDialog(false)}>
+                    <DialogContent sx={{ textAlign: "center", p: 4 }}>
+                      <Typography variant="h6" sx={{ mb: 2 }}>Condividi il tuo codice</Typography>
+                      <ReactQRCode value={couponToShare} size={150} marginSize={0}
+                        dataModulesSettings={{ color: "#000000", style: "rounded", randomSize: false }}
+                        finderPatternOuterSettings={{ style: "rounded" }}
+                        finderPatternInnerSettings={{ style: "rounded-sm" }}
+                        imageSettings={{ src: "/assets/images/qr-code-logo.png", width: 30, height: 30, excavate: true }}
+                      />
+                      <Box sx={{ display: "flex", alignItems: "center", mt: 3, gap: 1 }}>
+                        <TextField variant="outlined" value={couponToShare} fullWidth slotProps={{ input: { readOnly: true } }} />
+                        <Tooltip title={copySuccess ? "Copiato!" : "Copia"}><IconButton onClick={handleCopyLink}><ContentCopy /></IconButton></Tooltip>
+                      </Box>
+                    </DialogContent>
+                  </Dialog>
+                </div>
+                <div className="d-flex align-center">
+                  <Typography>Condividi il tuo codice QR</Typography>
+                  <IconButton style={{ bottom: "4px" }} className="position-relative" onClick={handleOpenShare}>
+                    <IosShareOutlined color="secondary" />
+                  </IconButton>
+                </div>
+              </Box>
+            </Grid>
+
+            <Grid size={{ xs: 12, sm: 6, lg: 4 }}>
+              <ChartPreview label="Guadagno Netto" icon={<AttachMoney style={{ color: "black", fontSize: "24px" }} />} obj={earningsPreview} sx={{ paddingBottom: "10px" }} />
+            </Grid>
+
+            <Grid size={{ xs: 12, sm: 6, lg: 4 }}>
+              <Box className="card1" sx={{ backgroundColor: "white", border: "4px solid white", borderRadius: "10px", p: 3, color: "black" }}>
+                <Typography>{networkInfo.count} Ordini </Typography>
+                <Typography>Valore della rete: <span className="price">{networkInfo.earnings}€</span></Typography>
+              </Box>
+            </Grid>
           </Grid>
 
-          <Grid size={{ xs: 12, sm: 6, lg: 4 }}>
-            <ChartPreview label="Guadagno Netto" icon={<AttachMoney style={{ color: "black", fontSize: "24px" }} />} obj={earningsPreview} />
-          </Grid>
-          <Grid size={{ xs: 12, sm: 6, lg: 4 }}>
-            <Box className="card1" sx={{ backgroundColor: "white", border: "4px solid white", borderRadius: "10px", p: 3, color: "black" }}>
-              <Typography>{networkInfo.count} Ordini</Typography>
-              <Typography>Valore della rete: <span className="price">{networkInfo.earnings}€</span></Typography>
-            </Box>
-          </Grid>
-        </Grid>
-
-        <div className="mt-2">
-          <div className="flex justify-between items-center"><h5 className="mb-1">Ultimi Ordini</h5></div>
+          <div className="mt-2">
+            <div className="d-flex justify-between align-center">
+              <h5 className="mb-1">Ultimi Ordini</h5>
+            </div>
+          </div>
+          <DataTable columns={columns} data={orders} showCheckbox={true} />
         </div>
-        <DataTable columns={columns} data={orders} showCheckbox />
       </div>
-    </div>
+    </>
   );
 }

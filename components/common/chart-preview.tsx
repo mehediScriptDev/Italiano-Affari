@@ -70,24 +70,24 @@ export default function ChartPreview({ obj, icon, label, sx }: ChartPreviewProps
         </Tooltip>
       </Box>
       <CardContent>
-        <div className="flex items-center">
+        <div className="d-flex align-center">
           <div className="bg-danger p-1 rounded">{icon}</div>
-          <div className="ml-3">
+          <div className="ms-3">
             <Typography variant="body2" color="textSecondary">
               {label}
             </Typography>
-            <Typography variant="h5" className="font-bold">
+            <Typography variant="h5" className="fw-bold">
               {formatted}
             </Typography>
           </div>
         </div>
-        <div className="mt-2 flex items-center">
+        <div className="mt-2 d-flex align-center">
           {obj.trend === "positive" ? (
             <ArrowUpward fontSize="small" />
           ) : (
             <ArrowDownward fontSize="small" />
           )}
-          <Typography variant="body2" className="ml-1">
+          <Typography variant="body2" className="ms-1">
             {obj.difference}
           </Typography>
         </div>

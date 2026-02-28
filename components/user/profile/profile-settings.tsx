@@ -35,9 +35,9 @@ export default function ProfileSettings() {
   };
 
   return (
-    <Card className="shadow" sx={{ borderRadius: 2 }}>
+    <Card className="card-shadow" sx={{ borderRadius: 2 }}>
       <CardContent>
-          <div className="flex justify-between items-center">
+        <div className="d-flex justify-between align-center">
           <Box sx={{ display: "flex", gap: "10px" }}>
             <Avatar src={profile?.avatar} sx={{ width: "80px", height: "80px" }}>{profile?.name?.charAt(0)}</Avatar>
             <div>
@@ -49,11 +49,11 @@ export default function ProfileSettings() {
           <Button hidden={isMobile} onClick={handleSubmit} variant="contained" startIcon={<Save />} color="secondary">Salva</Button>
         </div>
 
-        <hr className="w-full" />
+        <hr style={{ width: "100%" }} />
         <Typography variant="h5" align="center" sx={{ mb: 2 }} fontWeight={700}>Informazioni Personali</Typography>
 
         <Grid container spacing={2} mb={3}>
-          <Grid size={{ xs: 12, md: 6 }}>
+          <Grid size={{ xs: 12, md: 6, lg: 6 }}>
             <Typography variant="h6" sx={{ color: "black", mb: 1, fontSize: 16 }}>Nome*</Typography>
             <TextField fullWidth variant="outlined" placeholder="Inserisci nome" value={tempProfile.name} error={!!error.name} helperText={error.name}
               onChange={(e) => {
@@ -64,7 +64,7 @@ export default function ProfileSettings() {
                 else setError((p) => ({ ...p, name: "" }));
               }} />
           </Grid>
-          <Grid size={{ xs: 12, md: 6 }}>
+          <Grid size={{ xs: 12, md: 6, lg: 6 }}>
             <Typography variant="h6" sx={{ color: "black", mb: 1, fontSize: 16 }}>Email*</Typography>
             <TextField fullWidth variant="outlined" placeholder="Inserisci la tua email" value={tempProfile.email} error={!!error.email} helperText={error.email}
               onChange={(e) => {
@@ -75,7 +75,7 @@ export default function ProfileSettings() {
                 else setError((p) => ({ ...p, email: "" }));
               }} />
           </Grid>
-          <Grid size={{ xs: 12, md: 6 }}>
+          <Grid size={{ xs: 12, md: 6, lg: 6 }}>
             <Typography variant="h6" sx={{ color: "black", mb: 1, fontSize: 16 }}>Cellulare*</Typography>
             <TextField fullWidth variant="outlined" placeholder="Inserisci il tuo numero di cellulare" value={tempProfile.mobile} error={!!error.mobile} helperText={error.mobile}
               onChange={(e) => {
@@ -86,7 +86,7 @@ export default function ProfileSettings() {
                 else setError((p) => ({ ...p, mobile: "" }));
               }} />
           </Grid>
-          <Grid size={{ xs: 12, md: 6 }}>
+          <Grid size={{ xs: 12, md: 6, lg: 6 }}>
             <Typography variant="h6" sx={{ color: "black", mb: 1, fontSize: 16 }}>Telefono Fisso</Typography>
             <TextField fullWidth variant="outlined" placeholder="Inserisci il tuo numero fisso" value={tempProfile.phone ?? ""} error={!!error.phone} helperText={error.phone}
               onChange={(e) => {
@@ -98,14 +98,14 @@ export default function ProfileSettings() {
           </Grid>
         </Grid>
 
-        <hr className="w-full" />
+        <hr style={{ width: "100%" }} />
 
         {profile?.activity && Object.keys(activitiesFields).includes(profile.activity) && (
           <>
             <Typography variant="h5" align="center" sx={{ mb: 2 }} fontWeight={700}>Attività</Typography>
             <Grid container spacing={2} mb={5}>
               {activitiesFields[profile.activity].filter((f) => f !== "paragraph").map((field, i) => (
-                <Grid size={{ xs: 12, md: 6 }} key={i}>
+                <Grid size={{ xs: 12, md: 6, lg: 6 }} key={i}>
                   <Typography variant="h6" sx={{ color: "black", mb: 1, fontSize: 16 }}>{field}*</Typography>
                   <TextField fullWidth variant="outlined" placeholder={`Inserisci ${field}`}
                     value={tempProfile.business_info?.[field] ?? ""}
@@ -122,7 +122,7 @@ export default function ProfileSettings() {
           </>
         )}
 
-          <div className="flex justify-center items-center mb-3">
+        <div className="d-flex justify-center align-center mb-3">
           <Button hidden={!isMobile} onClick={handleSubmit} variant="contained" startIcon={<Save />} color="secondary">Salva</Button>
         </div>
       </CardContent>

@@ -16,15 +16,15 @@ export default function TransactionHistory() {
   ];
 
   return (
-    <Card className="shadow" sx={{ borderRadius: 2, minHeight: "650px", position: "relative" }}>
+    <Card className="card-shadow" sx={{ borderRadius: 2, minHeight: "650px", position: "relative" }}>
       <CardContent>
         <h3 className="text-center">Storico Pagamenti</h3>
         <Typography align="center" variant="body1">
           In questa sezione puoi visualizzare i tuoi pagamenti, aggiungere un nuovo metodo di pagamento e gestire i tuoi asset
         </Typography>
-        <hr className="w-full" />
+        <hr style={{ width: "100%" }} />
         <div className="mt-1">
-          <div className="flex justify-between items-center"><h5 className="mb-1">Storico Pagamenti</h5></div>
+          <div className="d-flex justify-between align-center"><h5 className="mb-1">Storico Pagamenti</h5></div>
         </div>
         <DataTable columns={columns} data={transactions} showCheckbox />
       </CardContent>

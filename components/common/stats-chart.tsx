@@ -71,12 +71,19 @@ function PeriodSelector({
   return (
     <Box sx={{ mb: 2, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
       <FormControl size="small" sx={{ width: "160px" }}>
-        <InputLabel id={`${chartType}-period-label`}>Periodo</InputLabel>
+        <InputLabel id={`${chartType}-period-label`} sx={{ color: "rgba(0,0,0,0.7)", "&.Mui-focused": { color: "rgba(0,0,0,0.7)" } }}>Periodo</InputLabel>
         <Select
           labelId={`${chartType}-period-label`}
           value={period}
           label="Periodo"
           onChange={(e) => onPeriodChange(e.target.value)}
+          sx={{
+            color: "black",
+            ".MuiOutlinedInput-notchedOutline": { borderColor: "rgba(0,0,0,0.3)" },
+            "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "rgba(0,0,0,0.5)" },
+            "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "black" },
+            ".MuiSvgIcon-root": { color: "black" },
+          }}
         >
           <MenuItem value="today">Oggi</MenuItem>
           <MenuItem value="weekly">Ultimi 7 giorni</MenuItem>
@@ -93,14 +100,24 @@ function PeriodSelector({
               value={dateRange.start}
               onChange={(value) => onDateChange("start", value)}
               slotProps={{ textField: { size: "small" } }}
-              sx={{ width: "120px" }}
+              sx={{
+                width: "120px",
+                "& .MuiInputBase-root": { color: "black", "& fieldset": { borderColor: "rgba(0,0,0,0.3)" }, "&:hover fieldset": { borderColor: "rgba(0,0,0,0.5)" } },
+                "& .MuiInputLabel-root": { color: "rgba(0,0,0,0.7)" },
+                "& .MuiSvgIcon-root": { color: "black" },
+              }}
             />
             <DatePicker
               label="A"
               value={dateRange.end}
               onChange={(value) => onDateChange("end", value)}
               slotProps={{ textField: { size: "small" } }}
-              sx={{ width: "120px" }}
+              sx={{
+                width: "120px",
+                "& .MuiInputBase-root": { color: "black", "& fieldset": { borderColor: "rgba(0,0,0,0.3)" }, "&:hover fieldset": { borderColor: "rgba(0,0,0,0.5)" } },
+                "& .MuiInputLabel-root": { color: "rgba(0,0,0,0.7)" },
+                "& .MuiSvgIcon-root": { color: "black" },
+              }}
             />
           </LocalizationProvider>
         </Box>

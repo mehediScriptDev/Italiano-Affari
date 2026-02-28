@@ -214,7 +214,7 @@ function EmailStep({ formData, handleChange, handleNextStep, error, verifying }:
       <TextField fullWidth label="Email" name="email" type="email" required variant="outlined" margin="normal"
         value={formData.email} onChange={handleChange} error={!!error} helperText={error} />
 
-      <div className="d-flex items-center">
+      <div className="d-flex align-center">
         <Checkbox required name="terms" color="primary" checked={acceptedTerms} onChange={(e) => setAcceptedTerms(e.target.checked)} />
         <span className="my-0" style={{ fontSize: "13px" }}>
           Accetto i&nbsp;

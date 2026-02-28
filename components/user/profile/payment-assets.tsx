@@ -68,21 +68,21 @@ export default function PaymentAssets() {
 
   const renderAsset = (asset: Asset, index: number) => (
     <div className="mt-1" key={`card-${index}`}>
-      <Card className="text-white bg-[linear-gradient(to_right,#2e2e2e_30%,#040404)] min-w-[320px]" elevation={10} sx={{ borderRadius: 2 }}>
-        <CardContent className="relative px-3.75 py-2.5">
-          <p className="mb-0 text-xs">IBAN</p>
-          <p className="mt-0 text-[17px]">{asset.iban}</p>
+      <Card className="text-white" style={{ background: "linear-gradient(to right, #2e2e2e 30%, #040404)", minWidth: "320px" }} elevation={10} sx={{ borderRadius: 2 }}>
+        <CardContent className="position-relative" style={{ padding: "10px 15px" }}>
+          <p style={{ fontSize: "12px" }} className="mb-0">IBAN</p>
+          <p style={{ fontSize: "17px" }} className="mt-0">{asset.iban}</p>
           {asset.vatNumber ? (
-            <><p className="mb-0 mt-1 text-xs">Partita IVA</p><p className="mt-0 text-[15px]">{asset.vatNumber}</p></>
+            <><p style={{ fontSize: "12px" }} className="mb-0 mt-1">Partita IVA</p><p style={{ fontSize: "15px" }} className="mt-0">{asset.vatNumber}</p></>
           ) : (
-            <><p className="mb-0 mt-1 text-xs">Codice Fiscale</p><p className="mt-0 text-sm">{asset.fiscalCode}</p></>
+            <><p style={{ fontSize: "12px" }} className="mb-0 mt-1">Codice Fiscale</p><p style={{ fontSize: "14px" }} className="mt-0">{asset.fiscalCode}</p></>
           )}
-          <p className="mb-0 mt-1 text-xs">Percentuale</p>
+          <p style={{ fontSize: "12px" }} className="mb-0 mt-1">Percentuale</p>
           <p className="mt-0">{asset.percentage}%</p>
           <p className="mt-1">{asset.entityType === "company" ? asset.companyName : `${asset.firstName} ${asset.lastName}`}</p>
-          <div className="flex justify-end absolute top-0 right-0">
-            <IconButton className="p-1.25" color="error" onClick={() => handleDeleteAsset(index)}><Delete /></IconButton>
-            <IconButton className="p-1.25" sx={{ color: "white" }} onClick={() => {}}><Edit /></IconButton>
+          <div className="d-flex justify-end position-absolute top-0 end-0">
+            <IconButton style={{ padding: "5px 5px" }} color="error" onClick={() => handleDeleteAsset(index)}><Delete /></IconButton>
+            <IconButton style={{ padding: "5px 5px", color: "white" }} onClick={() => {}}><Edit /></IconButton>
           </div>
         </CardContent>
       </Card>
@@ -90,14 +90,14 @@ export default function PaymentAssets() {
   );
 
   return (
-    <Card className="shadow" sx={{ borderRadius: 2, minHeight: "650px", position: "relative" }}>
+    <Card className="card-shadow" sx={{ borderRadius: 2, minHeight: "650px", position: "relative" }}>
       <CardContent>
         <h3 className="text-center">Gestisci Pagamenti</h3>
         <Typography align="center" variant="body1">In questa sezione puoi visualizzare i tuoi pagamenti, aggiungere un nuovo metodo di pagamento e gestire i tuoi asset</Typography>
-        <hr className="w-full" />
+        <hr style={{ width: "100%" }} />
         <h4 className="text-center mb-0">Asset di pagamento</h4>
         <Box sx={{ mt: 2 }}>
-          <div className="flex justify-end mr-4">
+          <div className="d-flex justify-end me-3">
             <Button variant="contained" color="secondary" onClick={handleOpenDialog}>Aggiungi</Button>
             <AssetDialog open={openDialog} onAdd={handleSubmit} onClose={() => setOpenDialog(false)} freePercentage={freePercentage} />
           </div>
@@ -106,7 +106,7 @@ export default function PaymentAssets() {
               <Typography variant="body1">Non hai registrato ancora nessun asset di pagamento</Typography>
             </Box>
           )}
-          <div className="flex gap-2">{assets.map(renderAsset)}</div>
+          <div className="d-flex gap-2">{assets.map(renderAsset)}</div>
         </Box>
       </CardContent>
     </Card>

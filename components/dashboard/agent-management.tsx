@@ -3,13 +3,14 @@
 import { useEffect, useState, type FormEvent, type ChangeEvent } from "react";
 import {
   Box, Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle,
-  FormControl, InputLabel, Select, MenuItem, CircularProgress, Grid,
+  FormControl, InputLabel, Select, MenuItem, Grid, CircularProgress,
 } from "@mui/material";
 import DynamicDataTable from "@/components/data/dynamic-data-table";
 import { fetchSubAgents, inviteSubAgent } from "@/lib/api/partners";
 import { showToast } from "@/lib/utils/notifications";
 import { useAppContext } from "@/lib/context/app-context";
 import type { DynamicRow } from "@/components/data/dynamic-data-table";
+// Grid import removed — using Box flexbox instead
 
 interface AgentNode {
   id: number;
@@ -80,9 +81,9 @@ export default function AgentManagement() {
 
   return (
     <>
-      <Box className="flex justify-center px-2" sx={{ backgroundColor: "#f6f8fb" }}>
-          <Box sx={{ maxWidth: "1200px" }} className="mt-5 w-full flex flex-col justify-center px-4 p-0">
-            <Box className="flex justify-between items-center mb-2">
+      <Box className="d-flex justify-center px-2" sx={{ backgroundColor: "#f6f8fb" }}>
+        <Box sx={{ maxWidth: "1200px" }} className="mt-5 w-100 d-flex flex-column justify-center paddingContainer p-0">
+          <Box className="d-flex justify-between align-center mb-2">
             <h5 className="mb-0">Gestione Agenti</h5>
             <Button color="secondary" variant="contained" onClick={() => !loading && setOpenModal(true)}>Invita Partner</Button>
           </Box>
@@ -110,8 +111,8 @@ export default function AgentManagement() {
               </Grid>
             </Grid>
           </DialogContent>
-          <DialogActions className="pb-4">
-            <Button className="bg-[#f6f8fb]" onClick={() => setOpenModal(false)}>Annulla</Button>
+          <DialogActions style={{ paddingBottom: "16px" }}>
+            <Button style={{ backgroundColor: "#f6f8fb" }} onClick={() => setOpenModal(false)}>Annulla</Button>
             <Button type="submit" color="secondary" variant="contained">Invita</Button>
           </DialogActions>
         </form>

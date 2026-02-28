@@ -67,8 +67,8 @@ export default function StatsPage() {
 
   return (
     <Box sx={{ backgroundColor: "transparent" }}>
-      <div className="flex justify-between items-center pr-[6px]"><h5 className="mb-0">Statistiche</h5></div>
-        <div className="flex flex-wrap justify-center">
+      <div className="d-flex justify-between align-center" style={{ paddingRight: "6px" }}><h5 className="mb-0">Statistiche</h5></div>
+      <div className="row d-flex justify-center">
         <Grid className={isMobile ? "px-0" : "px-1"} container spacing={isMobile ? 2 : 1} sx={{ mt: 2, p: 0 }}>
           <Grid size={{ xs: 12, md: 4 }}><ChartPreview label="Vendite Dirette" icon={<ShoppingBag style={{ color: "black", fontSize: "24px" }} />} obj={chartsPreview.sales} /></Grid>
           <Grid size={{ xs: 12, md: 4 }}><ChartPreview label="Guadagni Maturati" icon={<AttachMoney style={{ color: "black", fontSize: "24px" }} />} obj={chartsPreview.earnings} /></Grid>
@@ -77,7 +77,7 @@ export default function StatsPage() {
 
         <div className="col-12 mb-4">
           <Grid container mt={2} spacing={isMobile ? 2 : 0}>
-            <Grid size={12}>
+            <Grid size={{ xs: 12, md: 12 }}>
               <Card sx={{ borderRadius: 2, boxShadow: "rgba(0,0,0,0.24) 0px 3px 8px" }}>
                 <CardContent>
                   <Typography align="center" variant="h6" sx={{ color: "black", mb: 1, fontSize: 16 }}>Totale Commissioni Generate</Typography>
@@ -90,7 +90,7 @@ export default function StatsPage() {
 
         <div className="col-12 mb-4">
           <Grid container spacing={isMobile ? 2 : 0}>
-            <Grid size={{ xs: 12, md: 6 }} sx={{ pr: { md: 2 } }}>
+            <Grid size={{ xs: 12, md: 6, lg: 6 }} sx={{ borderRight: { md: "1px solid rgba(255,255,255,0.12)" }, pr: { md: 2 } }}>
               <Card sx={{ borderRadius: 2, boxShadow: "rgba(0,0,0,0.24) 0px 3px 8px" }}>
                 <CardContent>
                   <Typography align="center" variant="h6" sx={{ color: "black", mb: 1, fontSize: 16 }}>Totale Vendite Dirette</Typography>

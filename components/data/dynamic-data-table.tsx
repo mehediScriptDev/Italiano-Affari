@@ -58,24 +58,33 @@ export default function DynamicDataTable({ columns, data }: DynamicDataTableProp
         <TableRow>
           <TableCell className="p-0" sx={{ width: toggleColWidth, position: "relative", marginLeft: 10 }}>
             <div
-              className="flex justify-start items-center ml-1 cursor-pointer"
+              className="d-flex justify-start align-center ms-1"
               onClick={() => toggleExpand(row.id)}
-              style={{ paddingLeft }}
+              style={{ paddingLeft, cursor: "pointer" }}
             >
               <div
-                className="absolute left-1 h-13.5 -top-px bottom-0 w-0.75 bg-[#12715b]"
-                style={{ marginLeft: paddingLeft }}
+                style={{
+                  position: "absolute",
+                  left: "4px",
+                  height: "54px",
+                  top: "-1px",
+                  bottom: "0px",
+                  width: "3px",
+                  backgroundColor: "#12715b",
+                  marginLeft: paddingLeft,
+                }}
               />
               {hasSubagents && (
                 <hr
-                  className="opacity-100 border-0 relative bg-[#12715b] h-0.75 right-0.5"
+                  className="opacity1 border-0 position-relative"
+                  style={{ backgroundColor: "#12715b", height: "3px", right: "2px" }}
                 />
               )}
               {hasSubagents &&
                 (expandedRows[row.id] ? (
-                  <IndeterminateCheckBoxIcon className="relative right-1.25" color="secondary" />
+                  <IndeterminateCheckBoxIcon className="position-relative" style={{ right: "5px" }} color="secondary" />
                 ) : (
-                  <CheckBoxOutlineBlankIcon className="relative right-1.25" color="primary" />
+                  <CheckBoxOutlineBlankIcon className="position-relative" style={{ right: "5px" }} color="primary" />
                 ))}
             </div>
           </TableCell>

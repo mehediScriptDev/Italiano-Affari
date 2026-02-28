@@ -17,7 +17,7 @@ interface TabPanelProps {
 
 function TabPanel({ children, value, index, ...other }: TabPanelProps) {
   return (
-    <div role="tabpanel" hidden={value !== index} id={`full-width-tabpanel-${index}`} aria-labelledby={`full-width-tab-${index}`} className="max-w-300" {...other}>
+    <div role="tabpanel" hidden={value !== index} id={`full-width-tabpanel-${index}`} aria-labelledby={`full-width-tab-${index}`} style={{ maxWidth: "1200px" }} {...other}>
       {value === index && <Box>{children}</Box>}
     </div>
   );

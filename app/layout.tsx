@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import "./globals.css";
 import Providers from "./providers";
 
@@ -44,7 +45,9 @@ export default function RootLayout({
             className="hidden invisible"
           />
         </noscript>
-        <Providers>{children}</Providers>
+        <AppRouterCacheProvider>
+          <Providers>{children}</Providers>
+        </AppRouterCacheProvider>
       </body>
     </html>
   );

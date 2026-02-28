@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
-  Box, Grid, Typography, TextField, Button, FormControlLabel,
+  Box, Typography, TextField, Button, FormControlLabel,
   Checkbox, CircularProgress, CardMedia, useTheme, useMediaQuery,
 } from "@mui/material";
 
@@ -37,13 +37,13 @@ export default function ResetPassword() {
 
   return (
     <Box sx={{ width: "100vw", height: "100vh", overflow: "hidden", bgcolor: "#f6f8fb", display: "flex" }}>
-      <Grid container sx={{ height: "100%", width: "100%" }}>
-        <Grid size={{ xs: 0, lg: 6 }} sx={{ position: "relative", display: { xs: "none", lg: "block" }, height: "100%" }}>
+      <Box sx={{ display: "flex", flexWrap: "wrap", height: "100%", width: "100%" }}>
+        <Box sx={{ flexBasis: { xs: "0%", lg: "50%" }, maxWidth: { xs: "0%", lg: "50%" }, display: { xs: "none", lg: "block" }, height: "100%" }}>
           <CardMedia component="img" sx={{ height: "100%", width: "100%", objectFit: "cover" }} image="/assets/images/common/login.webp" alt="Hero login image" />
-        </Grid>
-        <Grid size={{ xs: 12, lg: 6 }} sx={{ height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", position: "relative" }}>
-          <Box sx={{ position: "absolute", top: isMobile ? 40 : 60, textAlign: "center" }}>
-            <img width={isMobile ? "60%" : "50%"} src="/assets/images/logo_psicopatici.png" alt="Logo" />
+        </Box>
+        <Box sx={{ flexBasis: { xs: "100%", lg: "50%" }, maxWidth: { xs: "100%", lg: "50%" }, height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", position: "relative" }}>
+          <Box sx={{ position: "absolute", top: isMobile ? 40 : 60, left: "50%", transform: "translateX(-50%)", width: { xs: "60%", lg: "50%" }, textAlign: "center" }}>
+            <img style={{ width: "100%" }} src="/assets/images/logo_psicopatici.png" alt="Logo" />
           </Box>
           <Box component="form" onSubmit={handleSubmit} sx={{ width: "100%", maxWidth: 350, mx: "auto", display: "flex", flexDirection: "column", alignItems: "center", px: 3 }}>
             <Typography component="h1" variant="h4" sx={{ mb: 4, mt: 4, fontWeight: "bold" }}>Reset password</Typography>
@@ -62,8 +62,8 @@ export default function ResetPassword() {
               </Link>
             </Typography>
           </Box>
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
     </Box>
   );
 }
