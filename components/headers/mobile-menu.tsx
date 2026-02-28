@@ -48,16 +48,14 @@ export default function MobileMenu() {
       ref={containerRef}
       id="uc-menu-panel"
       data-uc-offcanvas="overlay: true;"
-      className="uc-offcanvas mobile-menu"
-      style={{ display: "block" }}
+      className="uc-offcanvas mobile-menu block"
       tabIndex={-1}
     >
       <div
         ref={elementRef}
-        className="uc-offcanvas-bar bg-white text-dark dark:bg-gray-900 dark:text-white uc-offcanvas-bar-animation uc-offcanvas-slide"
+        className="uc-offcanvas-bar bg-white text-dark dark:bg-gray-900 dark:text-white uc-offcanvas-bar-animation uc-offcanvas-slide max-w-219"
         role="dialog"
         aria-modal="true"
-        style={{ maxWidth: 876 }}
       >
         <header className="uc-offcanvas-header hstack justify-between items-center pb-2 bg-white dark:bg-gray-900">
           <div className="uc-logo">
@@ -78,7 +76,7 @@ export default function MobileMenu() {
             <input type="text" className="form-control form-control-sm fs-7 rounded-default" placeholder="Search.." />
             <span className="form-icon text-gray"><i className="unicon-search icon-1" /></span>
           </form>
-          <ul className="nav-y gap-narrow fw-medium fs-6 uc-nav" data-uc-nav="">
+          <ul className="nav-y gap-1 font-medium text-sm uc-nav" data-uc-nav="">
             {menuItems.map((item, index) => (
               <li key={index} className={`${item.subItems ? "uc-parent" : ""} ${activeParent1 === index ? "active" : ""}`}>
                 {item.href ? (

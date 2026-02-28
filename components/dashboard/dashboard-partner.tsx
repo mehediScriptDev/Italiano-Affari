@@ -105,9 +105,9 @@ export default function DashboardPartner() {
   };
 
   return (
-    <div className="d-flex justify-center px-2" style={{ backgroundColor: "#f6f8fb" }}>
-      <div style={{ maxWidth: "1200px" }} className="mt-5 w-100 d-flex flex-column justify-center paddingContainer p-0">
-        <div className="d-flex justify-between align-center mb-2"><h5 className="mb-0">Dashboard</h5></div>
+    <div className="flex justify-center px-2 bg-[#f6f8fb]">
+      <div className="mt-5 w-full max-w-[1200px] flex flex-col justify-center px-4 p-0">
+        <div className="flex justify-between items-center mb-2"><h5 className="mb-0">Dashboard</h5></div>
 
         <Grid container justifyContent="center" spacing={2}>
           <Grid size={{ xs: 12, lg: 4 }}>
@@ -130,9 +130,9 @@ export default function DashboardPartner() {
                   </DialogContent>
                 </Dialog>
               </div>
-              <div className="d-flex align-center">
+              <div className="flex items-center">
                 <Typography>Condividi il tuo codice QR</Typography>
-                <IconButton style={{ bottom: "4px" }} className="position-relative" onClick={handleOpenShare}>
+                <IconButton className="relative bottom-[4px]" onClick={handleOpenShare}>
                   <IosShareOutlined color="secondary" />
                 </IconButton>
               </div>
@@ -151,7 +151,7 @@ export default function DashboardPartner() {
         </Grid>
 
         <div className="mt-2">
-          <div className="d-flex justify-between align-center"><h5 className="mb-1">Ultimi Ordini</h5></div>
+          <div className="flex justify-between items-center"><h5 className="mb-1">Ultimi Ordini</h5></div>
         </div>
         <DataTable columns={columns} data={orders} showCheckbox />
       </div>

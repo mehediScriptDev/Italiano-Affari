@@ -30,10 +30,10 @@ export default function ContactManager() {
       label: "Azioni", field: "action",
       renderCell: (row: DynamicRow) => (
         <Box sx={{ display: "flex", gap: 1 }}>
-          <IconButton className="p-1" style={{ backgroundColor: "#f6f8fb" }} size="small" onClick={() => handleEdit(row)}>
+          <IconButton className="p-1 bg-[#f6f8fb]" size="small" onClick={() => handleEdit(row)}>
             <EditIcon color="secondary" />
           </IconButton>
-          <IconButton className="p-1" style={{ backgroundColor: "#f6f8fb" }} size="small" onClick={() => handleDelete(row.id as number)}>
+          <IconButton className="p-1 bg-[#f6f8fb]" size="small" onClick={() => handleDelete(row.id as number)}>
             <DeleteOutlineIcon color="error" />
           </IconButton>
         </Box>
@@ -119,9 +119,9 @@ export default function ContactManager() {
 
   return (
     <>
-      <Box className="d-flex justify-center px-2" sx={{ backgroundColor: "#f6f8fb" }}>
-        <Box sx={{ maxWidth: "1200px" }} className="mt-5 w-100 d-flex flex-column justify-center paddingContainer p-0">
-          <Box className="d-flex justify-between align-center mb-2">
+      <Box className="flex justify-center px-2" sx={{ backgroundColor: "#f6f8fb" }}>
+          <Box sx={{ maxWidth: "1200px" }} className="mt-5 w-full flex flex-col justify-center px-4 p-0">
+            <Box className="flex justify-between items-center mb-2">
             <h5 className="mb-0">Gestione Contatti</h5>
             <Box>
               <Button component="label" color="secondary" variant="outlined" startIcon={<CloudUploadIcon />} sx={{ mr: 1 }} disabled={loading}>
@@ -145,8 +145,8 @@ export default function ContactManager() {
               <Grid size={12}><TextField required fullWidth margin="dense" label="Email" name="email" type="email" value={formData.email} onChange={(e) => setFormData((p) => ({ ...p, email: e.target.value }))} /></Grid>
             </Grid>
           </DialogContent>
-          <DialogActions style={{ paddingBottom: "16px" }}>
-            <Button style={{ backgroundColor: "#f6f8fb" }} onClick={() => setOpenModal(false)} disabled={loading}>Annulla</Button>
+          <DialogActions className="pb-4">
+            <Button className="bg-[#f6f8fb]" onClick={() => setOpenModal(false)} disabled={loading}>Annulla</Button>
             <Button type="submit" color="secondary" variant="contained" disabled={loading}>
               {editingContact ? "Modifica" : "Aggiungi"}
               {loading && <CircularProgress size={24} sx={{ ml: 1 }} />}

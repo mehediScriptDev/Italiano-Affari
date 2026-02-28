@@ -1,16 +1,15 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useRef, useState } from "react";
 import {
-  Box, Button, Grid, LinearProgress, TextField, Typography,
-  CircularProgress, IconButton, useMediaQuery, useTheme,
-  Stack, TextareaAutosize, Checkbox,
+  Box, Button, TextField, Typography, CircularProgress,
+  IconButton, LinearProgress, Checkbox, Stack, TextareaAutosize,
+  useMediaQuery, useTheme,
 } from "@mui/material";
 import { ArrowBack, AddCircleOutline, DeleteOutline } from "@mui/icons-material";
-import ActivityDropdown from "@/components/user/activity-dropdown";
 import Link from "next/link";
-import "@/styles/signup.css";
 import { sendRegisterRequest, sendVerifyEmailRequest, sendVerifyOtpRequest } from "@/lib/api/auth";
+import ActivityDropdown from "./activity-dropdown";
 
 interface FormData {
   firstName: string;
@@ -43,7 +42,9 @@ export default function SignupComponent() {
     return () => clearInterval(timer);
   }, [countdown]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | { target: { name: string; value: unknown } }) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | { target: { name: string; value: unknown } }
+  ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     if (error) setError("");
   };
@@ -57,13 +58,14 @@ export default function SignupComponent() {
     switch (activeStep) {
       case 1:
         if (!formData.email.trim()) err = "L'email è obbligatoria";
-        else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)) err = "Inserisci un indirizzo email valido";
+        else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email))
+          err = "Inserisci un indirizzo email valido";
         break;
       case 3:
         if (!formData.firstName.trim()) err = "Il nome è obbligatorio";
-        else if (!/^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/.test(formData.firstName)) err = "Il nome deve contenere solo lettere";
+        else if (!/^[A-Za-z\s]+$/.test(formData.firstName)) err = "Il nome deve contenere solo lettere";
         else if (!formData.lastName.trim()) err = "Il cognome è obbligatorio";
-        else if (!/^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/.test(formData.lastName)) err = "Il cognome deve contenere solo lettere";
+        else if (!/^[A-Za-z\s]+$/.test(formData.lastName)) err = "Il cognome deve contenere solo lettere";
         else if (!formData.phone.trim()) err = "Il numero di telefono è obbligatorio";
         else if (!/^[0-9+\s()-]{8,15}$/.test(formData.phone)) err = "Inserisci un numero di telefono valido";
         break;
@@ -78,7 +80,6 @@ export default function SignupComponent() {
   const handleNextStep = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateCurrentStep()) return;
-
     if (activeStep === 1) {
       setVerifying(true);
       try {
@@ -110,8 +111,11 @@ export default function SignupComponent() {
       await sendVerifyEmailRequest(formData.email);
       setResendMessage("Nuovo codice inviato con successo!");
       setCountdown(30);
-    } catch { setError("Errore durante il rinvio del codice. Riprova più tardi."); }
-    finally { setLoading(false); }
+    } catch {
+      setError("Errore durante il rinvio del codice. Riprova più tardi.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const getCurrentStep = () => {
@@ -133,26 +137,56 @@ export default function SignupComponent() {
   return (
     <Box width="100%" height="100%">
       <LinearProgress sx={{ height: "10px" }} variant="determinate" value={Math.ceil((activeStep * 100) / 6)} />
-      <Grid sx={{ mt: 4 }} container justifyContent="center" alignItems="center">
-        <img width={isMobile ? "70%" : "50%"} src="/assets/images/logo_psicopatici.png" alt="Logo" />
-      </Grid>
-      <Box hidden={hiddenBackSteps.includes(activeStep)} sx={{ position: "absolute", top: "60px", left: "20px" }}>
-        <IconButton onClick={handlePreviousStep} className="customHover" size={isMobile ? "small" : "medium"} sx={{ color: "white", backgroundColor: "black" }}>
+
+      <Box sx={{ mt: 4, display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <img
+          width={isMobile ? "70%" : "50%"}
+          src="/assets/images/logo_psicopatici.png"
+          alt="Logo"
+        />
+      </Box>
+
+      <Box
+        hidden={hiddenBackSteps.includes(activeStep)}
+        sx={{ position: "absolute", top: "60px", left: "20px" }}
+      >
+        <IconButton
+          onClick={handlePreviousStep}
+          className="customHover"
+          size={isMobile ? "small" : "medium"}
+          sx={{ color: "white", backgroundColor: "black" }}
+        >
           <ArrowBack />
         </IconButton>
       </Box>
+
       <Box sx={{ mt: 5 }} display="flex" flexDirection="column" justifyContent="center" alignItems="center">
-        <Grid height="100%" container justifyContent="center" alignItems="center">
-          <Grid size={{ xs: 12, md: 8, lg: 6, xl: 4 }}>
+        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%", width: "100%", flexWrap: "wrap" }}>
+          <Box sx={{ width: { xs: "100%", md: "66.6667%", lg: "50%", xl: "33.3333%" } }}>
             <Box sx={{ mt: isMobile ? 13 : 2 }}>{getCurrentStep()}</Box>
-          </Grid>
-        </Grid>
+          </Box>
+        </Box>
       </Box>
-      <Box hidden={activeStep === 6} sx={{ mt: 2 }} display="flex" flexDirection="column" justifyContent="center" alignItems="center">
+
+      <Box
+        hidden={activeStep === 6}
+        sx={{ mt: 2 }}
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+      >
         <Typography variant="body2" sx={{ mt: 2 }}>
           Sei già registrato?
           <Link href="/sign-in" style={{ textDecoration: "none" }}>
-            <Typography sx={{ textDecoration: "underline", fontWeight: "bolder" }} component="span" variant="body2" color="primary">Accedi</Typography>
+            <Typography
+              sx={{ textDecoration: "underline", fontWeight: "bolder" }}
+              component="span"
+              variant="body2"
+              color="primary"
+            >
+              Accedi
+            </Typography>
           </Link>
         </Typography>
       </Box>
@@ -161,21 +195,37 @@ export default function SignupComponent() {
 }
 
 function EmailStep({ formData, handleChange, handleNextStep, error, verifying }: {
-  formData: FormData; handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleNextStep: (e: React.FormEvent) => void; error: string; verifying: boolean;
+  formData: FormData;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleNextStep: (e: React.FormEvent) => void;
+  error: string;
+  verifying: boolean;
 }) {
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   return (
     <Box component="form" onSubmit={handleNextStep} noValidate>
-      <Typography textAlign="center" component="h1" variant="h4" sx={{ mb: 4, mt: 4, fontWeight: "bold" }}>Inserisci la tua email</Typography>
-      <Typography align="center" variant="body1" sx={{ mb: 3 }}>Per iniziare la registrazione, inserisci il tuo indirizzo email</Typography>
-      <TextField fullWidth label="Email" name="email" value={formData.email} onChange={handleChange} error={!!error} helperText={error} variant="outlined" margin="normal" type="email" required />
+      <Typography textAlign="center" component="h1" variant="h4" sx={{ mb: 4, mt: 4, fontWeight: "bold" }}>
+        Inserisci la tua email
+      </Typography>
+      <Typography align="center" variant="body1" sx={{ mb: 3 }}>
+        Per iniziare la registrazione, inserisci il tuo indirizzo email
+      </Typography>
+
+      <TextField fullWidth label="Email" name="email" type="email" required variant="outlined" margin="normal"
+        value={formData.email} onChange={handleChange} error={!!error} helperText={error} />
+
       <div className="d-flex items-center">
         <Checkbox required name="terms" color="primary" checked={acceptedTerms} onChange={(e) => setAcceptedTerms(e.target.checked)} />
-        <span style={{ fontSize: "13px" }}>Accetto i&nbsp;<a href="https://legal.psicopatici.com/partner-terms" target="_blank" rel="noopener" style={{ fontWeight: "600" }}>Termini e le Condizioni in uso</a></span>
+        <span className="my-0" style={{ fontSize: "13px" }}>
+          Accetto i&nbsp;
+          <a href="https://legal.psicopatici.com/partner-terms" target="_blank" rel="noopener" style={{ fontWeight: 600 }}>
+            Termini e le Condizioni in uso
+          </a>
+        </span>
       </div>
+
       <Box sx={{ mt: 3, display: "flex", justifyContent: "center" }}>
-        <Button variant="contained" color="secondary" type="submit" disabled={verifying || !acceptedTerms} fullWidth sx={{ mt: 2, py: 1.5 }}>
+        <Button variant="contained" color="secondary" type="submit" fullWidth disabled={verifying || !acceptedTerms} sx={{ mt: 2, py: 1.5 }}>
           {verifying ? <CircularProgress size={24} /> : "Verifica Email"}
         </Button>
       </Box>
@@ -218,21 +268,29 @@ function VerifyEmailStep({ email, handleNextStep, handleResendCode, countdown, r
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const code = verificationCode.join("");
     try {
-      await sendVerifyOtpRequest(email, code);
+      await sendVerifyOtpRequest(email, verificationCode.join(""));
       handleNextStep();
     } catch { setError(true); }
   };
 
   return (
     <Box component="form" onSubmit={handleSubmit} noValidate>
-      <Typography textAlign="center" component="h1" variant="h4" sx={{ mb: 4, fontWeight: "bold" }}>Verifica la tua email</Typography>
-      <Typography align="center" variant="body1" sx={{ mb: 3 }}>Abbiamo inviato un codice di verifica a <strong>{email}</strong></Typography>
-      <Typography align="center" variant="body2" sx={{ mb: 2 }}>Inserisci il codice a 6 cifre</Typography>
+      <Typography textAlign="center" component="h1" variant="h4" sx={{ mb: 4, fontWeight: "bold" }}>
+        Verifica la tua email
+      </Typography>
+      <Typography align="center" variant="body1" sx={{ mb: 3 }}>
+        Abbiamo inviato un codice di verifica a <strong>{email}</strong>
+      </Typography>
+      <Typography align="center" variant="body2" sx={{ mb: 2 }}>
+        Inserisci il codice a 6 cifre
+      </Typography>
+
       <Box sx={{ display: "flex", justifyContent: "center", gap: 1, mb: 3 }}>
         {verificationCode.map((digit, index) => (
-          <TextField key={index} inputRef={(el: HTMLInputElement | null) => { inputRefs.current[index] = el; }} value={digit}
+          <TextField key={index}
+            inputRef={(el: HTMLInputElement | null) => { inputRefs.current[index] = el; }}
+            value={digit}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleCodeChange(e, index)}
             onKeyDown={(e: React.KeyboardEvent) => handleKeyDown(e, index)}
             onPaste={index === 0 ? handlePaste : undefined}
@@ -242,15 +300,24 @@ function VerifyEmailStep({ email, handleNextStep, handleResendCode, countdown, r
           />
         ))}
       </Box>
-      {error && <Typography color="red" variant="body1" align="center">Codice errato!</Typography>}
-      {resendMessage && <Typography color="green" variant="body2" align="center" sx={{ mb: 2 }}>{resendMessage}</Typography>}
+
+      {error && (
+        <Typography color="red" variant="body1" align="center">Codice errato!</Typography>
+      )}
+      {resendMessage && (
+        <Typography color="green" variant="body2" align="center" sx={{ mb: 2 }}>{resendMessage}</Typography>
+      )}
+
       <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
         <Button variant="text" size="small" onClick={handleResendCode} disabled={loading || countdown > 0} sx={{ textTransform: "none", fontWeight: "bold" }}>
           {countdown > 0 ? `Rinvia codice in ${countdown}s` : "Non hai ricevuto il codice? Rinvialo"}
         </Button>
       </Box>
+
       <Box sx={{ mt: 3, display: "flex", justifyContent: "center" }}>
-        <Button variant="contained" color="secondary" type="submit" fullWidth sx={{ py: 1.5 }} disabled={!verificationCode.every((d) => d !== "")}>Verifica</Button>
+        <Button variant="contained" color="secondary" type="submit" fullWidth disabled={!verificationCode.every((d) => d !== "")} sx={{ py: 1.5 }}>
+          Verifica
+        </Button>
       </Box>
     </Box>
   );
@@ -262,10 +329,18 @@ function PersonalInfoStep({ formData, handleChange, handleNextStep, error }: {
 }) {
   return (
     <Box component="form" onSubmit={handleNextStep} noValidate>
-      <Typography textAlign="center" component="h1" variant="h4" sx={{ mb: 4, mt: 4, fontWeight: "bold" }}>Dati personali</Typography>
-      <TextField fullWidth label="Nome" name="firstName" value={formData.firstName} onChange={handleChange} error={!!(error && error.includes("nome"))} helperText={error && error.includes("nome") ? error : ""} variant="outlined" margin="normal" required />
-      <TextField fullWidth label="Cognome" name="lastName" value={formData.lastName} onChange={handleChange} error={!!(error && error.includes("cognome"))} helperText={error && error.includes("cognome") ? error : ""} variant="outlined" margin="normal" required />
-      <TextField fullWidth label="Telefono" name="phone" value={formData.phone} onChange={handleChange} error={!!(error && error.includes("telefono"))} helperText={error && error.includes("telefono") ? error : ""} variant="outlined" margin="normal" required />
+      <Typography textAlign="center" component="h1" variant="h4" sx={{ mb: 4, mt: 4, fontWeight: "bold" }}>
+        Dati personali
+      </Typography>
+      <TextField fullWidth label="Nome" name="firstName" required variant="outlined" margin="normal"
+        value={formData.firstName} onChange={handleChange}
+        error={!!(error && error.includes("nome"))} helperText={error && error.includes("nome") ? error : ""} />
+      <TextField fullWidth label="Cognome" name="lastName" required variant="outlined" margin="normal"
+        value={formData.lastName} onChange={handleChange}
+        error={!!(error && error.includes("cognome"))} helperText={error && error.includes("cognome") ? error : ""} />
+      <TextField fullWidth label="Telefono" name="phone" required variant="outlined" margin="normal"
+        value={formData.phone} onChange={handleChange}
+        error={!!(error && error.includes("telefono"))} helperText={error && error.includes("telefono") ? error : ""} />
       <Box sx={{ mt: 3, display: "flex", justifyContent: "center" }}>
         <Button variant="contained" color="secondary" type="submit" fullWidth sx={{ mt: 2, py: 1.5 }}>Continua</Button>
       </Box>
@@ -278,8 +353,12 @@ function ActivitySelectionStep({ handleChange, handleNextStep, error }: {
 }) {
   return (
     <Box component="form" onSubmit={handleNextStep} noValidate>
-      <Typography textAlign="center" component="h1" variant="h4" sx={{ mb: 4, mt: 4, fontWeight: "bold" }}>Seleziona la tua attività</Typography>
-      <Typography align="center" variant="body1" sx={{ mb: 3 }}>Scegli l&apos;attività che meglio descrive quello che fai</Typography>
+      <Typography textAlign="center" component="h1" variant="h4" sx={{ mb: 4, mt: 4, fontWeight: "bold" }}>
+        Seleziona la tua attività
+      </Typography>
+      <Typography align="center" variant="body1" sx={{ mb: 3 }}>
+        Scegli l&apos;attività che meglio descrive quello che fai
+      </Typography>
       <ActivityDropdown onActivityChange={handleChange} helperText={error} error={error} />
       <Box sx={{ mt: 3, display: "flex", justifyContent: "center" }}>
         <Button variant="contained" color="secondary" type="submit" fullWidth sx={{ mt: 2, py: 1.5 }}>Prosegui</Button>
@@ -289,7 +368,8 @@ function ActivitySelectionStep({ handleChange, handleNextStep, error }: {
 }
 
 function SocialStep({ formData, handleChange, handleNextStep }: {
-  formData: FormData; handleChange: (e: React.ChangeEvent<HTMLInputElement> | { target: { name: string; value: unknown } }) => void;
+  formData: FormData;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement> | { target: { name: string; value: unknown } }) => void;
   handleNextStep: (e: React.FormEvent) => void;
 }) {
   const [socialLinks, setSocialLinks] = useState<string[]>(formData.socialLinks ?? [""]);
@@ -316,19 +396,34 @@ function SocialStep({ formData, handleChange, handleNextStep }: {
 
   return (
     <Box component="form" onSubmit={validateAndSubmit} noValidate>
-      <Typography align="center" variant="h4" sx={{ mb: 3 }}>Profili Social</Typography>
-      <Typography align="center" variant="body1" sx={{ mb: 4 }}>Aggiungi i link ai tuoi profili social</Typography>
+      <Typography align="center" variant="h4" sx={{ mb: 3 }}>
+        Profili Social
+      </Typography>
+      <Typography align="center" variant="body1" sx={{ mb: 4 }}>
+        Aggiungi i link ai tuoi profili social
+      </Typography>
+
       <Stack spacing={2}>
         {socialLinks.map((link, index) => (
           <Box key={index} sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-            <TextField fullWidth label={`Profilo social ${index + 1}`} placeholder="https://www.example.com/profile" value={link} onChange={(e) => updateSocialLink(index, e.target.value)} error={!!errors[index]} helperText={errors[index]} variant="outlined" margin="none" />
-            {socialLinks.length > 1 && <IconButton onClick={() => { setSocialLinks(socialLinks.filter((_, i) => i !== index)); setErrors(errors.filter((_, i) => i !== index)); }} color="error" size="large"><DeleteOutline /></IconButton>}
+            <TextField fullWidth label={`Profilo social ${index + 1}`} placeholder="https://www.example.com/profile"
+              value={link} onChange={(e) => updateSocialLink(index, e.target.value)}
+              error={!!errors[index]} helperText={errors[index]} variant="outlined" margin="none" />
+            {socialLinks.length > 1 && (
+              <IconButton onClick={() => { setSocialLinks(socialLinks.filter((_, i) => i !== index)); setErrors(errors.filter((_, i) => i !== index)); }} color="error" size="large">
+                <DeleteOutline />
+              </IconButton>
+            )}
           </Box>
         ))}
       </Stack>
+
       <Box sx={{ mt: 2, display: "flex", justifyContent: "center" }}>
-        <Button startIcon={<AddCircleOutline />} onClick={() => { setSocialLinks([...socialLinks, ""]); setErrors([...errors, ""]); }} variant="outlined" color="secondary" sx={{ my: 2 }}>Aggiungi un altro profilo</Button>
+        <Button startIcon={<AddCircleOutline />} onClick={() => { setSocialLinks([...socialLinks, ""]); setErrors([...errors, ""]); }} variant="outlined" color="secondary" sx={{ my: 2 }}>
+          Aggiungi un altro profilo
+        </Button>
       </Box>
+
       <Box sx={{ mt: 3, display: "flex", justifyContent: "center" }}>
         <Button variant="contained" color="secondary" type="submit" fullWidth sx={{ py: 1.5 }}>Continua</Button>
       </Box>
@@ -344,14 +439,11 @@ function AdditionalInfo({ formData, handleChange, handleNextStep, fields, hasPar
 
   const validateAndSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    let newErrors: Record<string, string> = {};
+    const newErrors: Record<string, string> = {};
     let hasNew = false;
     fields.forEach((field) => {
       if (field === "paragraph") return;
-      if (!formData[field] || !(formData[field] as string).trim()) {
-        newErrors[field] = "Devi compilare prima questo campo!";
-        hasNew = true;
-      }
+      if (!formData[field] || !(formData[field] as string).trim()) { newErrors[field] = "Devi compilare prima questo campo!"; hasNew = true; }
     });
     if (hasNew) setErrors(newErrors);
     else handleNextStep(e);
@@ -359,11 +451,17 @@ function AdditionalInfo({ formData, handleChange, handleNextStep, fields, hasPar
 
   return (
     <Box component="form" onSubmit={validateAndSubmit} noValidate>
-      <Typography textAlign="center" component="h1" variant="h4" sx={{ mb: 4, mt: 4, fontWeight: "bold" }}>Informazioni aggiuntive</Typography>
+      <Typography textAlign="center" component="h1" variant="h4" sx={{ mb: 4, mt: 4, fontWeight: "bold" }}>
+        Informazioni aggiuntive
+      </Typography>
       {fields.filter((i) => i !== "paragraph").map((field) => (
-        <TextField key={field} fullWidth label={field} name={field} value={(formData[field] as string) ?? ""} error={!!errors[field]} helperText={errors[field]} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { if (errors[field]) setErrors({}); handleChange(e); }} variant="outlined" margin="normal" required />
+        <TextField key={field} fullWidth label={field} name={field} required variant="outlined" margin="normal"
+          value={(formData[field] as string) ?? ""} error={!!errors[field]} helperText={errors[field]}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => { if (errors[field]) setErrors({}); handleChange(e); }} />
       ))}
-      {hasParagraph && <TextareaAutosize className="signup-textarea" name="proposta" value={(formData.proposta as string) ?? ""} onChange={handleChange} minRows={3} placeholder="Raccontaci la tua idea" />}
+      {hasParagraph && (
+        <TextareaAutosize className="signup-textarea" name="proposta" value={(formData.proposta as string) ?? ""} onChange={handleChange} minRows={3} placeholder="Raccontaci la tua idea" />
+      )}
       <Box sx={{ mt: 3, display: "flex", justifyContent: "center" }}>
         <Button variant="contained" color="secondary" type="submit" fullWidth sx={{ mt: 2, py: 1.5 }}>Continua</Button>
       </Box>
@@ -395,9 +493,16 @@ function RegistrationComplete({ formData }: { formData: FormData }) {
 
   return (
     <Box textAlign="center">
-      <Typography textAlign="center" component="h1" variant="h4" sx={{ mb: 4, mt: 4, fontWeight: "bold" }}>Registrazione Completata</Typography>
-      <Typography variant="body1" sx={{ mb: 2 }}>Grazie <b>{formData.firstName}</b> per esserti registrato.<br />Attualmente stiamo verificando le informazioni del tuo account, riceverai una risposta entro 24h via e-mail.</Typography>
-      <Typography variant="body1">Attività selezionata: <strong>{formData.activity}</strong></Typography>
+      <Typography textAlign="center" component="h1" variant="h4" sx={{ mb: 4, mt: 4, fontWeight: "bold" }}>
+        Registrazione Completata
+      </Typography>
+      <Typography variant="body1" sx={{ mb: 2 }}>
+        Grazie <b>{formData.firstName}</b> per esserti registrato.<br />
+        Attualmente stiamo verificando le informazioni del tuo account, riceverai una risposta entro 24h via e-mail.
+      </Typography>
+      <Typography variant="body1">
+        Attività selezionata: <strong>{formData.activity}</strong>
+      </Typography>
     </Box>
   );
 }

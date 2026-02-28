@@ -130,11 +130,11 @@ export default function Wallet() {
   return (
     <>
       <Box sx={{ backgroundColor: "transparent", p: 2 }}>
-        <div className="d-flex justify-between align-center" style={{ paddingRight: "6px" }}>
+        <div className="flex justify-between items-center pr-[6px]">
           <h5 className="mb-0">Portafoglio</h5>
           <Button variant="contained" color="secondary" onClick={() => { setGenValue(0); setOpenGen(true); }}>Genera Coupon</Button>
         </div>
-        <div className="row d-flex justify-center">
+        <div className="flex flex-wrap justify-center">
           <Grid className={isMobile ? "px-0" : "px-1"} container spacing={isMobile ? 2 : 1} sx={{ mt: 2, p: 0 }}>
             <Grid size={{ xs: 12, md: 4 }}><ChartPreview label="Saldo attuale disponibile" icon={<Savings style={{ color: "black", fontSize: "24px" }} />} obj={chartsPreview.sales} /></Grid>
             <Grid size={{ xs: 12, md: 4 }}><ChartPreview label="Saldo utilizzato" icon={<MoneyOff style={{ color: "black", fontSize: "24px" }} />} obj={chartsPreview.earnings} /></Grid>
@@ -142,7 +142,7 @@ export default function Wallet() {
           </Grid>
         </div>
         <Box mt={4}>
-          <div className="mt-2"><div className="d-flex justify-between align-center"><h5 className="mb-1">Tabella coupon</h5></div></div>
+          <div className="mt-2"><div className="flex justify-between items-center"><h5 className="mb-1">Tabella coupon</h5></div></div>
           <DataTable columns={columns} data={tableData} showCheckbox />
         </Box>
       </Box>

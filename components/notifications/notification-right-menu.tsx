@@ -68,12 +68,12 @@ export default function NotificationRightMenu({ onClose, notifications, setNotif
     <>
       {isOpen && <div className={`overlay ${isOpen ? "open" : ""}`} onClick={handleClose} />}
       <div className={`notification-menu ${isOpen ? "open" : ""} ${isClosing ? "closing" : ""}`}>
-        <div className="notification-header d-flex justify-between">
+          <div className="notification-header flex justify-between">
           <div>
             <h4 className="mb-1">Notifiche</h4>
-            <div className="d-flex gap-2">
-              <p style={{ fontSize: "14px", color: "#377aca", cursor: "pointer" }} className="mb-0 fw-medium" onClick={handleAllNotificationsRead}>Segna tutto come letto</p>
-              <p style={{ color: "red", fontSize: "14px", cursor: "pointer" }} className="mt-0 fw-medium" onClick={handleDeleteAllNotifications}>Clear</p>
+              <div className="flex gap-2">
+              <p className="mb-0 font-medium text-sm text-[#377aca] cursor-pointer" onClick={handleAllNotificationsRead}>Segna tutto come letto</p>
+              <p className="mt-0 font-medium text-sm text-red-500 cursor-pointer" onClick={handleDeleteAllNotifications}>Clear</p>
             </div>
           </div>
           <IconButton className="p-0" onClick={handleClose}><CloseIcon style={{ color: "black" }} /></IconButton>
@@ -83,16 +83,16 @@ export default function NotificationRightMenu({ onClose, notifications, setNotif
           {notifications.length > 0 ? (
             notifications.map((notification) => (
               <div key={notification.id} className={`notification-item ${notification.is_read ? "read" : "unread"}`}>
-                <div className="d-flex"><NotificationsNoneIcon style={{ fontSize: "30px" }} /></div>
-                <div className="d-flex flex-column flex-1">
+                  <div className="flex"><NotificationsNoneIcon style={{ fontSize: "30px" }} /></div>
+                  <div className="flex flex-col flex-1">
                   <h5 className="mb-0">{notification.title}</h5>
-                  <p style={{ color: "#7d899e" }} className="mb-0">{formatTimeElapsed(notification.created_at)}</p>
+                  <p className="mb-0 text-[#7d899e]">{formatTimeElapsed(notification.created_at)}</p>
                   <p className="mt-0">{notification.message}</p>
                   {!notification.is_read && (
-                    <p style={{ textDecoration: "underline", cursor: "pointer" }} className="fw-medium mt-2" onClick={() => handleNotificationRead(notification.id)}>Visualizza</p>
+                    <p className="font-medium mt-2 underline cursor-pointer" onClick={() => handleNotificationRead(notification.id)}>Visualizza</p>
                   )}
                 </div>
-                <div className="d-flex flex-column">
+                <div className="flex flex-col">
                   <IconButton className="p-0" onClick={() => handleDeleteNotification(notification.id)}>
                     <ClearIcon style={{ color: "black" }} />
                   </IconButton>

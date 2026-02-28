@@ -12,7 +12,7 @@ export default function Home() {
     <>
       <AuthRedirect />
       <div className="page-wrapper uni-body panel bg-secondary dark:bg-gray-900 text-gray-900 dark:text-gray-200 overflow-x-hidden bp-xs bp-sm bp-md bp-lg bp-xl bp-xxl dom-ready">
-        <div style={{ height: "100vh" }}>
+        <div className="h-screen">
           <SignupPage />
         </div>
       </div>

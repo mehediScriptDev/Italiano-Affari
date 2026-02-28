@@ -10,15 +10,16 @@ import { ListItemIcon, useMediaQuery, useTheme } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { Handyman } from "@mui/icons-material";
-import NotificationMenu from "@/components/headers/notification-menu";
 import NotificationRightMenu from "@/components/notifications/notification-right-menu";
-import NavPartner from "@/components/headers/nav-partner";
+
 import { openMobileMenu } from "@/lib/utils/toggle-mobile-menu";
 import { useAppContext } from "@/lib/context/app-context";
 import { useAuth } from "@/lib/context/auth-context";
 import { fetchNotifications } from "@/lib/api/notifications";
 import { downloadAssetFile } from "@/lib/api/partners";
 import type { Notification } from "@/lib/types";
+import NotificationMenu from "./notification-menu";
+import NavPartner from "./nav-partner";
 
 export default function HeaderPartner() {
   const theme = useTheme();
@@ -76,19 +77,14 @@ export default function HeaderPartner() {
     <>
       <div className="mb-4">
         <header
-          style={{ height: "60px", backgroundColor: "black", display: "flex", justifyContent: "center" }}
-          className="uc-header uc-navbar-sticky-wrap z-999 uc-dark uc-sticky"
+          className="uc-header uc-navbar-sticky-wrap z-999 uc-dark uc-sticky h-15 bg-black flex justify-center"
         >
-          <div className="d-flex justify-center w-100">
+            <div className="flex justify-center w-full">
             <nav
-              className="uc-navbar-container uc-navbar-float ft-tertiary z-1 uc-navbar-transparent"
-              style={{
-                height: "60px", display: "flex", alignItems: "center", justifyContent: "space-between",
-                backgroundColor: "black", padding: isSm ? "0px 20px" : "0px",
-                maxWidth: "1200px", width: "100%", margin: "0 auto",
-              }}
+              className="uc-navbar-container uc-navbar-float ft-tertiary z-1 uc-navbar-transparent h-15 flex items-center justify-between bg-black max-w-300 w-full mx-auto"
+              style={{ padding: isSm ? "0px 20px" : "0px" }}
             >
-              <div className="uc-navbar-left" style={{ display: "flex", alignItems: "center" }}>
+              <div className="uc-navbar-left flex items-center">
                 <Link href="/" style={{ width: isSm ? 150 : 220 }}>
                   <img
                     src="https://cdn.psicopaticiservice.com/logo/materialeweb/psi-v3-white.png"
@@ -97,7 +93,7 @@ export default function HeaderPartner() {
                 </Link>
               </div>
 
-              <div className="uc-navbar-right" style={{ display: "flex", alignItems: "center", gap: isSm ? "18px" : "23px" }}>
+              <div className="uc-navbar-right flex items-center" style={{ gap: isSm ? "18px" : "23px" }}>
                 <Avatar
                   onClick={handleProfileClick}
                   src={profile?.avatar}
@@ -131,13 +127,13 @@ export default function HeaderPartner() {
                   anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
                   transformOrigin={{ vertical: "top", horizontal: "right" }}
                 >
-                  <div onClick={handleProfileClose} style={{ padding: "6px 16px", gap: "3px" }} className="mb-1 d-flex align-center">
+                  <div onClick={handleProfileClose} className="mb-1 flex items-center px-4 py-1.5 gap-0.75">
                     <Avatar src={profile?.avatar} sx={{ width: "32px", height: "32px" }}>
                       {profile?.name?.charAt(0)}
                     </Avatar>
                     <div>
-                      <p className="fw-bold">{profile?.name}</p>
-                      <p style={{ fontSize: "12px" }} className="mt-0">{profile?.email}</p>
+                      <p className="font-bold">{profile?.name}</p>
+                      <p className="mt-0 text-xs">{profile?.email}</p>
                     </div>
                   </div>
                   <MenuItem onClick={() => router.push("/profile")}>
@@ -148,13 +144,13 @@ export default function HeaderPartner() {
                     <ListItemIcon><Handyman style={{ fontSize: "19px" }} /></ListItemIcon>
                     Strumenti Partner
                   </MenuItem>
-                  <MenuItem onClick={() => setToken()} style={{ borderTop: "1px solid #e2e8f0", paddingTop: "10px" }}>
+                  <MenuItem onClick={() => setToken()} className="border-t border-[#e2e8f0] pt-2.5">
                     <ListItemIcon><LogoutIcon style={{ fontSize: "19px" }} /></ListItemIcon>
                     Esci
                   </MenuItem>
                 </Menu>
 
-                <a className="d-block lg:d-none uc-icon uc-navbar-toggle-icon text-white" onClick={openMobileMenu}>
+                <a className="block lg:hidden uc-icon uc-navbar-toggle-icon text-white" onClick={openMobileMenu}>
                   <svg width={20} height={20} viewBox="0 0 20 20">
                     <rect className="line-1" y={3} width={20} height={2} />
                     <rect className="line-2" y={9} width={20} height={2} />

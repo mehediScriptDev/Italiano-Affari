@@ -80,9 +80,9 @@ export default function AgentManagement() {
 
   return (
     <>
-      <Box className="d-flex justify-center px-2" sx={{ backgroundColor: "#f6f8fb" }}>
-        <Box sx={{ maxWidth: "1200px" }} className="mt-5 w-100 d-flex flex-column justify-center paddingContainer p-0">
-          <Box className="d-flex justify-between align-center mb-2">
+      <Box className="flex justify-center px-2" sx={{ backgroundColor: "#f6f8fb" }}>
+          <Box sx={{ maxWidth: "1200px" }} className="mt-5 w-full flex flex-col justify-center px-4 p-0">
+            <Box className="flex justify-between items-center mb-2">
             <h5 className="mb-0">Gestione Agenti</h5>
             <Button color="secondary" variant="contained" onClick={() => !loading && setOpenModal(true)}>Invita Partner</Button>
           </Box>
@@ -110,8 +110,8 @@ export default function AgentManagement() {
               </Grid>
             </Grid>
           </DialogContent>
-          <DialogActions style={{ paddingBottom: "16px" }}>
-            <Button style={{ backgroundColor: "#f6f8fb" }} onClick={() => setOpenModal(false)}>Annulla</Button>
+          <DialogActions className="pb-4">
+            <Button className="bg-[#f6f8fb]" onClick={() => setOpenModal(false)}>Annulla</Button>
             <Button type="submit" color="secondary" variant="contained">Invita</Button>
           </DialogActions>
         </form>

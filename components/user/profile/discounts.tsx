@@ -59,14 +59,14 @@ export default function Discounts() {
 
   const renderDiscount = (discount: Discount, index: number) => (
     <div className="mt-1" key={`card-${index}`}>
-      <Card style={{ background: "linear-gradient(to right, #2e2e2e 30%, #040404)", minWidth: "320px" }} className="text-white" elevation={10} sx={{ borderRadius: 2 }}>
-        <CardContent style={{ padding: "10px 15px" }} className="position-relative">
-          <p style={{ fontSize: "12px" }} className="mb-0">Codice</p>
-          <p style={{ fontSize: "17px" }} className="mt-0">{discount.code}</p>
-          <p style={{ fontSize: "12px" }} className="mb-0 mt-1">Percentuale</p>
+      <Card className="text-white bg-[linear-gradient(to_right,#2e2e2e_30%,#040404)] min-w-[320px]" elevation={10} sx={{ borderRadius: 2 }}>
+        <CardContent className="relative px-[15px] py-2.5">
+          <p className="mb-0 text-xs">Codice</p>
+          <p className="mt-0 text-[17px]">{discount.code}</p>
+          <p className="mb-0 mt-1 text-xs">Percentuale</p>
           <p className="mt-0">{discount.value}%</p>
-          <div className="d-flex justify-end position-absolute top-0 inset-e-0">
-            <IconButton style={{ padding: "5px" }} color="error" onClick={() => handleDeleteDiscount(index)}><Delete /></IconButton>
+          <div className="flex justify-end absolute top-0 right-0">
+            <IconButton className="p-[5px]" color="error" onClick={() => handleDeleteDiscount(index)}><Delete /></IconButton>
           </div>
         </CardContent>
       </Card>
@@ -74,13 +74,13 @@ export default function Discounts() {
   );
 
   return (
-    <Card className="card-shadow" sx={{ borderRadius: 2, minHeight: "650px", position: "relative" }}>
+    <Card className="shadow" sx={{ borderRadius: 2, minHeight: "650px", position: "relative" }}>
       <CardContent>
         <h3 className="text-center">Promozioni</h3>
         <Typography align="center" variant="body1">In questa sezione puoi visualizzare o creare le promozioni per i tuoi clienti</Typography>
-        <hr style={{ width: "100%" }} />
+        <hr className="w-full" />
         <Box sx={{ mt: 2 }}>
-          <div className="d-flex justify-end me-3">
+          <div className="flex justify-end mr-4">
             <Button variant="contained" color="secondary" onClick={handleOpenDialog}>Aggiungi</Button>
             <DiscountDialog open={openDialog} onAdd={handleSubmit} onClose={() => setOpenDialog(false)} freePercentage={freePercentage} />
           </div>
@@ -89,7 +89,7 @@ export default function Discounts() {
               <Typography variant="body1">Non hai registrato ancora nessuna promozione</Typography>
             </Box>
           )}
-          <div className="d-flex gap-2">{discounts.map(renderDiscount)}</div>
+          <div className="flex gap-2">{discounts.map(renderDiscount)}</div>
         </Box>
       </CardContent>
     </Card>

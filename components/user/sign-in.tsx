@@ -176,7 +176,7 @@ export default function SignIn() {
 
           <Typography variant="body2" sx={{ mt: 2 }}>
             Non hai un account?{" "}
-            <Link href="/" style={{ textDecoration: "none" }}>
+            <Link href="/" className="no-underline">
               <Typography sx={{ textDecoration: "underline", fontWeight: "bolder" }} component="span" variant="body2" color="primary">Registrati</Typography>
             </Link>
           </Typography>

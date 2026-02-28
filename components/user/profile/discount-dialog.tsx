@@ -36,7 +36,7 @@ export default function DiscountDialog({ open, onClose, onAdd, freePercentage }:
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="sm"
       slotProps={{ paper: { component: "form" as const, onSubmit: handleSubmit } as Record<string, unknown> }}>
-      <DialogTitle align="center" className="fw-bold">Crea Codice Promozionale</DialogTitle>
+      <DialogTitle align="center" className="font-bold">Crea Codice Promozionale</DialogTitle>
       <DialogContent>
         <Box sx={{ mt: 2 }}>
           <TextField required fullWidth name="code" label="Codice Promozione" variant="outlined" slotProps={{ htmlInput: { maxLength: 15 } }} />

@@ -42,7 +42,7 @@ export default function AssetDialog({ open, onClose, onAdd, freePercentage, enti
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="sm"
       slotProps={{ transition: { onExited: handleReset }, paper: { component: "form" as const, onSubmit: handleSubmit } as Record<string, unknown> }}>
-      <DialogTitle className="fw-bold" align="center">
+      <DialogTitle className="font-bold" align="center">
         {step === 1 ? "Seleziona Tipologia" : entityType === "company" ? "Dati Aziendali" : "Dati Personali"}
       </DialogTitle>
       <DialogContent>
@@ -58,7 +58,7 @@ export default function AssetDialog({ open, onClose, onAdd, freePercentage, enti
             </Box>
           </Box>
         ) : (
-          <Grid container spacing={2} sx={{ mt: 1 }} className="d-flex justify-center">
+          <Grid container spacing={2} sx={{ mt: 1 }} className="flex justify-center">
             {entityType === "company" ? (
               <>
                 <Grid size={12}><TextField required fullWidth name="companyName" label="Nome" variant="outlined" /></Grid>
@@ -72,7 +72,7 @@ export default function AssetDialog({ open, onClose, onAdd, freePercentage, enti
             ) : (
               <>
                 <Grid size={12}><TextField required fullWidth name="email" label="Email" variant="outlined" /></Grid>
-                <div className="d-flex justify-center w-100">
+                  <div className="flex justify-center w-full">
                   <Slider color="secondary" sx={{ width: "85%", mt: 3 }} defaultValue={sliderValue} onChange={(_, v) => setSliderValue(v as number)} valueLabelFormat={formatValue} step={100 / freePercentage} valueLabelDisplay="auto" marks={[{ value: 0, label: "0%" }, { value: 100, label: `${freePercentage}%` }]} />
                 </div>
               </>

@@ -57,7 +57,7 @@ export default function ResetPassword() {
             </Button>
             <Typography variant="body2" sx={{ mt: 2 }}>
               Vuoi accedere?
-              <Link href="/sign-in" style={{ textDecoration: "none" }}>
+              <Link href="/sign-in" className="no-underline">
                 <Typography sx={{ textDecoration: "underline", fontWeight: "bolder" }} component="span" variant="body2" color="primary">Accedi</Typography>
               </Link>
             </Typography>

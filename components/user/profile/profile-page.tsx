@@ -2,12 +2,12 @@
 
 import { Box, Tab, Tabs } from "@mui/material";
 import { useState } from "react";
-import ProfileSettings from "@/components/user/profile/profile-settings";
-import PaymentAssets from "@/components/user/profile/payment-assets";
-import SecurityComponent from "@/components/user/profile/security";
-import TransactionHistory from "@/components/user/profile/transaction-history";
-import Discounts from "@/components/user/profile/discounts";
 import { useAppContext } from "@/lib/context/app-context";
+import ProfileSettings from "./profile-settings";
+import PaymentAssets from "./payment-assets";
+import SecurityComponent from "./security";
+import TransactionHistory from "./transaction-history";
+import Discounts from "./discounts";
 
 interface TabPanelProps {
   children: React.ReactNode;
@@ -17,7 +17,7 @@ interface TabPanelProps {
 
 function TabPanel({ children, value, index, ...other }: TabPanelProps) {
   return (
-    <div role="tabpanel" hidden={value !== index} id={`full-width-tabpanel-${index}`} aria-labelledby={`full-width-tab-${index}`} style={{ maxWidth: "1200px" }} {...other}>
+    <div role="tabpanel" hidden={value !== index} id={`full-width-tabpanel-${index}`} aria-labelledby={`full-width-tab-${index}`} className="max-w-300" {...other}>
       {value === index && <Box>{children}</Box>}
     </div>
   );

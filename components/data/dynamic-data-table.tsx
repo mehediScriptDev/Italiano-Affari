@@ -58,27 +58,24 @@ export default function DynamicDataTable({ columns, data }: DynamicDataTableProp
         <TableRow>
           <TableCell className="p-0" sx={{ width: toggleColWidth, position: "relative", marginLeft: 10 }}>
             <div
-              className="d-flex justify-start align-center ms-1"
+              className="flex justify-start items-center ml-1 cursor-pointer"
               onClick={() => toggleExpand(row.id)}
-              style={{ paddingLeft, cursor: "pointer" }}
+              style={{ paddingLeft }}
             >
               <div
-                style={{
-                  position: "absolute", left: "4px", height: "54px", top: "-1px",
-                  bottom: "0px", width: "3px", backgroundColor: "#12715b", marginLeft: paddingLeft,
-                }}
+                className="absolute left-1 h-13.5 -top-px bottom-0 w-0.75 bg-[#12715b]"
+                style={{ marginLeft: paddingLeft }}
               />
               {hasSubagents && (
                 <hr
-                  className="opacity1 border-0 position-relative"
-                  style={{ backgroundColor: "#12715b", height: "3px", right: "2px" }}
+                  className="opacity-100 border-0 relative bg-[#12715b] h-0.75 right-0.5"
                 />
               )}
               {hasSubagents &&
                 (expandedRows[row.id] ? (
-                  <IndeterminateCheckBoxIcon className="position-relative" style={{ right: "5px" }} color="secondary" />
+                  <IndeterminateCheckBoxIcon className="relative right-1.25" color="secondary" />
                 ) : (
-                  <CheckBoxOutlineBlankIcon className="position-relative" style={{ right: "5px" }} color="primary" />
+                  <CheckBoxOutlineBlankIcon className="relative right-1.25" color="primary" />
                 ))}
             </div>
           </TableCell>
@@ -100,7 +97,7 @@ export default function DynamicDataTable({ columns, data }: DynamicDataTableProp
 
         {hasSubagents && (
           <TableRow>
-            <TableCell style={{ padding: 0 }} colSpan={columns.length + 1}>
+            <TableCell className="p-0" colSpan={columns.length + 1}>
               <Collapse in={expandedRows[row.id]} timeout="auto" unmountOnExit>
                 <Box>
                   <Table size="small" sx={{ width: "100%", tableLayout: "auto" }}>

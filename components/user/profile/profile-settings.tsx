@@ -35,9 +35,9 @@ export default function ProfileSettings() {
   };
 
   return (
-    <Card className="card-shadow" sx={{ borderRadius: 2 }}>
+    <Card className="shadow" sx={{ borderRadius: 2 }}>
       <CardContent>
-        <div className="d-flex justify-between align-center">
+          <div className="flex justify-between items-center">
           <Box sx={{ display: "flex", gap: "10px" }}>
             <Avatar src={profile?.avatar} sx={{ width: "80px", height: "80px" }}>{profile?.name?.charAt(0)}</Avatar>
             <div>
@@ -49,7 +49,7 @@ export default function ProfileSettings() {
           <Button hidden={isMobile} onClick={handleSubmit} variant="contained" startIcon={<Save />} color="secondary">Salva</Button>
         </div>
 
-        <hr style={{ width: "100%" }} />
+        <hr className="w-full" />
         <Typography variant="h5" align="center" sx={{ mb: 2 }} fontWeight={700}>Informazioni Personali</Typography>
 
         <Grid container spacing={2} mb={3}>
@@ -98,7 +98,7 @@ export default function ProfileSettings() {
           </Grid>
         </Grid>
 
-        <hr style={{ width: "100%" }} />
+        <hr className="w-full" />
 
         {profile?.activity && Object.keys(activitiesFields).includes(profile.activity) && (
           <>
@@ -122,7 +122,7 @@ export default function ProfileSettings() {
           </>
         )}
 
-        <div className="d-flex justify-center align-center mb-3">
+          <div className="flex justify-center items-center mb-3">
           <Button hidden={!isMobile} onClick={handleSubmit} variant="contained" startIcon={<Save />} color="secondary">Salva</Button>
         </div>
       </CardContent>

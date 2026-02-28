@@ -84,17 +84,17 @@ export default function Orders() {
   };
 
   return (
-    <div className="d-flex justify-center px-2" style={{ backgroundColor: "#f6f8fb" }}>
-      <div style={{ maxWidth: "1200px" }} className="w-100 d-flex flex-column justify-center paddingContainer p-0">
+    <div className="flex justify-center px-2 bg-[#f6f8fb]">
+      <div className="w-full max-w-[1200px] flex flex-col justify-center px-4 p-0">
         <Grid container spacing={2} alignItems="center">
           <Grid size={{ xs: 12, md: 6 }}><h5 className="mb-0">Ordini / Report</h5></Grid>
           <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={it}>
             <Grid size={{ xs: 12, sm: 6, md: 3 }} sx={{ display: "flex", alignItems: "center", justifyContent: { xs: "flex-start", sm: "flex-end" }, gap: 1 }}>
-              <label className="fw-bold">Data inizio: </label>
+              <label className="font-bold">Data inizio: </label>
               <DatePicker value={startDate} onChange={(v) => v && setStartDate(v)} slotProps={{ textField: { size: "small" } }} sx={datePickerSx} />
             </Grid>
             <Grid size={{ xs: 12, sm: 6, md: 3 }} sx={{ display: "flex", alignItems: "center", justifyContent: { xs: "flex-start", sm: "flex-end" }, gap: 1 }}>
-              <label className="fw-bold">Data fine: </label>
+              <label className="font-bold">Data fine: </label>
               <DatePicker value={endDate} onChange={(v) => v && setEndDate(v)} slotProps={{ textField: { size: "small" } }} sx={datePickerSx} />
             </Grid>
           </LocalizationProvider>

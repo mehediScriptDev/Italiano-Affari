@@ -24,7 +24,7 @@ export default function RootLayout({
         <link rel="stylesheet" href="/assets/css/swiper-bundle.min.css" />
         <link rel="stylesheet" href="/assets/css/theme/main.min.purge.css" />
       </head>
-      <body style={{ backgroundColor: "#f6f8fb" }}>
+      <body className="bg-[#f6f8fb]">
         <Script
           id="gtm"
           strategy="afterInteractive"
@@ -41,7 +41,7 @@ export default function RootLayout({
             src="https://www.googletagmanager.com/ns.html?id=GTM-WL43RK8L"
             height="0"
             width="0"
-            style={{ display: "none", visibility: "hidden" }}
+            className="hidden invisible"
           />
         </noscript>
         <Providers>{children}</Providers>

@@ -39,12 +39,12 @@ export default function NotificationsPercentage() {
 
   return (
     <div className="px-2">
-      <div className="bg-white shadowBox mb-2 mt-1" style={{ maxWidth: "1200px", margin: "auto", borderRadius: "10px" }}>
+      <div className="bg-white shadowBox mb-2 mt-1 max-w-300 mx-auto rounded-[10px]">
         <div className="p-2">
           <h3>Notifiche</h3>
-          <div className="d-flex gap-1 mb-0">
-            <Button style={{ borderRadius: "20px", color: flag === "all" ? "white" : "black" }} variant={flag === "all" ? "contained" : "outlined"} onClick={() => setFlag("all")}>Tutte</Button>
-            <Button style={{ borderRadius: "20px", color: flag === "pending" ? "white" : "black" }} variant={flag === "pending" ? "contained" : "outlined"} onClick={() => setFlag("pending")}>In Attesa</Button>
+          <div className="flex gap-1 mb-0">
+            <Button className={`rounded-[20px] ${flag === "all" ? "text-white" : "text-black"}`} variant={flag === "all" ? "contained" : "outlined"} onClick={() => setFlag("all")}>Tutte</Button>
+            <Button className={`rounded-[20px] ${flag === "pending" ? "text-white" : "text-black"}`} variant={flag === "pending" ? "contained" : "outlined"} onClick={() => setFlag("pending")}>In Attesa</Button>
           </div>
 
           {loading ? (
@@ -55,15 +55,15 @@ export default function NotificationsPercentage() {
                 notifications
                   .filter((n) => flag === "all" || !n.is_read)
                   .map((notification) => (
-                    <div key={notification.id} className="d-flex mb-5 gap-2 align-center">
-                      <div className="d-flex align-center">
-                        {!notification.is_read && <span style={{ display: "inline-block", width: "12px", height: "12px", backgroundColor: "black", borderRadius: "50%" }} />}
+                    <div key={notification.id} className="flex mb-5 gap-2 items-center">
+                        <div className="flex items-center">
+                        {!notification.is_read && <span className="inline-block w-3 h-3 bg-black rounded-full" />}
                       </div>
                       <div className="flex-1"><p>{notification.message}</p></div>
-                      <p className="mt-0 d-flex align-center">
+                      <p className="mt-0 flex items-center">
                         <strong>{notification.current_percentage}% → {notification.proposed_percentage}%</strong>
                       </p>
-                      <div className="d-flex gap-1 align-center iconButton" style={{ alignSelf: "center" }}>
+                      <div className="flex gap-1 items-center iconButton self-center">
                         <Button size="small" variant="contained" onClick={() => { setSelected(notification); setDialogOpen(true); }}>Sì</Button>
                         <Button size="small" variant="outlined" onClick={() => handleConfirm()}>No</Button>
                       </div>
@@ -75,7 +75,7 @@ export default function NotificationsPercentage() {
             </div>
           )}
 
-          <div className="d-flex justify-center"><Button variant="contained">Mostra di più</Button></div>
+          <div className="flex justify-center"><Button variant="contained">Mostra di più</Button></div>
         </div>
       </div>
 

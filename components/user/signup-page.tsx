@@ -1,7 +1,7 @@
 "use client";
 
-import SignupComponent from "@/components/user/signup-component";
 import Image from "next/image";
+import SignupComponent from "./signup-component";
 
 export default function SignupPage() {
   return (

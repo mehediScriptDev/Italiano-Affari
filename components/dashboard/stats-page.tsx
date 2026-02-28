@@ -67,8 +67,8 @@ export default function StatsPage() {
 
   return (
     <Box sx={{ backgroundColor: "transparent" }}>
-      <div className="d-flex justify-between align-center" style={{ paddingRight: "6px" }}><h5 className="mb-0">Statistiche</h5></div>
-      <div className="row d-flex justify-center">
+      <div className="flex justify-between items-center pr-[6px]"><h5 className="mb-0">Statistiche</h5></div>
+        <div className="flex flex-wrap justify-center">
         <Grid className={isMobile ? "px-0" : "px-1"} container spacing={isMobile ? 2 : 1} sx={{ mt: 2, p: 0 }}>
           <Grid size={{ xs: 12, md: 4 }}><ChartPreview label="Vendite Dirette" icon={<ShoppingBag style={{ color: "black", fontSize: "24px" }} />} obj={chartsPreview.sales} /></Grid>
           <Grid size={{ xs: 12, md: 4 }}><ChartPreview label="Guadagni Maturati" icon={<AttachMoney style={{ color: "black", fontSize: "24px" }} />} obj={chartsPreview.earnings} /></Grid>
