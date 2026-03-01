@@ -10,7 +10,7 @@ import { fetchSubAgents, inviteSubAgent } from "@/lib/api/partners";
 import { showToast } from "@/lib/utils/notifications";
 import { useAppContext } from "@/lib/context/app-context";
 import type { DynamicRow } from "@/components/data/dynamic-data-table";
-// Grid import removed — using Box flexbox instead
+
 
 interface AgentNode {
   id: number;

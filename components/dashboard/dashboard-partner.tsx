@@ -195,10 +195,15 @@ export default function DashboardPartner() {
             <h1 className="text-2xl font-semibold">Dashboard</h1>
           </div>
 
-          <Grid container justifyContent="center" spacing={2} alignItems="stretch">
+          <Grid
+            container
+            justifyContent="center"
+            spacing={2}
+            alignItems="stretch"
+          >
             <Grid size={{ xs: 12, lg: 4 }} sx={{ display: "flex" }}>
               <Box
-                className="min-h-[200px]"
+                className="min-h-50!"
                 sx={{
                   backgroundColor: "#13131f",
                   borderRadius: "10px",
@@ -214,12 +219,21 @@ export default function DashboardPartner() {
                 <div className="d-flex align-center gap-3 mb-3">
                   <Avatar
                     src={profile?.avatar}
-                    sx={{ width: 52, height: 52, bgcolor: "#12715b", fontSize: 20, flexShrink: 0 }}
+                    sx={{
+                      width: 52,
+                      height: 52,
+                      bgcolor: "#12715b",
+                      fontSize: 20,
+                      flexShrink: 0,
+                    }}
                   >
                     {profile?.name?.charAt(0)}
                   </Avatar>
                   <div>
-                    <Typography variant="h6" sx={{ fontWeight: 700, lineHeight: 1.2 }}>
+                    <Typography
+                      variant="h6"
+                      sx={{ fontWeight: 700, lineHeight: 1.2 }}
+                    >
                       Welcome, {profile?.name}
                     </Typography>
                     <Typography sx={{ color: "#b2b2b2", fontSize: "13px" }}>
@@ -234,7 +248,12 @@ export default function DashboardPartner() {
                     size="small"
                     variant="contained"
                     color="secondary"
-                    sx={{ textTransform: "none", fontWeight: 600, fontSize: "12px", borderRadius: "8px" }}
+                    sx={{
+                      textTransform: "none",
+                      fontWeight: 600,
+                      fontSize: "12px",
+                      borderRadius: "8px",
+                    }}
                     onClick={() => handleAssetButtonClick()}
                   >
                     Mostra Assets
@@ -250,7 +269,10 @@ export default function DashboardPartner() {
                       borderRadius: "8px",
                       color: "white",
                       borderColor: "rgba(255,255,255,0.35)",
-                      "&:hover": { borderColor: "white", backgroundColor: "rgba(255,255,255,0.08)" },
+                      "&:hover": {
+                        borderColor: "white",
+                        backgroundColor: "rgba(255,255,255,0.08)",
+                      },
                     }}
                     onClick={handleOpenShare}
                   >
@@ -259,23 +281,51 @@ export default function DashboardPartner() {
                 </div>
 
                 {/* Dialogs */}
-                <Dialog className="p-0" open={openAssetsDialog} maxWidth="lg" onClose={() => setOpenAssetsDialog(false)}>
-                  <DialogContent className="p-0"><PaymentAssets /></DialogContent>
+                <Dialog
+                  className="p-0"
+                  open={openAssetsDialog}
+                  maxWidth="lg"
+                  onClose={() => setOpenAssetsDialog(false)}
+                >
+                  <DialogContent className="p-0">
+                    <PaymentAssets />
+                  </DialogContent>
                 </Dialog>
 
-                <Dialog open={openShareDialog} onClose={() => setOpenShareDialog(false)}>
+                <Dialog
+                  open={openShareDialog}
+                  onClose={() => setOpenShareDialog(false)}
+                >
                   <DialogContent sx={{ textAlign: "center", p: 4 }}>
-                    <Typography variant="h6" sx={{ mb: 2 }}>Condividi il tuo codice</Typography>
+                    <Typography variant="h6" sx={{ mb: 2 }}>
+                      Condividi il tuo codice
+                    </Typography>
                     <ReactQRCode
                       value={couponToShare}
                       size={150}
                       marginSize={0}
-                      dataModulesSettings={{ color: "#000000", style: "rounded", randomSize: false }}
+                      dataModulesSettings={{
+                        color: "#000000",
+                        style: "rounded",
+                        randomSize: false,
+                      }}
                       finderPatternOuterSettings={{ style: "rounded" }}
                       finderPatternInnerSettings={{ style: "rounded-sm" }}
-                      imageSettings={{ src: "/assets/images/qr-code-logo.png", width: 30, height: 30, excavate: true }}
+                      imageSettings={{
+                        src: "/assets/images/qr-code-logo.png",
+                        width: 30,
+                        height: 30,
+                        excavate: true,
+                      }}
                     />
-                    <Box sx={{ display: "flex", alignItems: "center", mt: 3, gap: 1 }}>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        mt: 3,
+                        gap: 1,
+                      }}
+                    >
                       <TextField
                         variant="outlined"
                         value={couponToShare}
@@ -283,7 +333,9 @@ export default function DashboardPartner() {
                         slotProps={{ input: { readOnly: true } }}
                       />
                       <Tooltip title={copySuccess ? "Copiato!" : "Copia"}>
-                        <IconButton onClick={handleCopyLink}><ContentCopy /></IconButton>
+                        <IconButton onClick={handleCopyLink}>
+                          <ContentCopy />
+                        </IconButton>
                       </Tooltip>
                     </Box>
                   </DialogContent>
@@ -294,7 +346,9 @@ export default function DashboardPartner() {
             <Grid size={{ xs: 12, sm: 6, lg: 4 }} sx={{ display: "flex" }}>
               <ChartPreview
                 label={"Guadagno Netto"}
-                icon={<AttachMoney style={{ color: "white", fontSize: "24px" }} />}
+                icon={
+                  <AttachMoney style={{ color: "white", fontSize: "24px" }} />
+                }
                 obj={earningsPreview}
                 iconBg="#12715b"
                 suffix=" €"
@@ -304,7 +358,7 @@ export default function DashboardPartner() {
 
             <Grid size={{ xs: 12, sm: 6, lg: 4 }} sx={{ display: "flex" }}>
               <Box
-                className="min-h-[110px] lg:min-h-[200px]"
+                className="min-h-27.5 lg:min-h-50"
                 sx={{
                   backgroundColor: "white",
                   borderRadius: 2,
@@ -317,12 +371,31 @@ export default function DashboardPartner() {
                 }}
               >
                 <div className="d-flex align-center">
-                  <div style={{ backgroundColor: "#1976d2", borderRadius: "10px", padding: "10px", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                    <ShoppingCart style={{ color: "white", fontSize: "22px" }} />
+                  <div
+                    style={{
+                      backgroundColor: "#1976d2",
+                      borderRadius: "10px",
+                      padding: "10px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      flexShrink: 0,
+                    }}
+                  >
+                    <ShoppingCart
+                      style={{ color: "white", fontSize: "22px" }}
+                    />
                   </div>
                   <div className="ms-3">
-                    <Typography variant="body2" color="textSecondary">Ordini Totali</Typography>
-                    <Typography variant="h5" sx={{ fontWeight: 700, lineHeight: 1.2 }}>{networkInfo.count}</Typography>
+                    <Typography variant="body2" color="textSecondary">
+                      Ordini Totali
+                    </Typography>
+                    <Typography
+                      variant="h5"
+                      sx={{ fontWeight: 700, lineHeight: 1.2 }}
+                    >
+                      {networkInfo.count}
+                    </Typography>
                   </div>
                 </div>
                 <Typography variant="body2" sx={{ mt: 2, color: "#64748b" }}>
@@ -334,7 +407,7 @@ export default function DashboardPartner() {
 
           <div className=" mt-2">
             <div className="d-flex justify-between align-center">
-              <h5 className="mb-1">Ultimi Ordini</h5>
+              <h5 className="mb-1 text-lg font-medium">Ultimi Ordini</h5>
             </div>
           </div>
 

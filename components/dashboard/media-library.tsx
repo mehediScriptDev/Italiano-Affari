@@ -108,8 +108,6 @@ export default function MediaLibrary() {
     loadAssets();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  // Client-side search filtering
   useEffect(() => {
     if (!searchQuery.trim()) {
       setFilteredAssets(assets);
@@ -176,7 +174,6 @@ export default function MediaLibrary() {
 
   return (
     <Box className="w-100 paddingContainer mt-3">
-      {/* Header */}
       <div className="d-flex justify-between align-center mb-4">
         <div>
           <Typography variant="h5" sx={{ fontWeight: "bold" }}>
@@ -195,7 +192,7 @@ export default function MediaLibrary() {
         </Button>
       </div>
 
-      {/* Search Bar */}
+      
       <TextField
         fullWidth
         placeholder="Cerca contenuti..."
@@ -213,7 +210,7 @@ export default function MediaLibrary() {
         }}
       />
 
-      {/* Filter Panel */}
+      
       {showFilters && (
         <Card sx={{ mb: 3, p: 2 }}>
           <CardContent>
@@ -312,14 +309,14 @@ export default function MediaLibrary() {
         </Card>
       )}
 
-      {/* Loading State */}
+      
       {loading && (
         <Box sx={{ display: "flex", justifyContent: "center", py: 8 }}>
           <CircularProgress />
         </Box>
       )}
 
-      {/* Error State */}
+      
       {error && !loading && (
         <Box sx={{ textAlign: "center", py: 8 }}>
           <Typography color="error" sx={{ mb: 2 }}>
@@ -331,7 +328,7 @@ export default function MediaLibrary() {
         </Box>
       )}
 
-      {/* Empty State */}
+      
       {!loading && !error && filteredAssets.length === 0 && (
         <Box sx={{ textAlign: "center", py: 8 }}>
           <Typography variant="body1" color="text.secondary">
@@ -342,7 +339,7 @@ export default function MediaLibrary() {
         </Box>
       )}
 
-      {/* Asset Grid */}
+      
       {!loading && !error && filteredAssets.length > 0 && (
         <Grid container spacing={3}>
           {filteredAssets.map((asset) => (
@@ -358,7 +355,7 @@ export default function MediaLibrary() {
                   "&:hover": { boxShadow: 6 },
                 }}
               >
-                {/* Thumbnail — click opens lightbox preview */}
+                
                 <CardMedia
                   component="img"
                   height={200}
@@ -428,7 +425,7 @@ export default function MediaLibrary() {
         </Grid>
       )}
 
-      {/* Lightbox Preview Dialog */}
+      
       <Dialog
         open={!!previewAsset}
         onClose={() => setPreviewAsset(null)}
