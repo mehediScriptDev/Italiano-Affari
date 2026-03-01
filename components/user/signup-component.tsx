@@ -152,7 +152,7 @@ export default function SignupComponent() {
       >
         <IconButton
           onClick={handlePreviousStep}
-          className="hover:!bg-[#1a1a2e]"
+          className="hover:bg-[#1a1a2e]!"
           size={isMobile ? "small" : "medium"}
           sx={{ color: "white", backgroundColor: "#13131f" }}
         >

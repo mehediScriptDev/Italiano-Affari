@@ -192,7 +192,7 @@ export default function DashboardPartner() {
       >
         <div className="mt-3 w-100 d-flex flex-column">
           <div className="d-flex justify-between align-center mb-2">
-            <h1 className="text-2xl font-semibold">Dashboard</h1>
+            <h1 className="page-title">Dashboard</h1>
           </div>
 
           <Grid

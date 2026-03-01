@@ -198,8 +198,8 @@ export default function StatsPage() {
 
     return (
         <Box className="w-100 paddingContainer mt-3" sx={{backgroundColor: 'transparent'}}>
-            <div className="d-flex justify-between align-center" style={{paddingRight: '6px'}}>
-                <h5 className=" mb-0">Statistiche</h5>
+            <div className="flex items-center justify-between mb-2">
+                <h1 className="page-title">Statistiche</h1>
             </div>
             <div className="row d-flex justify-center">
                 <Grid className={isMobile ? 'px-0' : "px-1"} container spacing={isMobile ? 2 : 1} sx={{mt:2, p:0}}>

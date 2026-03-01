@@ -174,14 +174,10 @@ export default function MediaLibrary() {
 
   return (
     <Box className="w-100 paddingContainer mt-3">
-      <div className="d-flex justify-between align-center mb-4">
+      <div className="flex items-center justify-between mb-6">
         <div>
-          <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-            Libreria Contenuti
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Sfoglia e scarica i contenuti ufficiali per le tue campagne di promozione
-          </Typography>
+          <h1 className="page-title">Libreria Contenuti</h1>
+          <p className="page-subtitle">Sfoglia e scarica i contenuti ufficiali per le tue campagne di promozione</p>
         </div>
         <Button
           variant="outlined"
