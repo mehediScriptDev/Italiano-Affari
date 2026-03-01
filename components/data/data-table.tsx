@@ -55,10 +55,11 @@ export default function DataTable<T extends { id: string | number }>({
     <Box
       sx={{
         backgroundColor: "white",
-        borderRadius: "10px",
-        p: 2,
+        borderRadius: "12px",
+        p: "20px 24px",
         mb: 3,
-        boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+        border: "1px solid rgba(0,0,0,0.06)",
+        boxShadow: "0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.04)",
       }}
     >
       <TextField
@@ -70,7 +71,10 @@ export default function DataTable<T extends { id: string | number }>({
         sx={{
           mb: 2,
           "& .MuiOutlinedInput-root": {
-            "&:hover fieldset": { borderColor: "black" },
+            borderRadius: "8px",
+            backgroundColor: "#f6f8fb",
+            "& fieldset": { borderColor: "transparent" },
+            "&:hover fieldset": { borderColor: "rgba(0,0,0,0.15)" },
             "&.Mui-focused fieldset": { borderColor: "black" },
           },
         }}
@@ -78,29 +82,30 @@ export default function DataTable<T extends { id: string | number }>({
           input: {
             startAdornment: (
               <InputAdornment position="start">
-                <SearchIcon sx={{ color: "black" }} />
+                <SearchIcon sx={{ color: "#64748b", fontSize: 20 }} />
               </InputAdornment>
             ),
           },
         }}
       />
 
-      <TableContainer component={Paper} sx={{ borderRadius: "10px", boxShadow: "none" }}>
+      <TableContainer component={Paper} sx={{ borderRadius: "8px", boxShadow: "none", border: "1px solid rgba(0,0,0,0.06)" }}>
         <Table>
-          <TableHead sx={{ backgroundColor: "#f8f9fa" }}>
+          <TableHead sx={{ backgroundColor: "#f8f9fb" }}>
             <TableRow>
               {showCheckbox && (
-                <TableCell>
+                <TableCell sx={{ borderBottom: "1px solid rgba(0,0,0,0.06)", py: 1.5 }}>
                   <Checkbox
                     checked={selectedRows.length === filteredData.length && filteredData.length > 0}
                     indeterminate={selectedRows.length > 0 && selectedRows.length < filteredData.length}
                     onChange={handleSelectAll}
+                    size="small"
                   />
                 </TableCell>
               )}
               {columns.map((col) => (
-                <TableCell key={col.field}>
-                  <Typography fontSize={14} fontWeight="bold">
+                <TableCell key={col.field} sx={{ borderBottom: "1px solid rgba(0,0,0,0.06)", py: 1.5 }}>
+                  <Typography sx={{ fontSize: 12, fontWeight: 600, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.5px" }}>
                     {col.label}
                   </Typography>
                 </TableCell>
@@ -109,17 +114,25 @@ export default function DataTable<T extends { id: string | number }>({
           </TableHead>
           <TableBody>
             {filteredData.slice(0, rowsPerPage).map((row) => (
-              <TableRow key={row.id}>
+              <TableRow
+                key={row.id}
+                sx={{
+                  transition: "background-color 0.15s ease",
+                  "&:hover": { backgroundColor: "#f8f9fb" },
+                  "&:last-child td": { borderBottom: 0 },
+                }}
+              >
                 {showCheckbox && (
-                  <TableCell>
+                  <TableCell sx={{ borderBottom: "1px solid rgba(0,0,0,0.04)", py: 1.5 }}>
                     <Checkbox
                       checked={selectedRows.includes(row.id)}
                       onChange={() => handleSelectRow(row.id)}
+                      size="small"
                     />
                   </TableCell>
                 )}
                 {columns.map((col) => (
-                  <TableCell key={col.field}>
+                  <TableCell key={col.field} sx={{ borderBottom: "1px solid rgba(0,0,0,0.04)", py: 1.5, fontSize: 14, color: "#333" }}>
                     {typeof col.render === "function"
                       ? col.render(row)
                       : String((row as Record<string, unknown>)[col.field] ?? "")}
@@ -131,17 +144,18 @@ export default function DataTable<T extends { id: string | number }>({
         </Table>
       </TableContainer>
 
-      <Box display="flex" justifyContent="space-between" alignItems="center" mt={2}>
-        <Typography>Selezionati: {selectedRows.length}</Typography>
+      <Box display="flex" justifyContent="space-between" alignItems="center" mt={2} sx={{ px: "4px" }}>
+        <Typography sx={{ fontSize: 13, color: "#64748b" }}>Selezionati: {selectedRows.length}</Typography>
         <FormControl size="small" sx={{ width: 80 }}>
           <Select
             value={rowsPerPage}
             onChange={(e: SelectChangeEvent<number>) => setRowsPerPage(Number(e.target.value))}
             sx={{
-              "& .MuiOutlinedInput-root": {
-                "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "black" },
-                "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "black" },
-              },
+              borderRadius: "8px",
+              fontSize: 13,
+              "& .MuiOutlinedInput-notchedOutline": { borderColor: "rgba(0,0,0,0.1)" },
+              "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "rgba(0,0,0,0.2)" },
+              "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "black" },
             }}
           >
             <MenuItem value={10}>10</MenuItem>

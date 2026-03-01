@@ -33,8 +33,38 @@ export default function ProfilePage({ index = 0 }: ProfilePageProps) {
 
   return (
     <Box sx={{ maxWidth: "1200px", margin: "auto", mb: 5, px: 2 }}>
-      <Box sx={{ overflowX: "auto", whiteSpace: "nowrap" }}>
-        <Tabs value={value} onChange={(_, v) => setValue(v)} textColor="secondary" indicatorColor="secondary" aria-label="tabs" sx={{ minWidth: "600px" }}>
+      <Box sx={{ mb: 3 }}>
+        <h5 style={{ fontSize: "20px", fontWeight: 700, letterSpacing: "-0.3px", margin: 0 }}>Il mio account</h5>
+        <p style={{ fontSize: "13px", color: "#64748b", margin: "2px 0 0" }}>Gestisci il tuo profilo e le impostazioni</p>
+      </Box>
+      <Box sx={{
+        overflowX: "auto",
+        whiteSpace: "nowrap",
+        backgroundColor: "white",
+        borderRadius: "12px",
+        border: "1px solid rgba(0,0,0,0.06)",
+        boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
+        mb: 2,
+        px: 1,
+      }}>
+        <Tabs
+          value={value}
+          onChange={(_, v) => setValue(v)}
+          textColor="secondary"
+          indicatorColor="secondary"
+          aria-label="tabs"
+          sx={{
+            minWidth: "600px",
+            "& .MuiTab-root": {
+              textTransform: "none",
+              fontWeight: 500,
+              fontSize: "14px",
+              minHeight: "48px",
+              letterSpacing: "0.1px",
+            },
+            "& .Mui-selected": { fontWeight: 600 },
+          }}
+        >
           <Tab value={0} label="Profilo" />
           <Tab value={1} label="Pagamenti" />
           <Tab value={2} label="Storico Pagamenti" />

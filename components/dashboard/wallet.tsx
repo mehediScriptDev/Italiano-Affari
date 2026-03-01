@@ -129,10 +129,20 @@ export default function Wallet() {
 
   return (
     <>
-      <Box sx={{ backgroundColor: "transparent", p: 2 }}>
+      <Box sx={{ backgroundColor: "#f6f8fb", p: 2 }}>
         <div className="d-flex justify-between align-center" style={{ paddingRight: "6px" }}>
-          <h5 className="mb-0">Portafoglio</h5>
-          <Button variant="contained" color="secondary" onClick={() => { setGenValue(0); setOpenGen(true); }}>Genera Coupon</Button>
+          <div>
+            <h5 className="mb-0" style={{ fontSize: "20px", fontWeight: 700, letterSpacing: "-0.3px" }}>Portafoglio</h5>
+            <p style={{ fontSize: "13px", color: "#64748b", margin: "2px 0 0" }}>Gestisci i tuoi crediti e coupon</p>
+          </div>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => { setGenValue(0); setOpenGen(true); }}
+            sx={{ borderRadius: "8px", textTransform: "none", fontWeight: 600, fontSize: "13px", px: 2.5 }}
+          >
+            Genera Coupon
+          </Button>
         </div>
         <div className="row d-flex justify-center">
           <Grid
@@ -142,36 +152,45 @@ export default function Wallet() {
             sx={{ mt: 2, p: 0 }}
           >
             <Grid size={{ xs: 12, md: 4 }}>
-              <ChartPreview label="Saldo attuale disponibile" icon={<Savings style={{ color: "black", fontSize: "24px" }} />} obj={chartsPreview.sales} />
+              <ChartPreview label="Saldo attuale disponibile" icon={<Savings style={{ color: "black", fontSize: "22px" }} />} obj={chartsPreview.sales} />
             </Grid>
             <Grid size={{ xs: 12, md: 4 }}>
-              <ChartPreview label="Saldo utilizzato" icon={<MoneyOff style={{ color: "black", fontSize: "24px" }} />} obj={chartsPreview.earnings} />
+              <ChartPreview label="Saldo utilizzato" icon={<MoneyOff style={{ color: "black", fontSize: "22px" }} />} obj={chartsPreview.earnings} />
             </Grid>
             <Grid size={{ xs: 12, md: 4 }}>
-              <ChartPreview label="Saldo totale" icon={<MonetizationOn style={{ color: "black", fontSize: "24px" }} />} obj={chartsPreview.affiliates} />
+              <ChartPreview label="Saldo totale" icon={<MonetizationOn style={{ color: "black", fontSize: "22px" }} />} obj={chartsPreview.affiliates} />
             </Grid>
           </Grid>
         </div>
         <Box mt={4}>
-          <div className="mt-2"><div className="d-flex justify-between align-center"><h5 className="mb-1">Tabella coupon</h5></div></div>
+          <div style={{ marginBottom: "12px" }}>
+            <div className="d-flex justify-between align-center">
+              <div>
+                <h5 className="mb-0" style={{ fontSize: "18px", fontWeight: 700, letterSpacing: "-0.3px" }}>Tabella Coupon</h5>
+                <p style={{ fontSize: "13px", color: "#64748b", margin: "2px 0 0" }}>I tuoi coupon generati</p>
+              </div>
+            </div>
+          </div>
           <DataTable columns={columns} data={tableData} showCheckbox />
         </Box>
       </Box>
 
-      <Dialog open={openGen} onClose={() => setOpenGen(false)}>
-        <DialogTitle>Genera Coupon</DialogTitle>
+      <Dialog open={openGen} onClose={() => setOpenGen(false)} PaperProps={{ sx: { borderRadius: "12px", minWidth: 360 } }}>
+        <DialogTitle sx={{ fontWeight: 700, fontSize: "18px", pt: 3 }}>Genera Coupon</DialogTitle>
         <DialogContent>
-          <Typography gutterBottom>Seleziona quanti crediti assegnare:</Typography>
-          <Box display="flex" alignItems="center">
-            <Typography variant="body2" sx={{ minWidth: 24 }}>0</Typography>
+          <Typography gutterBottom sx={{ fontSize: "14px", color: "#64748b" }}>Seleziona quanti crediti assegnare:</Typography>
+          <Box display="flex" alignItems="center" sx={{ mt: 1 }}>
+            <Typography variant="body2" sx={{ minWidth: 24, fontSize: "13px", color: "#64748b" }}>0</Typography>
             <Slider color="secondary" value={genValue} onChange={(_, v) => setGenValue(v as number)} min={0} max={chartsPreview.sales.total} valueLabelDisplay="auto" sx={{ mx: 2, flexGrow: 1 }} />
-            <Typography variant="body2" sx={{ minWidth: 32, textAlign: "right" }}>{chartsPreview.sales.total}</Typography>
+            <Typography variant="body2" sx={{ minWidth: 32, textAlign: "right", fontSize: "13px", color: "#64748b" }}>{chartsPreview.sales.total}</Typography>
           </Box>
-          <div className="mt-3"><Typography variant="caption">{genValue} crediti selezionati</Typography></div>
+          <Box sx={{ mt: 2, p: "10px 14px", backgroundColor: "#f6f8fb", borderRadius: "8px" }}>
+            <Typography sx={{ fontSize: "14px", fontWeight: 600 }}>{genValue} crediti selezionati</Typography>
+          </Box>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpenGen(false)}>Annulla</Button>
-          <Button onClick={handleGenerateCoupon} color="secondary" variant="contained" disabled={genValue <= 0 || chartsPreview.sales.total === 0}>Genera</Button>
+        <DialogActions sx={{ pb: 2.5, px: 3, gap: 1 }}>
+          <Button onClick={() => setOpenGen(false)} sx={{ borderRadius: "8px", textTransform: "none", fontWeight: 500, px: 2.5 }}>Annulla</Button>
+          <Button onClick={handleGenerateCoupon} color="secondary" variant="contained" disabled={genValue <= 0 || chartsPreview.sales.total === 0} sx={{ borderRadius: "8px", textTransform: "none", fontWeight: 600, px: 2.5 }}>Genera</Button>
         </DialogActions>
       </Dialog>
     </>

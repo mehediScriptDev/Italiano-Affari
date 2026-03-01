@@ -35,27 +35,28 @@ export default function ProfileSettings() {
   };
 
   return (
-    <Card className="card-shadow" sx={{ borderRadius: 2 }}>
-      <CardContent>
+    <Card className="card-shadow" sx={{ borderRadius: "12px" }}>
+      <CardContent sx={{ p: "28px !important" }}>
         <div className="d-flex justify-between align-center">
-          <Box sx={{ display: "flex", gap: "10px" }}>
-            <Avatar src={profile?.avatar} sx={{ width: "80px", height: "80px" }}>{profile?.name?.charAt(0)}</Avatar>
+          <Box sx={{ display: "flex", gap: "14px", alignItems: "center" }}>
+            <Avatar src={profile?.avatar} sx={{ width: "72px", height: "72px", border: "2px solid rgba(0,0,0,0.06)" }}>{profile?.name?.charAt(0)}</Avatar>
             <div>
-              <Typography align="left" variant="h6" sx={{ color: "black", fontSize: 16 }}>{profile?.name}</Typography>
-              <Typography align="left" variant="h6" sx={{ color: "gray", mb: 1, fontSize: 12 }}>{profile?.email}</Typography>
-              <Typography align="left" variant="h6" sx={{ color: "gray", mt: 1.5, fontSize: 12 }}>Attività: {profile?.activity}</Typography>
+              <Typography sx={{ color: "black", fontSize: 16, fontWeight: 600, letterSpacing: "-0.2px" }}>{profile?.name}</Typography>
+              <Typography sx={{ color: "#64748b", fontSize: 13, mt: "2px" }}>{profile?.email}</Typography>
+              <Typography sx={{ color: "#64748b", mt: 1, fontSize: 12 }}>Attività: <span style={{ fontWeight: 600, color: "#333" }}>{profile?.activity}</span></Typography>
             </div>
           </Box>
-          <Button hidden={isMobile} onClick={handleSubmit} variant="contained" startIcon={<Save />} color="secondary">Salva</Button>
+          <Button hidden={isMobile} onClick={handleSubmit} variant="contained" startIcon={<Save />} color="secondary" sx={{ borderRadius: "8px", textTransform: "none", fontWeight: 600, px: 2.5 }}>Salva</Button>
         </div>
 
-        <hr style={{ width: "100%" }} />
-        <Typography variant="h5" align="center" sx={{ mb: 2 }} fontWeight={700}>Informazioni Personali</Typography>
+        <hr style={{ width: "100%", border: "none", borderTop: "1px solid rgba(0,0,0,0.06)", margin: "20px 0" }} />
+        <Typography sx={{ fontSize: "18px", fontWeight: 700, textAlign: "center", mb: 2.5, letterSpacing: "-0.3px" }}>Informazioni Personali</Typography>
 
         <Grid container spacing={2} mb={3}>
           <Grid size={{ xs: 12, md: 6, lg: 6 }}>
-            <Typography variant="h6" sx={{ color: "black", mb: 1, fontSize: 16 }}>Nome*</Typography>
+            <Typography sx={{ color: "#333", mb: 0.5, fontSize: 13, fontWeight: 600 }}>Nome*</Typography>
             <TextField fullWidth variant="outlined" placeholder="Inserisci nome" value={tempProfile.name} error={!!error.name} helperText={error.name}
+              sx={{ "& .MuiOutlinedInput-root": { borderRadius: "8px" } }}
               onChange={(e) => {
                 const v = e.target.value;
                 setTempProfile((p) => ({ ...p, name: v }));
@@ -65,8 +66,9 @@ export default function ProfileSettings() {
               }} />
           </Grid>
           <Grid size={{ xs: 12, md: 6, lg: 6 }}>
-            <Typography variant="h6" sx={{ color: "black", mb: 1, fontSize: 16 }}>Email*</Typography>
+            <Typography sx={{ color: "#333", mb: 0.5, fontSize: 13, fontWeight: 600 }}>Email*</Typography>
             <TextField fullWidth variant="outlined" placeholder="Inserisci la tua email" value={tempProfile.email} error={!!error.email} helperText={error.email}
+              sx={{ "& .MuiOutlinedInput-root": { borderRadius: "8px" } }}
               onChange={(e) => {
                 const v = e.target.value;
                 setTempProfile((p) => ({ ...p, email: v }));
@@ -76,8 +78,9 @@ export default function ProfileSettings() {
               }} />
           </Grid>
           <Grid size={{ xs: 12, md: 6, lg: 6 }}>
-            <Typography variant="h6" sx={{ color: "black", mb: 1, fontSize: 16 }}>Cellulare*</Typography>
+            <Typography sx={{ color: "#333", mb: 0.5, fontSize: 13, fontWeight: 600 }}>Cellulare*</Typography>
             <TextField fullWidth variant="outlined" placeholder="Inserisci il tuo numero di cellulare" value={tempProfile.mobile} error={!!error.mobile} helperText={error.mobile}
+              sx={{ "& .MuiOutlinedInput-root": { borderRadius: "8px" } }}
               onChange={(e) => {
                 const v = e.target.value;
                 setTempProfile((p) => ({ ...p, mobile: v }));
@@ -87,8 +90,9 @@ export default function ProfileSettings() {
               }} />
           </Grid>
           <Grid size={{ xs: 12, md: 6, lg: 6 }}>
-            <Typography variant="h6" sx={{ color: "black", mb: 1, fontSize: 16 }}>Telefono Fisso</Typography>
+            <Typography sx={{ color: "#333", mb: 0.5, fontSize: 13, fontWeight: 600 }}>Telefono Fisso</Typography>
             <TextField fullWidth variant="outlined" placeholder="Inserisci il tuo numero fisso" value={tempProfile.phone ?? ""} error={!!error.phone} helperText={error.phone}
+              sx={{ "& .MuiOutlinedInput-root": { borderRadius: "8px" } }}
               onChange={(e) => {
                 const v = e.target.value;
                 setTempProfile((p) => ({ ...p, phone: v }));
@@ -98,18 +102,19 @@ export default function ProfileSettings() {
           </Grid>
         </Grid>
 
-        <hr style={{ width: "100%" }} />
+        <hr style={{ width: "100%", border: "none", borderTop: "1px solid rgba(0,0,0,0.06)", margin: "20px 0" }} />
 
         {profile?.activity && Object.keys(activitiesFields).includes(profile.activity) && (
           <>
-            <Typography variant="h5" align="center" sx={{ mb: 2 }} fontWeight={700}>Attività</Typography>
+            <Typography sx={{ fontSize: "18px", fontWeight: 700, textAlign: "center", mb: 2.5, letterSpacing: "-0.3px" }}>Attività</Typography>
             <Grid container spacing={2} mb={5}>
               {activitiesFields[profile.activity].filter((f) => f !== "paragraph").map((field, i) => (
                 <Grid size={{ xs: 12, md: 6, lg: 6 }} key={i}>
-                  <Typography variant="h6" sx={{ color: "black", mb: 1, fontSize: 16 }}>{field}*</Typography>
+                  <Typography sx={{ color: "#333", mb: 0.5, fontSize: 13, fontWeight: 600 }}>{field}*</Typography>
                   <TextField fullWidth variant="outlined" placeholder={`Inserisci ${field}`}
                     value={tempProfile.business_info?.[field] ?? ""}
                     error={!!error[field]} helperText={error[field]}
+                    sx={{ "& .MuiOutlinedInput-root": { borderRadius: "8px" } }}
                     onChange={(e) => {
                       const v = e.target.value;
                       setTempProfile((p) => ({ ...p, business_info: { ...p.business_info, [field]: v } }));
@@ -123,7 +128,7 @@ export default function ProfileSettings() {
         )}
 
         <div className="d-flex justify-center align-center mb-3">
-          <Button hidden={!isMobile} onClick={handleSubmit} variant="contained" startIcon={<Save />} color="secondary">Salva</Button>
+          <Button hidden={!isMobile} onClick={handleSubmit} variant="contained" startIcon={<Save />} color="secondary" sx={{ borderRadius: "8px", textTransform: "none", fontWeight: 600, px: 2.5 }}>Salva</Button>
         </div>
       </CardContent>
     </Card>

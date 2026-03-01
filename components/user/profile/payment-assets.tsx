@@ -101,16 +101,16 @@ export default function PaymentAssets() {
 
   const renderAsset = (asset: Asset, index: number) => (
     <div className="mt-1" key={`card-${index}`}>
-      <Card className="text-white" style={{ background: "linear-gradient(to right, #2e2e2e 30%, #040404)", minWidth: "320px" }} elevation={10} sx={{ borderRadius: 2 }}>
-        <CardContent className="position-relative" style={{ padding: "10px 15px" }}>
-          <p style={{ fontSize: "12px" }} className="mb-0">IBAN</p>
-          <p style={{ fontSize: "17px" }} className="mt-0">{asset.iban}</p>
+      <Card className="text-white" style={{ background: "linear-gradient(135deg, #1a1a2e 0%, #0a0a0a 100%)", minWidth: "320px" }} elevation={0} sx={{ borderRadius: "12px", border: "1px solid rgba(255,255,255,0.06)" }}>
+        <CardContent className="position-relative" style={{ padding: "16px 20px" }}>
+          <p style={{ fontSize: "11px", color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.5px" }} className="mb-0">IBAN</p>
+          <p style={{ fontSize: "16px", letterSpacing: "0.5px" }} className="mt-0">{asset.iban}</p>
           {asset.vatNumber ? (
-            <><p style={{ fontSize: "12px" }} className="mb-0 mt-1">Partita IVA</p><p style={{ fontSize: "15px" }} className="mt-0">{asset.vatNumber}</p></>
+            <><p style={{ fontSize: "11px", color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.5px" }} className="mb-0 mt-1">Partita IVA</p><p style={{ fontSize: "14px" }} className="mt-0">{asset.vatNumber}</p></>
           ) : (
-            <><p style={{ fontSize: "12px" }} className="mb-0 mt-1">Codice Fiscale</p><p style={{ fontSize: "14px" }} className="mt-0">{asset.fiscalCode}</p></>
+            <><p style={{ fontSize: "11px", color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.5px" }} className="mb-0 mt-1">Codice Fiscale</p><p style={{ fontSize: "14px" }} className="mt-0">{asset.fiscalCode}</p></>
           )}
-          <p style={{ fontSize: "12px" }} className="mb-0 mt-1">Percentuale</p>
+          <p style={{ fontSize: "11px", color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.5px" }} className="mb-0 mt-1">Percentuale</p>
           <p className="mt-0">{asset.percentage}%</p>
           <p className="mt-1">{asset.entityType === "company" ? asset.companyName : `${asset.firstName} ${asset.lastName}`}</p>
           <div className="d-flex justify-end position-absolute top-0 end-0">
@@ -123,15 +123,15 @@ export default function PaymentAssets() {
   );
 
   return (
-    <Card className="card-shadow" sx={{ borderRadius: 2, minHeight: "650px", position: "relative" }}>
-      <CardContent>
-        <h3 className="text-center">Gestisci Pagamenti</h3>
-        <Typography align="center" variant="body1">In questa sezione puoi visualizzare i tuoi pagamenti, aggiungere un nuovo metodo di pagamento e gestire i tuoi asset</Typography>
-        <hr style={{ width: "100%" }} />
-        <h4 className="text-center mb-0">Asset di pagamento</h4>
+    <Card className="card-shadow" sx={{ borderRadius: "12px", minHeight: "650px", position: "relative" }}>
+      <CardContent sx={{ p: "28px !important" }}>
+        <Typography sx={{ fontSize: "20px", fontWeight: 700, textAlign: "center", letterSpacing: "-0.3px" }}>Gestisci Pagamenti</Typography>
+        <Typography align="center" sx={{ fontSize: "14px", color: "#64748b", mt: 0.5 }}>In questa sezione puoi visualizzare i tuoi pagamenti, aggiungere un nuovo metodo di pagamento e gestire i tuoi asset</Typography>
+        <hr style={{ width: "100%", border: "none", borderTop: "1px solid rgba(0,0,0,0.06)", margin: "20px 0" }} />
+        <Typography sx={{ fontSize: "16px", fontWeight: 700, textAlign: "center", mb: 0 }}>Asset di pagamento</Typography>
         <Box sx={{ mt: 2 }}>
           <div className="d-flex justify-end me-3">
-            <Button variant="contained" color="secondary" onClick={handleOpenDialog}>Aggiungi</Button>
+            <Button variant="contained" color="secondary" onClick={handleOpenDialog} sx={{ borderRadius: "8px", textTransform: "none", fontWeight: 600, px: 2.5 }}>Aggiungi</Button>
             <AssetDialog
               open={openDialog}
               onAdd={handleSubmit}

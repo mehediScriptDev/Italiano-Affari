@@ -84,15 +84,25 @@ export default function AgentManagement() {
       <Box className="d-flex justify-center px-2" sx={{ backgroundColor: "#f6f8fb" }}>
         <Box sx={{ maxWidth: "1200px" }} className="mt-5 w-100 d-flex flex-column justify-center paddingContainer p-0">
           <Box className="d-flex justify-between align-center mb-2">
-            <h5 className="mb-0">Gestione Agenti</h5>
-            <Button color="secondary" variant="contained" onClick={() => !loading && setOpenModal(true)}>Invita Partner</Button>
+            <div>
+              <h5 className="mb-0" style={{ fontSize: "20px", fontWeight: 700, letterSpacing: "-0.3px" }}>Gestione Agenti</h5>
+              <p style={{ fontSize: "13px", color: "#64748b", margin: "2px 0 0" }}>La tua rete di partner</p>
+            </div>
+            <Button
+              color="secondary"
+              variant="contained"
+              onClick={() => !loading && setOpenModal(true)}
+              sx={{ borderRadius: "8px", textTransform: "none", fontWeight: 600, fontSize: "13px", px: 2.5 }}
+            >
+              Invita Partner
+            </Button>
           </Box>
           <DynamicDataTable columns={columns} data={agents} showCheckbox />
         </Box>
       </Box>
 
-      <Dialog open={openModal} fullWidth maxWidth="sm" onClose={() => setOpenModal(false)}>
-        <DialogTitle textAlign="center">Invita Partner</DialogTitle>
+      <Dialog open={openModal} fullWidth maxWidth="sm" onClose={() => setOpenModal(false)} PaperProps={{ sx: { borderRadius: "12px" } }}>
+        <DialogTitle sx={{ textAlign: "center", fontWeight: 700, fontSize: "18px", pt: 3 }}>Invita Partner</DialogTitle>
         <form onSubmit={handleSubmit}>
           <DialogContent>
             <Grid container spacing={2}>
@@ -111,9 +121,9 @@ export default function AgentManagement() {
               </Grid>
             </Grid>
           </DialogContent>
-          <DialogActions style={{ paddingBottom: "16px" }}>
-            <Button style={{ backgroundColor: "#f6f8fb" }} onClick={() => setOpenModal(false)}>Annulla</Button>
-            <Button type="submit" color="secondary" variant="contained">Invita</Button>
+          <DialogActions sx={{ pb: 2.5, px: 3, gap: 1 }}>
+            <Button sx={{ backgroundColor: "#f6f8fb", borderRadius: "8px", textTransform: "none", fontWeight: 500, px: 2.5 }} onClick={() => setOpenModal(false)}>Annulla</Button>
+            <Button type="submit" color="secondary" variant="contained" sx={{ borderRadius: "8px", textTransform: "none", fontWeight: 600, px: 2.5 }}>Invita</Button>
           </DialogActions>
         </form>
       </Dialog>

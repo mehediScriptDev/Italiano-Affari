@@ -13,7 +13,7 @@ export default function WalletPage() {
       <div className="d-flex justify-center px-2">
         <div
           id="dashboard-partner"
-          className="w-100 d-flex flex-column justify-center p-0"
+          className="mt-5 w-100 d-flex flex-column justify-center paddingContainer p-0"
           style={{ maxWidth: "1200px" }}
         >
           <Wallet />

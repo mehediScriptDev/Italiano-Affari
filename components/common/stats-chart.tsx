@@ -69,9 +69,9 @@ function PeriodSelector({
   onDateChange,
 }: PeriodSelectorProps) {
   return (
-    <Box sx={{ mb: 2, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+    <Box sx={{ mb: 2, display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 1 }}>
       <FormControl size="small" sx={{ width: "160px" }}>
-        <InputLabel id={`${chartType}-period-label`} sx={{ color: "rgba(0,0,0,0.7)", "&.Mui-focused": { color: "rgba(0,0,0,0.7)" } }}>Periodo</InputLabel>
+        <InputLabel id={`${chartType}-period-label`} sx={{ color: "rgba(0,0,0,0.5)", fontSize: "13px", "&.Mui-focused": { color: "rgba(0,0,0,0.7)" } }}>Periodo</InputLabel>
         <Select
           labelId={`${chartType}-period-label`}
           value={period}
@@ -79,10 +79,13 @@ function PeriodSelector({
           onChange={(e) => onPeriodChange(e.target.value)}
           sx={{
             color: "black",
-            ".MuiOutlinedInput-notchedOutline": { borderColor: "rgba(0,0,0,0.3)" },
-            "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "rgba(0,0,0,0.5)" },
+            borderRadius: "8px",
+            fontSize: "13px",
+            backgroundColor: "#f6f8fb",
+            ".MuiOutlinedInput-notchedOutline": { borderColor: "transparent" },
+            "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "rgba(0,0,0,0.15)" },
             "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "black" },
-            ".MuiSvgIcon-root": { color: "black" },
+            ".MuiSvgIcon-root": { color: "#64748b" },
           }}
         >
           <MenuItem value="today">Oggi</MenuItem>
@@ -102,9 +105,9 @@ function PeriodSelector({
               slotProps={{ textField: { size: "small" } }}
               sx={{
                 width: "120px",
-                "& .MuiInputBase-root": { color: "black", "& fieldset": { borderColor: "rgba(0,0,0,0.3)" }, "&:hover fieldset": { borderColor: "rgba(0,0,0,0.5)" } },
-                "& .MuiInputLabel-root": { color: "rgba(0,0,0,0.7)" },
-                "& .MuiSvgIcon-root": { color: "black" },
+                "& .MuiInputBase-root": { color: "black", borderRadius: "8px", fontSize: "13px", backgroundColor: "#f6f8fb", "& fieldset": { borderColor: "transparent" }, "&:hover fieldset": { borderColor: "rgba(0,0,0,0.15)" } },
+                "& .MuiInputLabel-root": { color: "rgba(0,0,0,0.5)", fontSize: "13px" },
+                "& .MuiSvgIcon-root": { color: "#64748b" },
               }}
             />
             <DatePicker
@@ -114,9 +117,9 @@ function PeriodSelector({
               slotProps={{ textField: { size: "small" } }}
               sx={{
                 width: "120px",
-                "& .MuiInputBase-root": { color: "black", "& fieldset": { borderColor: "rgba(0,0,0,0.3)" }, "&:hover fieldset": { borderColor: "rgba(0,0,0,0.5)" } },
-                "& .MuiInputLabel-root": { color: "rgba(0,0,0,0.7)" },
-                "& .MuiSvgIcon-root": { color: "black" },
+                "& .MuiInputBase-root": { color: "black", borderRadius: "8px", fontSize: "13px", backgroundColor: "#f6f8fb", "& fieldset": { borderColor: "transparent" }, "&:hover fieldset": { borderColor: "rgba(0,0,0,0.15)" } },
+                "& .MuiInputLabel-root": { color: "rgba(0,0,0,0.5)", fontSize: "13px" },
+                "& .MuiSvgIcon-root": { color: "#64748b" },
               }}
             />
           </LocalizationProvider>

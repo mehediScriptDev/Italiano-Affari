@@ -78,9 +78,16 @@ export default function Orders() {
 
   const datePickerSx = {
     width: "180px",
-    "& .MuiInputBase-root": { color: "black", borderColor: "rgba(0,0,0,0.3)", "& fieldset": { borderColor: "rgba(0,0,0,0.3)" }, "&:hover fieldset": { borderColor: "rgba(0,0,0,0.5)" } },
-    "& .MuiInputLabel-root": { color: "rgba(0,0,0,0.7)" },
-    "& .MuiSvgIcon-root": { color: "black" },
+    "& .MuiInputBase-root": {
+      color: "black",
+      borderRadius: "8px",
+      backgroundColor: "#f6f8fb",
+      "& fieldset": { borderColor: "transparent" },
+      "&:hover fieldset": { borderColor: "rgba(0,0,0,0.15)" },
+      "&.Mui-focused fieldset": { borderColor: "black" },
+    },
+    "& .MuiInputLabel-root": { color: "rgba(0,0,0,0.5)", fontSize: "13px" },
+    "& .MuiSvgIcon-root": { color: "#64748b" },
   };
 
   return (
@@ -88,16 +95,19 @@ export default function Orders() {
       <div style={{ maxWidth: "1200px" }} className="w-100 d-flex flex-column justify-center paddingContainer p-0">
         <Grid container spacing={2} alignItems="center">
           <Grid size={{ xs: 12, md: 6 }}>
-            <h5 className="mb-0">Ordini / Report</h5>
+            <div>
+              <h5 className="mb-0" style={{ fontSize: "20px", fontWeight: 700, letterSpacing: "-0.3px" }}>Ordini / Report</h5>
+              <p style={{ fontSize: "13px", color: "#64748b", margin: "2px 0 0" }}>Storico degli ordini con filtri per data</p>
+            </div>
           </Grid>
 
           <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={it}>
             <Grid size={{ xs: 12, sm: 6, md: 3 }} sx={{ display: "flex", alignItems: "center", justifyContent: { xs: "flex-start", sm: "flex-end" }, gap: 1 }}>
-              <label className="fw-bold">Data inizio: </label>
+              <label style={{ fontWeight: 600, fontSize: "13px", color: "#64748b", whiteSpace: "nowrap" }}>Da:</label>
               <DatePicker value={startDate} onChange={(v) => v && setStartDate(v)} slotProps={{ textField: { size: "small" } }} sx={datePickerSx} />
             </Grid>
             <Grid size={{ xs: 12, sm: 6, md: 3 }} sx={{ display: "flex", alignItems: "center", justifyContent: { xs: "flex-start", sm: "flex-end" }, gap: 1 }}>
-              <label className="fw-bold">Data fine: </label>
+              <label style={{ fontWeight: 600, fontSize: "13px", color: "#64748b", whiteSpace: "nowrap" }}>A:</label>
               <DatePicker value={endDate} onChange={(v) => v && setEndDate(v)} slotProps={{ textField: { size: "small" } }} sx={datePickerSx} />
             </Grid>
           </LocalizationProvider>

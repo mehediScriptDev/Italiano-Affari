@@ -66,21 +66,32 @@ export default function StatsPage() {
   };
 
   return (
-    <Box sx={{ backgroundColor: "transparent" }}>
-      <div className="d-flex justify-between align-center" style={{ paddingRight: "6px" }}><h5 className="mb-0">Statistiche</h5></div>
+    <Box sx={{ backgroundColor: "#f6f8fb" }}>
+      <div className="d-flex justify-between align-center" style={{ paddingRight: "6px" }}>
+        <div>
+          <h5 className="mb-0" style={{ fontSize: "20px", fontWeight: 700, letterSpacing: "-0.3px" }}>Statistiche</h5>
+          <p style={{ fontSize: "13px", color: "#64748b", margin: "2px 0 0" }}>Analisi delle tue performance</p>
+        </div>
+      </div>
       <div className="row d-flex justify-center">
         <Grid className={isMobile ? "px-0" : "px-1"} container spacing={isMobile ? 2 : 1} sx={{ mt: 2, p: 0 }}>
-          <Grid size={{ xs: 12, md: 4 }}><ChartPreview label="Vendite Dirette" icon={<ShoppingBag style={{ color: "black", fontSize: "24px" }} />} obj={chartsPreview.sales} /></Grid>
-          <Grid size={{ xs: 12, md: 4 }}><ChartPreview label="Guadagni Maturati" icon={<AttachMoney style={{ color: "black", fontSize: "24px" }} />} obj={chartsPreview.earnings} /></Grid>
-          <Grid size={{ xs: 12, md: 4 }}><ChartPreview label="Co-Partner" icon={<Handshake style={{ color: "black", fontSize: "24px" }} />} obj={chartsPreview.affiliates} /></Grid>
+          <Grid size={{ xs: 12, md: 4 }}><ChartPreview label="Vendite Dirette" icon={<ShoppingBag style={{ color: "black", fontSize: "22px" }} />} obj={chartsPreview.sales} /></Grid>
+          <Grid size={{ xs: 12, md: 4 }}><ChartPreview label="Guadagni Maturati" icon={<AttachMoney style={{ color: "black", fontSize: "22px" }} />} obj={chartsPreview.earnings} /></Grid>
+          <Grid size={{ xs: 12, md: 4 }}><ChartPreview label="Co-Partner" icon={<Handshake style={{ color: "black", fontSize: "22px" }} />} obj={chartsPreview.affiliates} /></Grid>
         </Grid>
 
         <div className="col-12 mb-4">
           <Grid container mt={2} spacing={isMobile ? 2 : 0}>
             <Grid size={{ xs: 12, md: 12 }}>
-              <Card sx={{ borderRadius: 2, boxShadow: "rgba(0,0,0,0.24) 0px 3px 8px" }}>
-                <CardContent>
-                  <Typography align="center" variant="h6" sx={{ color: "black", mb: 1, fontSize: 16 }}>Totale Commissioni Generate</Typography>
+              <Card sx={{
+                borderRadius: "12px",
+                border: "1px solid rgba(0,0,0,0.06)",
+                boxShadow: "0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.04)",
+              }}>
+                <CardContent sx={{ p: "24px !important" }}>
+                  <Typography sx={{ color: "#000", mb: 1.5, fontSize: 15, fontWeight: 600, letterSpacing: "-0.2px" }}>
+                    Totale Commissioni Generate
+                  </Typography>
                   <StatsChart label="commissioni" chartType="line" fetchData={fetchBigChart} />
                 </CardContent>
               </Card>
@@ -89,19 +100,31 @@ export default function StatsPage() {
         </div>
 
         <div className="col-12 mb-4">
-          <Grid container spacing={isMobile ? 2 : 0}>
-            <Grid size={{ xs: 12, md: 6, lg: 6 }} sx={{ borderRight: { md: "1px solid rgba(255,255,255,0.12)" }, pr: { md: 2 } }}>
-              <Card sx={{ borderRadius: 2, boxShadow: "rgba(0,0,0,0.24) 0px 3px 8px" }}>
-                <CardContent>
-                  <Typography align="center" variant="h6" sx={{ color: "black", mb: 1, fontSize: 16 }}>Totale Vendite Dirette</Typography>
+          <Grid container spacing={isMobile ? 2 : 2}>
+            <Grid size={{ xs: 12, md: 6, lg: 6 }}>
+              <Card sx={{
+                borderRadius: "12px",
+                border: "1px solid rgba(0,0,0,0.06)",
+                boxShadow: "0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.04)",
+              }}>
+                <CardContent sx={{ p: "24px !important" }}>
+                  <Typography sx={{ color: "#000", mb: 1.5, fontSize: 15, fontWeight: 600, letterSpacing: "-0.2px" }}>
+                    Totale Vendite Dirette
+                  </Typography>
                   <StatsChart label="vendite" chartType="line" fetchData={fetchBigChart} />
                 </CardContent>
               </Card>
             </Grid>
-            <Grid size={{ xs: 12, md: 6 }} sx={{ pl: { md: 2 } }}>
-              <Card sx={{ borderRadius: 2, boxShadow: "rgba(0,0,0,0.24) 0px 3px 8px" }}>
-                <CardContent>
-                  <Typography align="center" variant="h6" sx={{ color: "black", mb: 1, fontSize: 16 }}>Nuovi Affiliati Registrati</Typography>
+            <Grid size={{ xs: 12, md: 6 }}>
+              <Card sx={{
+                borderRadius: "12px",
+                border: "1px solid rgba(0,0,0,0.06)",
+                boxShadow: "0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.04)",
+              }}>
+                <CardContent sx={{ p: "24px !important" }}>
+                  <Typography sx={{ color: "#000", mb: 1.5, fontSize: 15, fontWeight: 600, letterSpacing: "-0.2px" }}>
+                    Nuovi Affiliati Registrati
+                  </Typography>
                   <StatsChart label="affiliati" chartType="bar" fetchData={fetchBigChart} />
                 </CardContent>
               </Card>

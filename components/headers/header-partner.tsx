@@ -140,26 +140,39 @@ export default function HeaderPartner() {
                   onClose={handleProfileClose}
                   anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
                   transformOrigin={{ vertical: "top", horizontal: "right" }}
+                  slotProps={{
+                    paper: {
+                      sx: {
+                        borderRadius: "12px",
+                        border: "1px solid rgba(0,0,0,0.06)",
+                        boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
+                        mt: 1,
+                        minWidth: 220,
+                      },
+                    },
+                  }}
                 >
-                  <div onClick={handleProfileClose} style={{ padding: "6px 16px", gap: "3px" }} className="mb-1 d-flex align-center">
-                    <Avatar src={profile?.avatar} sx={{ width: "32px", height: "32px" }}>
+                  <div onClick={handleProfileClose} style={{ padding: "12px 16px", gap: "10px" }} className="mb-1 d-flex align-center">
+                    <Avatar src={profile?.avatar} sx={{ width: "36px", height: "36px" }}>
                       {profile?.name?.charAt(0)}
                     </Avatar>
                     <div>
-                      <p className="fw-bold">{profile?.name}</p>
-                      <p style={{ fontSize: "12px" }} className="mt-0">{profile?.email}</p>
+                      <p style={{ fontWeight: 600, fontSize: "14px", margin: 0 }}>{profile?.name}</p>
+                      <p style={{ fontSize: "12px", color: "#64748b", margin: "2px 0 0" }}>{profile?.email}</p>
                     </div>
                   </div>
-                  <MenuItem onClick={() => router.push("/profile")}>
-                    <ListItemIcon><AccountCircleIcon style={{ fontSize: "19px" }} /></ListItemIcon>
+                  <div style={{ height: "1px", backgroundColor: "rgba(0,0,0,0.06)", margin: "0 12px" }} />
+                  <MenuItem onClick={() => router.push("/profile")} sx={{ py: 1.2, px: 2, mx: "4px", borderRadius: "8px", fontSize: "14px" }}>
+                    <ListItemIcon><AccountCircleIcon style={{ fontSize: "18px" }} /></ListItemIcon>
                     Il mio account
                   </MenuItem>
-                  <MenuItem onClick={() => downloadAssetFile()}>
-                    <ListItemIcon><Handyman style={{ fontSize: "19px" }} /></ListItemIcon>
+                  <MenuItem onClick={() => downloadAssetFile()} sx={{ py: 1.2, px: 2, mx: "4px", borderRadius: "8px", fontSize: "14px" }}>
+                    <ListItemIcon><Handyman style={{ fontSize: "18px" }} /></ListItemIcon>
                     Strumenti Partner
                   </MenuItem>
-                  <MenuItem onClick={() => setToken()} style={{ borderTop: "1px solid #e2e8f0", paddingTop: "10px" }}>
-                    <ListItemIcon><LogoutIcon style={{ fontSize: "19px" }} /></ListItemIcon>
+                  <div style={{ height: "1px", backgroundColor: "rgba(0,0,0,0.06)", margin: "4px 12px" }} />
+                  <MenuItem onClick={() => setToken()} sx={{ py: 1.2, px: 2, mx: "4px", borderRadius: "8px", fontSize: "14px", color: "#dc2626" }}>
+                    <ListItemIcon><LogoutIcon style={{ fontSize: "18px", color: "#dc2626" }} /></ListItemIcon>
                     Esci
                   </MenuItem>
                 </Menu>

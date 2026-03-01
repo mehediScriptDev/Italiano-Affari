@@ -16,32 +16,40 @@ const navLinks = [
 const styles: Record<string, CSSProperties> = {
   navContainer: {
     backgroundColor: "white",
-    padding: "15px 16px",
-    borderBottom: "1px solid #ddd",
+    padding: "0 16px",
+    borderBottom: "1px solid rgba(0,0,0,0.06)",
+    boxShadow: "0 1px 2px rgba(0,0,0,0.03)",
   },
   navList: {
     display: "flex",
-    gap: "20px",
+    gap: "4px",
     listStyle: "none",
     margin: 0,
     padding: 0,
+    height: "48px",
+    alignItems: "center",
   },
   navItem: {
     position: "relative",
   },
   navLink: {
     textDecoration: "none",
-    fontSize: "14px",
-    color: "#333",
-    fontWeight: "500",
-    padding: "8px 12px",
-    borderRadius: "0px",
-    transition: "background 0.2s",
+    fontSize: "13px",
+    color: "#64748b",
+    fontWeight: 500,
+    padding: "6px 14px",
+    borderRadius: "8px",
+    transition: "all 0.2s ease",
+    display: "inline-block",
+    letterSpacing: "0.1px",
   },
   activeLink: {
-    borderBottom: "2px solid black",
-    color: "#000",
-    fontWeight: "bold",
+    backgroundColor: "#000",
+    color: "#fff",
+    fontWeight: 600,
+  },
+  hoverStyle: {
+    backgroundColor: "#f6f8fb",
   },
 };
 
@@ -52,29 +60,31 @@ export default function NavPartner() {
     <nav className="nav-container" style={styles.navContainer}>
       <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
         <ul className="nav-list" style={styles.navList}>
-          {navLinks.map(({ href, label }) => (
-            <li key={href} style={styles.navItem}>
-              <Link
-                href={href}
-                style={{
-                  ...styles.navLink,
-                  ...(pathname === href ? styles.activeLink : {}),
-                }}
-              >
-                {label}
-              </Link>
-            </li>
-          ))}
+          {navLinks.map(({ href, label }) => {
+            const isActive = pathname === href;
+            return (
+              <li key={href} style={styles.navItem}>
+                <Link
+                  href={href}
+                  style={{
+                    ...styles.navLink,
+                    ...(isActive ? styles.activeLink : {}),
+                  }}
+                >
+                  {label}
+                </Link>
+              </li>
+            );
+          })}
           <li style={styles.navItem}>
-            <Link
-              href="/media-library"
-              style={{
-                ...styles.navLink,
-                ...(pathname === "/media-library" ? styles.activeLink : {}),
-              }}
+            <a
+              href="https://contents.psicopatici.com/"
+              style={styles.navLink}
+              target="_blank"
+              rel="noopener noreferrer"
             >
               Libreria Contenuti
-            </Link>
+            </a>
           </li>
         </ul>
       </div>
