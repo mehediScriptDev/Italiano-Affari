@@ -5,7 +5,7 @@ import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import ClearIcon from "@mui/icons-material/Clear";
-import "@/styles/notification-right-menu.css";
+/* notification-right-menu styles are now in globals.css */
 import {
   deleteAllNotifications, deleteNotification,
   markAllNotificationsAsRead, markNotificationAsRead,

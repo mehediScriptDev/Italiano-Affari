@@ -197,7 +197,7 @@ export default function StatsPage() {
     }
 
     return (
-        <Box sx={{backgroundColor: 'transparent'}}>
+        <Box className="w-100 paddingContainer mt-3" sx={{backgroundColor: 'transparent'}}>
             <div className="d-flex justify-between align-center" style={{paddingRight: '6px'}}>
                 <h5 className=" mb-0">Statistiche</h5>
             </div>

@@ -35,7 +35,7 @@ export default function ProfilePage({ index = 0 }: ProfilePageProps) {
   const [value, setValue] = useState(index);
 
   return (
-    <div className="container py-8 mb-8">
+    <div className="w-100 paddingContainer mt-3 mb-8">
       {/* Page header */}
       <div className="mb-4">
         <h1 className="page-title">Il mio account</h1>

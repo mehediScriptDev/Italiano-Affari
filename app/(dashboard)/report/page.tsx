@@ -8,14 +8,8 @@ export const metadata: Metadata = {
 
 export default function ReportPage() {
   return (
-    <div className="d-flex justify-center px-2">
-      <div
-        id="dashboard-partner"
-        className="mt-5 w-100 d-flex flex-column justify-center paddingContainer p-0"
-        style={{ maxWidth: "1200px" }}
-      >
-        <StatsPage />
-      </div>
+    <div id="report" className="overflow-hidden">
+      <StatsPage />
     </div>
   );
 }

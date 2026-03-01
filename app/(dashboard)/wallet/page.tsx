@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Wallet from "@/components/dashboard/wallet";
-import Box from "@mui/material/Box";
 
 export const metadata: Metadata = {
   title: "Psicopatici Partners",
@@ -9,16 +8,8 @@ export const metadata: Metadata = {
 
 export default function WalletPage() {
   return (
-    <Box>
-      <div className="d-flex justify-center px-2">
-        <div
-          id="dashboard-partner"
-          className="mt-5 w-100 d-flex flex-column justify-center paddingContainer p-0"
-          style={{ maxWidth: "1200px" }}
-        >
-          <Wallet />
-        </div>
-      </div>
-    </Box>
+    <div id="wallet" className="overflow-hidden">
+      <Wallet />
+    </div>
   );
 }

@@ -9,7 +9,7 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import IndeterminateCheckBoxIcon from "@mui/icons-material/IndeterminateCheckBox";
-import "@/styles/dynamic-table.css";
+
 
 export interface DynamicColumn {
   label: string;
@@ -76,7 +76,7 @@ export default function DynamicDataTable({ columns, data }: DynamicDataTableProp
               />
               {hasSubagents && (
                 <hr
-                  className="opacity1 border-0 position-relative"
+                  className="!opacity-100 border-0 position-relative"
                   style={{ backgroundColor: "#13131f", height: "3px", right: "2px" }}
                 />
               )}

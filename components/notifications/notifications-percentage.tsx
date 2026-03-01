@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import {
   Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
 } from "@mui/material";
-import "@/styles/notification.css";
 import { useAuth } from "@/lib/context/auth-context";
 import { fetchNotifications } from "@/lib/api/notifications";
 import type { Notification } from "@/lib/types";
@@ -38,8 +37,8 @@ export default function NotificationsPercentage() {
   };
 
   return (
-    <div className="px-2">
-      <div className="bg-white mb-2 mt-1" style={{ maxWidth: "1200px", margin: "auto", borderRadius: "16px", border: '1px solid #eef0f4', boxShadow: '0 1px 2px rgba(19, 19, 31, 0.04), 0 4px 16px rgba(19, 19, 31, 0.04)' }}>
+    <div className="w-100 paddingContainer mt-3">
+      <div className="bg-white mb-2" style={{ borderRadius: "16px", border: '1px solid #eef0f4', boxShadow: '0 1px 2px rgba(19, 19, 31, 0.04), 0 4px 16px rgba(19, 19, 31, 0.04)' }}>
         <div className="p-2">
           <h3>Notifiche</h3>
           <div className="d-flex gap-1 mb-0">
@@ -50,7 +49,7 @@ export default function NotificationsPercentage() {
           {loading ? (
             <p>Caricamento notifiche...</p>
           ) : (
-            <div className="scrollable-container mt-4">
+            <div className="max-h-[60vh] overflow-y-auto mt-4">
               {notifications.length > 0 ? (
                 notifications
                   .filter((n) => flag === "all" || !n.is_read)
@@ -65,7 +64,7 @@ export default function NotificationsPercentage() {
                       <p className="mt-0 d-flex align-center">
                         <strong>{notification.current_percentage}% → {notification.proposed_percentage}%</strong>
                       </p>
-                      <div className="d-flex gap-1 align-center iconButton" style={{ alignSelf: "center" }}>
+                      <div className="d-flex gap-2.5 align-center max-[600px]:flex-col max-[600px]:gap-5" style={{ alignSelf: "center" }}>
                         <Button size="small" variant="contained" onClick={() => { setSelected(notification); setDialogOpen(true); }}>Sì</Button>
                         <Button size="small" variant="outlined" onClick={() => handleConfirm()}>No</Button>
                       </div>

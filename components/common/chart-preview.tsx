@@ -12,6 +12,8 @@ interface ChartPreviewProps {
     icon: React.ReactNode;
     label: string;
     sx?: SxProps;
+    iconBg?: string;
+    suffix?: string;
 }
 
 const ChartSkeleton = () => (
@@ -34,7 +36,7 @@ const ChartSkeleton = () => (
     </Card>
 );
 
-function ChartPreview({ obj, icon, label, sx }: ChartPreviewProps) {
+function ChartPreview({ obj, icon, label, sx, iconBg = '#12715b', suffix = '' }: ChartPreviewProps) {
     if (!obj)
         return <ChartSkeleton />;
 
@@ -69,7 +71,7 @@ function ChartPreview({ obj, icon, label, sx }: ChartPreviewProps) {
 
             <CardContent>
                 <div className="d-flex align-center">
-                    <div className="bg-danger p-1 rounded">
+                    <div style={{ backgroundColor: iconBg, borderRadius: '10px', padding: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: 'white' }}>
                         {icon}
                     </div>
                     <div className="ms-3">
@@ -77,7 +79,7 @@ function ChartPreview({ obj, icon, label, sx }: ChartPreviewProps) {
                             {label}
                         </Typography>
                         <Typography variant="h5" className="fw-bold">
-                            {formatted}
+                            {formatted}{suffix}
                         </Typography>
                     </div>
                 </div>

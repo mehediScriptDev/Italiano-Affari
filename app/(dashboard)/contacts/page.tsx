@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import ContactManager from "@/components/dashboard/contact-manager";
-import Box from "@mui/material/Box";
 
 export const metadata: Metadata = {
   title: "Psicopatici Partners",
@@ -9,10 +8,8 @@ export const metadata: Metadata = {
 
 export default function ContactsPage() {
   return (
-    <Box>
-      <div id="dashboard-partner" className="overflow-hidden">
-        <ContactManager />
-      </div>
-    </Box>
+    <div id="contacts" className="overflow-hidden">
+      <ContactManager />
+    </div>
   );
 }

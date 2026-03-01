@@ -21,12 +21,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-        <link rel="stylesheet" href="/assets/css/uni-core.min.css" />
-        <link rel="stylesheet" href="/assets/css/unicons.min.css" />
-        <link rel="stylesheet" href="/assets/css/fonts.css" />
-        <link rel="stylesheet" href="/assets/css/prettify.min.css" />
-        <link rel="stylesheet" href="/assets/css/swiper-bundle.min.css" />
-        <link rel="stylesheet" href="/assets/css/theme/main.min.purge.css" />
+        {/* Vendor CSS is now imported via globals.css with layer(vendor) */}
       </head>
       <body className="bg-[#f6f8fb]">
         <Script

@@ -129,7 +129,7 @@ export default function Wallet() {
 
   return (
     <>
-      <div className="container py-8">
+      <div className="w-100 paddingContainer mt-3">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div>

@@ -175,7 +175,7 @@ export default function MediaLibrary() {
   };
 
   return (
-    <Box sx={{ maxWidth: "1200px", margin: "0 auto", px: 2, py: 3 }}>
+    <Box className="w-100 paddingContainer mt-3">
       {/* Header */}
       <div className="d-flex justify-between align-center mb-4">
         <div>

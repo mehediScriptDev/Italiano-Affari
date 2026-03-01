@@ -7,7 +7,6 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { it } from "date-fns/locale";
 import { formatInTimeZone } from "date-fns-tz";
 import { InfoOutlined } from "@mui/icons-material";
-import "@/styles/orders.css";
 import DataTable from "@/components/data/data-table";
 import { fetchLatestOrders } from "@/lib/api/partners";
 import type { Commission } from "@/lib/types";
@@ -91,7 +90,7 @@ export default function Orders() {
   };
 
   return (
-    <div className="container py-8">
+    <div className="w-100 paddingContainer mt-3">
       {/* Header row */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
         <div>

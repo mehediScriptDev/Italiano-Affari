@@ -119,7 +119,7 @@ export default function ContactManager() {
 
   return (
     <>
-      <div className="container py-8">
+      <div className="w-100 paddingContainer mt-3">
         <div className="flex items-center justify-between mb-6">
           <div>
             <h1 className="page-title">Gestione Contatti</h1>
