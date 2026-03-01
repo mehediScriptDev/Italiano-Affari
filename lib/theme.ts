@@ -16,7 +16,7 @@ declare module "@mui/material/styles" {
 const theme = createTheme({
   palette: {
     primary: { main: "#13131f" },
-    secondary: { main: "#13131f" },
+    secondary: { main: "#12715b" },
     tertiary: { main: "#f6f8fb" },
     dashboard: { main: "#13131f" },
     background: {
@@ -49,21 +49,21 @@ const theme = createTheme({
         },
         contained: {
           "&.MuiButton-containedSecondary": {
-            background: "linear-gradient(135deg, #13131f 0%, #1e1e30 100%)",
+            background: "#12715b",
             color: "#ffffff",
             "&:hover": {
-              background: "linear-gradient(135deg, #1a1a2e 0%, #252540 100%)",
-              boxShadow: "0 4px 14px rgba(19, 19, 31, 0.25)",
+              background: "#0f5e4a",
+              boxShadow: "0 4px 14px rgba(18, 113, 91, 0.35)",
             },
           },
         },
         outlined: {
           "&.MuiButton-outlinedSecondary": {
-            borderColor: "#13131f",
-            color: "#13131f",
+            borderColor: "#12715b",
+            color: "#12715b",
             "&:hover": {
-              backgroundColor: "rgba(19, 19, 31, 0.04)",
-              borderColor: "#13131f",
+              backgroundColor: "rgba(18, 113, 91, 0.04)",
+              borderColor: "#12715b",
             },
           },
         },

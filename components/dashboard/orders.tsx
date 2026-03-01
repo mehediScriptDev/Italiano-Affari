@@ -101,11 +101,11 @@ export default function Orders() {
         <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={it}>
           <div className="flex flex-wrap items-center gap-3">
             <div className="flex items-center gap-2">
-              <label className="text-[13px] font-semibold text-slate-500 whitespace-nowrap">Da:</label>
+              <label className="text-[13px] font-semibold text-slate-500 whitespace-nowrap">Data inizio:</label>
               <DatePicker value={startDate} onChange={(v) => v && setStartDate(v)} slotProps={{ textField: { size: "small" } }} sx={datePickerSx} />
             </div>
             <div className="flex items-center gap-2">
-              <label className="text-[13px] font-semibold text-slate-500 whitespace-nowrap">A:</label>
+              <label className="text-[13px] font-semibold text-slate-500 whitespace-nowrap">Data fine:</label>
               <DatePicker value={endDate} onChange={(v) => v && setEndDate(v)} slotProps={{ textField: { size: "small" } }} sx={datePickerSx} />
             </div>
           </div>
