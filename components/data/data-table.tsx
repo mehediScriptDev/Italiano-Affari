@@ -59,7 +59,7 @@ export default function DataTable<T extends { id: string | number }>({
         size="small"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="!mb-4"
+        className="mb-4!"
         sx={{
           "& .MuiOutlinedInput-root": {
             borderRadius: "8px",

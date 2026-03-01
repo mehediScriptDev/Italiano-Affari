@@ -30,10 +30,10 @@ export default function ContactManager() {
       label: "Azioni", field: "action",
       renderCell: (row: DynamicRow) => (
         <div className="flex gap-1">
-          <IconButton className="!p-1" style={{ backgroundColor: "#f6f8fb" }} size="small" onClick={() => handleEdit(row)}>
+          <IconButton className="p-1!" style={{ backgroundColor: "#f6f8fb" }} size="small" onClick={() => handleEdit(row)}>
             <EditIcon color="secondary" />
           </IconButton>
-          <IconButton className="!p-1" style={{ backgroundColor: "#f6f8fb" }} size="small" onClick={() => handleDelete(row.id as number)}>
+          <IconButton className="p-1!" style={{ backgroundColor: "#f6f8fb" }} size="small" onClick={() => handleDelete(row.id as number)}>
             <DeleteOutlineIcon color="error" />
           </IconButton>
         </div>

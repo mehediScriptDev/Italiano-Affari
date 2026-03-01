@@ -138,7 +138,7 @@ export default function DashboardShell({ config, children }: DashboardShellProps
                     "text-sm lg:text-base font-medium whitespace-nowrap cursor-pointer relative",
                     "transition-all duration-150 ease-out",
                     active
-                      ? "text-white! bg-[#12715b]/25 font-semibold"
+                      ? "text-white! bg-[#12715b] font-semibold"
                       : "text-white/65! hover:text-white! hover:bg-white/8",
                   ].join(" ")}
                 >
@@ -193,22 +193,22 @@ export default function DashboardShell({ config, children }: DashboardShellProps
       {/* ── Topbar ────────────────────────────── */}
       <div
         className={[
-          "fixed top-0 right-0 h-15 flex items-center justify-end px-6",
+          "fixed top-0 right-0 h-15 flex items-center justify-between px-4",
           "z-1100 bg-white border-b border-[#eef0f4] shadow-sm",
           "left-75",
           "max-lg:left-0!",
         ].join(" ")}
       >
-        {/* Hamburger (mobile) */}
+        {/* Hamburger (mobile) — left side */}
         <IconButton
           onClick={() => setMobileOpen(true)}
-          className="lg:hidden! mr-auto"
+          className="lg:hidden!"
           size="small"
         >
           <MenuIcon />
         </IconButton>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 ml-auto">
           {/* Notifications bell */}
           <IconButton onClick={() => setRightMenuOpen(true)}>
             <Badge badgeContent={unreadCount} color="error" max={99}>

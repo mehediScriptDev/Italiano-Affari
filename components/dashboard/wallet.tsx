@@ -167,9 +167,9 @@ export default function Wallet() {
         <DialogContent>
           <p className="text-sm text-slate-500 mb-3">Seleziona quanti crediti assegnare:</p>
           <div className="flex items-center gap-2">
-            <span className="text-[13px] text-slate-500 min-w-[24px]">0</span>
+            <span className="text-[13px] text-slate-500 min-w-6">0</span>
             <Slider color="secondary" value={genValue} onChange={(_, v) => setGenValue(v as number)} min={0} max={chartsPreview.sales.total} valueLabelDisplay="auto" className="flex-1" />
-            <span className="text-[13px] text-slate-500 min-w-[32px] text-right">{chartsPreview.sales.total}</span>
+            <span className="text-[13px] text-slate-500 min-w-8 text-right">{chartsPreview.sales.total}</span>
           </div>
           <div className="mt-4 px-3.5 py-2.5 bg-[#f6f8fb] rounded-xl">
             <p className="text-sm font-semibold m-0">{genValue} crediti selezionati</p>
