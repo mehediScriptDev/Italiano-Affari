@@ -26,17 +26,17 @@ export default function DashboardError({
         p: 4,
       }}
     >
-      <Typography variant="h4" fontWeight={700} sx={{ color: "#12715b", mb: 2 }}>
+      <Typography variant="h4" fontWeight={700} sx={{ color: "#13131f", mb: 1.5, letterSpacing: "-0.02em" }}>
         Qualcosa è andato storto
       </Typography>
-      <Typography variant="body1" sx={{ color: "text.secondary", maxWidth: 440, mb: 4 }}>
+      <Typography variant="body1" sx={{ color: "#64748b", maxWidth: 440, mb: 4, lineHeight: 1.6 }}>
         Si è verificato un errore imprevisto nel caricamento di questa sezione.
       </Typography>
       <Box sx={{ display: "flex", gap: 2 }}>
-        <Button variant="contained" color="secondary" onClick={reset}>
+        <Button variant="contained" color="secondary" onClick={reset} sx={{ px: 3, fontWeight: 600 }}>
           Riprova
         </Button>
-        <Button variant="outlined" color="secondary" href="/dashboard">
+        <Button variant="outlined" color="secondary" href="/dashboard" sx={{ px: 3, fontWeight: 500 }}>
           Vai alla Dashboard
         </Button>
       </Box>

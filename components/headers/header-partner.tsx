@@ -26,7 +26,6 @@ export default function HeaderPartner() {
   const { token, setToken } = useAuth();
   const { profile } = useAppContext();
   const isMd = useMediaQuery(theme.breakpoints.up("md"));
-  const isSm = useMediaQuery(theme.breakpoints.down("sm"));
   const router = useRouter();
 
   const [notificationAnchorEl, setNotificationAnchorEl] = useState<HTMLElement | null>(null);
@@ -75,123 +74,119 @@ export default function HeaderPartner() {
 
   return (
     <>
-      <div className="mb-4">
-        <header
-          className="uc-header uc-navbar-sticky-wrap z-999 uc-dark uc-sticky"
-          style={{ height: "60px", backgroundColor: "black", display: "flex", justifyContent: "center" }}
-        >
-            <div className="d-flex justify-center w-100">
-            <nav
-              className="uc-navbar-container uc-navbar-float ft-tertiary z-1 uc-navbar-transparent"
-              style={{
-                height: "60px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                backgroundColor: "black",
-                padding: isSm ? "0px 20px" : "0px",
-                maxWidth: "1200px",
-                width: "100%",
-                margin: "0 auto",
+      <header className="sticky top-0 z-999 h-15 bg-[#13131f] flex items-center" style={{ boxShadow: '0 2px 12px rgba(19, 19, 31, 0.3)' }}>
+        <div className="container flex items-center justify-between w-full">
+          {/* Logo */}
+          <Link href="/" className="flex items-center shrink-0">
+            <img
+              src="https://cdn.psicopaticiservice.com/logo/materialeweb/psi-v3-white.png"
+              alt="Logo"
+              height={30}
+              width={34}
+            />
+          </Link>
+
+          {/* Right side */}
+          <div className="flex items-center gap-4 sm:gap-5">
+            <Avatar
+              onClick={handleProfileClick}
+              src={profile?.avatar}
+              className="cursor-pointer sm:w-10! sm:h-10! w-9! h-9! bg-gray-500! ring-2 ring-white/20 hover:ring-white/40 transition-all duration-200"
+            >
+              {profile?.name?.charAt(0)}
+            </Avatar>
+
+            {openNotification && (
+              <NotificationMenu
+                anchorEl={notificationAnchorEl}
+                open={openNotification}
+                onClose={handleNotificationClose}
+                notifications={notifications.filter((i) => i.type === "operation")}
+              />
+            )}
+
+            {openRightMenu && (
+              <NotificationRightMenu
+                open={openRightMenu}
+                onClose={() => setOpenRightMenu(false)}
+                notifications={notifications.filter((i) => i.type === "system")}
+                setNotifications={setNotifications}
+              />
+            )}
+
+            {/* Profile dropdown */}
+            <Menu
+              anchorEl={anchorElProfile}
+              open={Boolean(anchorElProfile)}
+              onClose={handleProfileClose}
+              anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+              transformOrigin={{ vertical: "top", horizontal: "right" }}
+              slotProps={{
+                paper: {
+                  className: "!rounded-2xl !mt-2.5 !min-w-60",
+                  style: { boxShadow: '0 8px 32px rgba(19, 19, 31, 0.12), 0 2px 8px rgba(19, 19, 31, 0.06)', border: '1px solid #eef0f4' },
+                },
               }}
             >
-              <div className="uc-navbar-left" style={{ display: "flex", alignItems: "center" }}>
-                <Link href="/" style={{ width: isSm ? 150 : 220 }}>
-                  <img
-                    src="https://cdn.psicopaticiservice.com/logo/materialeweb/psi-v3-white.png"
-                    alt="Logo" height={30} width={34}
-                  />
-                </Link>
-              </div>
-
+              {/* Profile header */}
               <div
-                className="uc-navbar-right"
-                style={{ display: "flex", alignItems: "center", gap: isSm ? "18px" : "23px" }}
+                className="flex items-center gap-3 px-4 py-3.5 mb-1 cursor-pointer"
+                onClick={handleProfileClose}
               >
-                <Avatar
-                  onClick={handleProfileClick}
-                  src={profile?.avatar}
-                  sx={{ cursor: "pointer", backgroundColor: "gray", width: isSm ? 35 : 40, height: isSm ? 35 : 40 }}
-                >
+                <Avatar src={profile?.avatar} className="!w-9 !h-9">
                   {profile?.name?.charAt(0)}
                 </Avatar>
-
-                {openNotification && (
-                  <NotificationMenu
-                    anchorEl={notificationAnchorEl}
-                    open={openNotification}
-                    onClose={handleNotificationClose}
-                    notifications={notifications.filter((i) => i.type === "operation")}
-                  />
-                )}
-
-                {openRightMenu && (
-                  <NotificationRightMenu
-                    open={openRightMenu}
-                    onClose={() => setOpenRightMenu(false)}
-                    notifications={notifications.filter((i) => i.type === "system")}
-                    setNotifications={setNotifications}
-                  />
-                )}
-
-                <Menu
-                  anchorEl={anchorElProfile}
-                  open={Boolean(anchorElProfile)}
-                  onClose={handleProfileClose}
-                  anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-                  transformOrigin={{ vertical: "top", horizontal: "right" }}
-                  slotProps={{
-                    paper: {
-                      sx: {
-                        borderRadius: "12px",
-                        border: "1px solid rgba(0,0,0,0.06)",
-                        boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
-                        mt: 1,
-                        minWidth: 220,
-                      },
-                    },
-                  }}
-                >
-                  <div onClick={handleProfileClose} style={{ padding: "12px 16px", gap: "10px" }} className="mb-1 d-flex align-center">
-                    <Avatar src={profile?.avatar} sx={{ width: "36px", height: "36px" }}>
-                      {profile?.name?.charAt(0)}
-                    </Avatar>
-                    <div>
-                      <p style={{ fontWeight: 600, fontSize: "14px", margin: 0 }}>{profile?.name}</p>
-                      <p style={{ fontSize: "12px", color: "#64748b", margin: "2px 0 0" }}>{profile?.email}</p>
-                    </div>
-                  </div>
-                  <div style={{ height: "1px", backgroundColor: "rgba(0,0,0,0.06)", margin: "0 12px" }} />
-                  <MenuItem onClick={() => router.push("/profile")} sx={{ py: 1.2, px: 2, mx: "4px", borderRadius: "8px", fontSize: "14px" }}>
-                    <ListItemIcon><AccountCircleIcon style={{ fontSize: "18px" }} /></ListItemIcon>
-                    Il mio account
-                  </MenuItem>
-                  <MenuItem onClick={() => downloadAssetFile()} sx={{ py: 1.2, px: 2, mx: "4px", borderRadius: "8px", fontSize: "14px" }}>
-                    <ListItemIcon><Handyman style={{ fontSize: "18px" }} /></ListItemIcon>
-                    Strumenti Partner
-                  </MenuItem>
-                  <div style={{ height: "1px", backgroundColor: "rgba(0,0,0,0.06)", margin: "4px 12px" }} />
-                  <MenuItem onClick={() => setToken()} sx={{ py: 1.2, px: 2, mx: "4px", borderRadius: "8px", fontSize: "14px", color: "#dc2626" }}>
-                    <ListItemIcon><LogoutIcon style={{ fontSize: "18px", color: "#dc2626" }} /></ListItemIcon>
-                    Esci
-                  </MenuItem>
-                </Menu>
-
-                <a className="d-block lg:d-none uc-icon uc-navbar-toggle-icon text-white" onClick={openMobileMenu}>
-                  <svg width={20} height={20} viewBox="0 0 20 20">
-                    <rect className="line-1" y={3} width={20} height={2} />
-                    <rect className="line-2" y={9} width={20} height={2} />
-                    <rect className="line-3" y={9} width={20} height={2} />
-                    <rect className="line-4" y={15} width={20} height={2} />
-                  </svg>
-                </a>
+                <div>
+                  <p className="text-sm font-semibold m-0 leading-tight">{profile?.name}</p>
+                  <p className="text-xs text-slate-500 m-0 mt-0.5">{profile?.email}</p>
+                </div>
               </div>
-            </nav>
-          </div>
-        </header>
 
-        {isMd && <NavPartner />}
-      </div>
+              <div className="h-px bg-[#e5e7ec] mx-3 mb-1" />
+
+              <MenuItem
+                onClick={() => router.push("/profile")}
+                sx={{ py: 1.2, px: 2, mx: "4px", borderRadius: "8px", fontSize: "14px" }}
+              >
+                <ListItemIcon><AccountCircleIcon style={{ fontSize: "18px" }} /></ListItemIcon>
+                Il mio account
+              </MenuItem>
+
+              <MenuItem
+                onClick={() => downloadAssetFile()}
+                sx={{ py: 1.2, px: 2, mx: "4px", borderRadius: "8px", fontSize: "14px" }}
+              >
+                <ListItemIcon><Handyman style={{ fontSize: "18px" }} /></ListItemIcon>
+                Strumenti Partner
+              </MenuItem>
+
+              <div className="h-px bg-[#e5e7ec] mx-3 my-1" />
+
+              <MenuItem
+                onClick={() => setToken()}
+                sx={{ py: 1.2, px: 2, mx: "4px", borderRadius: "8px", fontSize: "14px", color: "#dc2626" }}
+              >
+                <ListItemIcon><LogoutIcon style={{ fontSize: "18px", color: "#dc2626" }} /></ListItemIcon>
+                Esci
+              </MenuItem>
+            </Menu>
+
+            {/* Mobile menu toggle */}
+            <a
+              className="flex lg:hidden cursor-pointer text-white"
+              onClick={openMobileMenu}
+            >
+              <svg width={20} height={20} viewBox="0 0 20 20" fill="white">
+                <rect y={3} width={20} height={2} />
+                <rect y={9} width={20} height={2} />
+                <rect y={15} width={20} height={2} />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </header>
+
+      {isMd && <NavPartner />}
     </>
   );
 }

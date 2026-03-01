@@ -12,9 +12,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <ScrollToTop />
       <HeaderPartner />
       <MobileMenu />
-      <div style={{ backgroundColor: "#f6f8fb", minHeight: "100vh" }}>
+      <main className="min-h-screen bg-[#f6f8fb]">
         {children}
-      </div>
+      </main>
     </ProtectedRoute>
   );
 }
+

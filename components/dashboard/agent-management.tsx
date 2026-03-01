@@ -2,8 +2,8 @@
 
 import { useEffect, useState, type FormEvent, type ChangeEvent } from "react";
 import {
-  Box, Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle,
-  FormControl, InputLabel, Select, MenuItem, Grid, CircularProgress,
+  Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle,
+  FormControl, InputLabel, Select, MenuItem, CircularProgress,
 } from "@mui/material";
 import DynamicDataTable from "@/components/data/dynamic-data-table";
 import { fetchSubAgents, inviteSubAgent } from "@/lib/api/partners";
@@ -81,45 +81,39 @@ export default function AgentManagement() {
 
   return (
     <>
-      <Box className="d-flex justify-center px-2" sx={{ backgroundColor: "#f6f8fb" }}>
-        <Box sx={{ maxWidth: "1200px" }} className="mt-5 w-100 d-flex flex-column justify-center paddingContainer p-0">
-          <Box className="d-flex justify-between align-center mb-2">
-            <div>
-              <h5 className="mb-0" style={{ fontSize: "20px", fontWeight: 700, letterSpacing: "-0.3px" }}>Gestione Agenti</h5>
-              <p style={{ fontSize: "13px", color: "#64748b", margin: "2px 0 0" }}>La tua rete di partner</p>
-            </div>
-            <Button
-              color="secondary"
-              variant="contained"
-              onClick={() => !loading && setOpenModal(true)}
-              sx={{ borderRadius: "8px", textTransform: "none", fontWeight: 600, fontSize: "13px", px: 2.5 }}
-            >
-              Invita Partner
-            </Button>
-          </Box>
-          <DynamicDataTable columns={columns} data={agents} showCheckbox />
-        </Box>
-      </Box>
+      <div className="container py-8">
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h1 className="page-title">Gestione Agenti</h1>
+            <p className="page-subtitle">La tua rete di partner</p>
+          </div>
+          <Button
+            color="secondary"
+            variant="contained"
+            onClick={() => !loading && setOpenModal(true)}
+            sx={{ borderRadius: "8px", textTransform: "none", fontWeight: 600, fontSize: "13px", px: 2.5 }}
+          >
+            Invita Partner
+          </Button>
+        </div>
+        <DynamicDataTable columns={columns} data={agents} showCheckbox />
+      </div>
 
-      <Dialog open={openModal} fullWidth maxWidth="sm" onClose={() => setOpenModal(false)} PaperProps={{ sx: { borderRadius: "12px" } }}>
+      <Dialog open={openModal} fullWidth maxWidth="sm" onClose={() => setOpenModal(false)} PaperProps={{ className: "!rounded-2xl" }}>
         <DialogTitle sx={{ textAlign: "center", fontWeight: 700, fontSize: "18px", pt: 3 }}>Invita Partner</DialogTitle>
         <form onSubmit={handleSubmit}>
           <DialogContent>
-            <Grid container spacing={2}>
-              <Grid size={{ xs: 12, md: 6 }}>
-                <TextField required fullWidth margin="dense" label="Email" name="email" value={formData.email}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => setFormData((p) => ({ ...p, email: e.target.value }))} />
-              </Grid>
-              <Grid size={{ xs: 12, md: 6 }}>
-                <FormControl fullWidth margin="dense">
-                  <InputLabel>Agente Supervisore</InputLabel>
-                  <Select name="parent" value={formData.parent} onChange={(e) => setFormData((p) => ({ ...p, parent: e.target.value }))} label="Agente Supervisore">
-                    <MenuItem key={profile?.id} value={profile?.id}>Me</MenuItem>
-                    {loading ? <MenuItem disabled><CircularProgress size={24} /></MenuItem> : subAgents.map((a) => <MenuItem key={a.id} value={a.id}>{a.name}</MenuItem>)}
-                  </Select>
-                </FormControl>
-              </Grid>
-            </Grid>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <TextField required fullWidth margin="dense" label="Email" name="email" value={formData.email}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setFormData((p) => ({ ...p, email: e.target.value }))} />
+              <FormControl fullWidth margin="dense">
+                <InputLabel>Agente Supervisore</InputLabel>
+                <Select name="parent" value={formData.parent} onChange={(e) => setFormData((p) => ({ ...p, parent: e.target.value }))} label="Agente Supervisore">
+                  <MenuItem key={profile?.id} value={profile?.id}>Me</MenuItem>
+                  {loading ? <MenuItem disabled><CircularProgress size={24} /></MenuItem> : subAgents.map((a) => <MenuItem key={a.id} value={a.id}>{a.name}</MenuItem>)}
+                </Select>
+              </FormControl>
+            </div>
           </DialogContent>
           <DialogActions sx={{ pb: 2.5, px: 3, gap: 1 }}>
             <Button sx={{ backgroundColor: "#f6f8fb", borderRadius: "8px", textTransform: "none", fontWeight: 500, px: 2.5 }} onClick={() => setOpenModal(false)}>Annulla</Button>

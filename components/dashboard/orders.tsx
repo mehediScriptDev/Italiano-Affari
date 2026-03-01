@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Box, Grid, IconButton, Tooltip } from "@mui/material";
+import { IconButton, Tooltip } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { it } from "date-fns/locale";
@@ -32,22 +32,22 @@ export default function Orders() {
     {
       label: "Importo (Guadagno)", field: "label",
       render: (row: OrderRow) => (
-        <Box display="flex" alignItems="center" gap={1}>
+        <div className="flex items-center gap-2">
           <span>{`${row.total}€ (${row.earnings}€)`}</span>
           <Tooltip
             title={
-              <Box>
+              <div>
                 {row.commissions?.filter((c) => c.amount !== 0).map((c, i) => {
                   const tipo = { direct: "Vendita Diretta", affiliate: "Affiliazione", level2: "Livello 2" }[c.type] ?? "Livello 3+";
                   return <div key={i}>{tipo}: {c.amount.toFixed(2)}€</div>;
                 })}
-              </Box>
+              </div>
             }
             arrow
           >
             <IconButton size="small"><InfoOutlined fontSize="small" /></IconButton>
           </Tooltip>
-        </Box>
+        </div>
       ),
     },
     { label: "Agente", field: "agent" },
@@ -79,41 +79,39 @@ export default function Orders() {
   const datePickerSx = {
     width: "180px",
     "& .MuiInputBase-root": {
-      color: "black",
+      color: "#13131f",
       borderRadius: "8px",
       backgroundColor: "#f6f8fb",
       "& fieldset": { borderColor: "transparent" },
-      "&:hover fieldset": { borderColor: "rgba(0,0,0,0.15)" },
-      "&.Mui-focused fieldset": { borderColor: "black" },
+      "&:hover fieldset": { borderColor: "#c4c8d0" },
+      "&.Mui-focused fieldset": { borderColor: "#13131f" },
     },
     "& .MuiInputLabel-root": { color: "rgba(0,0,0,0.5)", fontSize: "13px" },
     "& .MuiSvgIcon-root": { color: "#64748b" },
   };
 
   return (
-    <div className="d-flex justify-center px-2" style={{ backgroundColor: "#f6f8fb" }}>
-      <div style={{ maxWidth: "1200px" }} className="w-100 d-flex flex-column justify-center paddingContainer p-0">
-        <Grid container spacing={2} alignItems="center">
-          <Grid size={{ xs: 12, md: 6 }}>
-            <div>
-              <h5 className="mb-0" style={{ fontSize: "20px", fontWeight: 700, letterSpacing: "-0.3px" }}>Ordini / Report</h5>
-              <p style={{ fontSize: "13px", color: "#64748b", margin: "2px 0 0" }}>Storico degli ordini con filtri per data</p>
-            </div>
-          </Grid>
-
-          <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={it}>
-            <Grid size={{ xs: 12, sm: 6, md: 3 }} sx={{ display: "flex", alignItems: "center", justifyContent: { xs: "flex-start", sm: "flex-end" }, gap: 1 }}>
-              <label style={{ fontWeight: 600, fontSize: "13px", color: "#64748b", whiteSpace: "nowrap" }}>Da:</label>
+    <div className="container py-8">
+      {/* Header row */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+        <div>
+          <h1 className="page-title">Ordini / Report</h1>
+          <p className="page-subtitle">Storico degli ordini con filtri per data</p>
+        </div>
+        <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={it}>
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="flex items-center gap-2">
+              <label className="text-[13px] font-semibold text-slate-500 whitespace-nowrap">Da:</label>
               <DatePicker value={startDate} onChange={(v) => v && setStartDate(v)} slotProps={{ textField: { size: "small" } }} sx={datePickerSx} />
-            </Grid>
-            <Grid size={{ xs: 12, sm: 6, md: 3 }} sx={{ display: "flex", alignItems: "center", justifyContent: { xs: "flex-start", sm: "flex-end" }, gap: 1 }}>
-              <label style={{ fontWeight: 600, fontSize: "13px", color: "#64748b", whiteSpace: "nowrap" }}>A:</label>
+            </div>
+            <div className="flex items-center gap-2">
+              <label className="text-[13px] font-semibold text-slate-500 whitespace-nowrap">A:</label>
               <DatePicker value={endDate} onChange={(v) => v && setEndDate(v)} slotProps={{ textField: { size: "small" } }} sx={datePickerSx} />
-            </Grid>
-          </LocalizationProvider>
-        </Grid>
-        <div className="mt-2"><DataTable columns={columns} data={orders} showCheckbox /></div>
+            </div>
+          </div>
+        </LocalizationProvider>
       </div>
+      <DataTable columns={columns} data={orders} showCheckbox />
     </div>
   );
 }

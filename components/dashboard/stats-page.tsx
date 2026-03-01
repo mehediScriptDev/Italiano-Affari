@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Box, Card, CardContent, Grid, Typography, useMediaQuery } from "@mui/material";
+// removed: Box, Card, CardContent, Grid, useMediaQuery (replaced by Tailwind)
 import {
   ArcElement, BarElement, CategoryScale, Chart as ChartJS, Filler,
   Legend, LinearScale, LineElement, PointElement, Title, Tooltip,
@@ -27,7 +27,6 @@ const config: Record<string, { label: string; colors: string[]; borderColors?: s
 
 export default function StatsPage() {
   const [chartsPreview, setChartsPreview] = useState<Record<string, ChartPreviewData | null>>({ sales: null, earnings: null, affiliates: null });
-  const isMobile = useMediaQuery((theme: { breakpoints: { down: (b: string) => string } }) => theme.breakpoints.down("sm"));
 
   useEffect(() => {
     fetchEarnings().then((res) => setChartsPreview((p) => ({ ...p, earnings: res.data })));
@@ -66,72 +65,37 @@ export default function StatsPage() {
   };
 
   return (
-    <Box sx={{ backgroundColor: "#f6f8fb" }}>
-      <div className="d-flex justify-between align-center" style={{ paddingRight: "6px" }}>
-        <div>
-          <h5 className="mb-0" style={{ fontSize: "20px", fontWeight: 700, letterSpacing: "-0.3px" }}>Statistiche</h5>
-          <p style={{ fontSize: "13px", color: "#64748b", margin: "2px 0 0" }}>Analisi delle tue performance</p>
+    <div className="container py-8">
+      {/* Page header */}
+      <div className="mb-6">
+        <h1 className="page-title">Statistiche</h1>
+        <p className="page-subtitle">Analisi delle tue performance</p>
+      </div>
+
+      {/* KPI cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+        <ChartPreview label="Vendite Dirette" icon={<ShoppingBag style={{ color: "#13131f", fontSize: "22px" }} />} obj={chartsPreview.sales} />
+        <ChartPreview label="Guadagni Maturati" icon={<AttachMoney style={{ color: "#13131f", fontSize: "22px" }} />} obj={chartsPreview.earnings} />
+        <ChartPreview label="Co-Partner" icon={<Handshake style={{ color: "#13131f", fontSize: "22px" }} />} obj={chartsPreview.affiliates} />
+      </div>
+
+      {/* Full-width chart */}
+      <div className="dash-card p-6 mb-6">
+        <p className="text-[15px] font-semibold text-[#13131f] tracking-tight mb-3 m-0">Totale Commissioni Generate</p>
+        <StatsChart label="commissioni" chartType="line" fetchData={fetchBigChart} />
+      </div>
+
+      {/* Two-column charts */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <div className="dash-card p-6">
+          <p className="text-[15px] font-semibold text-[#13131f] tracking-tight mb-3 m-0">Totale Vendite Dirette</p>
+          <StatsChart label="vendite" chartType="line" fetchData={fetchBigChart} />
+        </div>
+        <div className="dash-card p-6">
+          <p className="text-[15px] font-semibold text-[#13131f] tracking-tight mb-3 m-0">Nuovi Affiliati Registrati</p>
+          <StatsChart label="affiliati" chartType="bar" fetchData={fetchBigChart} />
         </div>
       </div>
-      <div className="row d-flex justify-center">
-        <Grid className={isMobile ? "px-0" : "px-1"} container spacing={isMobile ? 2 : 1} sx={{ mt: 2, p: 0 }}>
-          <Grid size={{ xs: 12, md: 4 }}><ChartPreview label="Vendite Dirette" icon={<ShoppingBag style={{ color: "black", fontSize: "22px" }} />} obj={chartsPreview.sales} /></Grid>
-          <Grid size={{ xs: 12, md: 4 }}><ChartPreview label="Guadagni Maturati" icon={<AttachMoney style={{ color: "black", fontSize: "22px" }} />} obj={chartsPreview.earnings} /></Grid>
-          <Grid size={{ xs: 12, md: 4 }}><ChartPreview label="Co-Partner" icon={<Handshake style={{ color: "black", fontSize: "22px" }} />} obj={chartsPreview.affiliates} /></Grid>
-        </Grid>
-
-        <div className="col-12 mb-4">
-          <Grid container mt={2} spacing={isMobile ? 2 : 0}>
-            <Grid size={{ xs: 12, md: 12 }}>
-              <Card sx={{
-                borderRadius: "12px",
-                border: "1px solid rgba(0,0,0,0.06)",
-                boxShadow: "0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.04)",
-              }}>
-                <CardContent sx={{ p: "24px !important" }}>
-                  <Typography sx={{ color: "#000", mb: 1.5, fontSize: 15, fontWeight: 600, letterSpacing: "-0.2px" }}>
-                    Totale Commissioni Generate
-                  </Typography>
-                  <StatsChart label="commissioni" chartType="line" fetchData={fetchBigChart} />
-                </CardContent>
-              </Card>
-            </Grid>
-          </Grid>
-        </div>
-
-        <div className="col-12 mb-4">
-          <Grid container spacing={isMobile ? 2 : 2}>
-            <Grid size={{ xs: 12, md: 6, lg: 6 }}>
-              <Card sx={{
-                borderRadius: "12px",
-                border: "1px solid rgba(0,0,0,0.06)",
-                boxShadow: "0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.04)",
-              }}>
-                <CardContent sx={{ p: "24px !important" }}>
-                  <Typography sx={{ color: "#000", mb: 1.5, fontSize: 15, fontWeight: 600, letterSpacing: "-0.2px" }}>
-                    Totale Vendite Dirette
-                  </Typography>
-                  <StatsChart label="vendite" chartType="line" fetchData={fetchBigChart} />
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid size={{ xs: 12, md: 6 }}>
-              <Card sx={{
-                borderRadius: "12px",
-                border: "1px solid rgba(0,0,0,0.06)",
-                boxShadow: "0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.04)",
-              }}>
-                <CardContent sx={{ p: "24px !important" }}>
-                  <Typography sx={{ color: "#000", mb: 1.5, fontSize: 15, fontWeight: 600, letterSpacing: "-0.2px" }}>
-                    Nuovi Affiliati Registrati
-                  </Typography>
-                  <StatsChart label="affiliati" chartType="bar" fetchData={fetchBigChart} />
-                </CardContent>
-              </Card>
-            </Grid>
-          </Grid>
-        </div>
-      </div>
-    </Box>
+    </div>
   );
 }

@@ -77,7 +77,7 @@ export default function NotificationRightMenu({ onClose, notifications, setNotif
             </div>
           </div>
           <div>
-            <IconButton className="p-0" onClick={handleClose}><CloseIcon style={{ color: "black" }} /></IconButton>
+            <IconButton className="p-0" onClick={handleClose}><CloseIcon style={{ color: "#13131f" }} /></IconButton>
           </div>
         </div>
 
@@ -94,7 +94,7 @@ export default function NotificationRightMenu({ onClose, notifications, setNotif
                 </div>
                 <div className="d-flex flex-column">
                   <IconButton className="p-0" onClick={() => handleDeleteNotification(notification.id)}>
-                    <ClearIcon style={{ color: "black" }} />
+                    <ClearIcon style={{ color: "#13131f" }} />
                   </IconButton>
                 </div>
               </div>

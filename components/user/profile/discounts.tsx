@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Button, Card, CardContent, IconButton, Typography } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Delete } from "@mui/icons-material";
 import { showToast } from "@/lib/utils/notifications";
@@ -58,40 +58,41 @@ export default function Discounts() {
   };
 
   const renderDiscount = (discount: Discount, index: number) => (
-    <div className="mt-1" key={`card-${index}`}>
-      <Card className="text-white" style={{ background: "linear-gradient(to right, #2e2e2e 30%, #040404)", minWidth: "320px" }} elevation={10} sx={{ borderRadius: 2 }}>
-        <CardContent className="position-relative" style={{ padding: "10px 15px" }}>
-          <p style={{ fontSize: "12px" }} className="mb-0">Codice</p>
-          <p style={{ fontSize: "17px" }} className="mt-0">{discount.code}</p>
-          <p style={{ fontSize: "12px" }} className="mb-0 mt-1">Percentuale</p>
-          <p className="mt-0">{discount.value}%</p>
-          <div className="d-flex justify-end position-absolute top-0 end-0">
-            <IconButton style={{ padding: "5px 5px" }} color="error" onClick={() => handleDeleteDiscount(index)}><Delete /></IconButton>
-          </div>
-        </CardContent>
-      </Card>
+    <div key={`card-${index}`} className="relative rounded-2xl text-white min-w-[320px] p-5" style={{ background: "linear-gradient(135deg, #1e1e30 0%, #13131f 100%)", border: "1px solid rgba(255,255,255,0.08)" }}>
+      <div className="absolute top-2 right-2">
+        <IconButton size="small" color="error" onClick={() => handleDeleteDiscount(index)}><Delete sx={{ fontSize: 18 }} /></IconButton>
+      </div>
+
+      <p className="text-[11px] text-gray-400 uppercase tracking-wide m-0">Codice</p>
+      <p className="text-base tracking-wide mt-1 mb-3">{discount.code}</p>
+
+      <p className="text-[11px] text-gray-400 uppercase tracking-wide m-0">Percentuale</p>
+      <p className="text-sm mt-1 mb-0">{discount.value}%</p>
     </div>
   );
 
   return (
-    <Card className="card-shadow" sx={{ borderRadius: 2, minHeight: "650px", position: "relative" }}>
-      <CardContent>
-        <h3 className="text-center">Promozioni</h3>
-        <Typography align="center" variant="body1">In questa sezione puoi visualizzare o creare le promozioni per i tuoi clienti</Typography>
-        <hr style={{ width: "100%" }} />
-        <Box sx={{ mt: 2 }}>
-          <div className="d-flex justify-end me-3">
-            <Button variant="contained" color="secondary" onClick={handleOpenDialog}>Aggiungi</Button>
-            <DiscountDialog open={openDialog} onAdd={handleSubmit} onClose={() => setOpenDialog(false)} freePercentage={freePercentage} />
-          </div>
-          {discounts.length === 0 && (
-            <Box sx={{ position: "absolute", width: "97%", textAlign: "center", top: "50%" }}>
-              <Typography variant="body1">Non hai registrato ancora nessuna promozione</Typography>
-            </Box>
-          )}
-          <div className="d-flex gap-2">{discounts.map(renderDiscount)}</div>
-        </Box>
-      </CardContent>
-    </Card>
+    <div className="dash-card p-7 min-h-[500px] relative">
+      <h2 className="text-xl font-bold tracking-tight text-center text-[#13131f] mb-1">Promozioni</h2>
+      <p className="text-sm text-slate-500 text-center mb-5">
+        In questa sezione puoi visualizzare o creare le promozioni per i tuoi clienti
+      </p>
+
+      <hr className="border-0 border-t border-[#eef0f4] my-5" />
+
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="text-base font-bold text-[#13131f] m-0">Codici Promozionali</h3>
+        <Button variant="contained" color="secondary" onClick={handleOpenDialog} sx={{ borderRadius: "8px", textTransform: "none", fontWeight: 600, px: 2.5 }}>Aggiungi</Button>
+        <DiscountDialog open={openDialog} onAdd={handleSubmit} onClose={() => setOpenDialog(false)} freePercentage={freePercentage} />
+      </div>
+
+      {discounts.length === 0 ? (
+        <div className="flex items-center justify-center h-48">
+          <p className="text-slate-400 text-sm">Non hai registrato ancora nessuna promozione</p>
+        </div>
+      ) : (
+        <div className="flex flex-wrap gap-3">{discounts.map(renderDiscount)}</div>
+      )}
+    </div>
   );
 }

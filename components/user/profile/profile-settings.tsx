@@ -1,8 +1,6 @@
 "use client";
 
-import {
-  Box, Button, Card, CardContent, Grid, TextField, Typography, useMediaQuery,
-} from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import { Save } from "@mui/icons-material";
 import { useState } from "react";
@@ -13,7 +11,6 @@ import type { UserProfile } from "@/lib/types";
 
 export default function ProfileSettings() {
   const [error, setError] = useState<Record<string, string>>({});
-  const isMobile = useMediaQuery((theme: { breakpoints: { down: (b: string) => string } }) => theme.breakpoints.down("sm"));
   const { profile, setProfile } = useAppContext();
   const [tempProfile, setTempProfile] = useState<UserProfile>(profile ?? {} as UserProfile);
 
@@ -35,102 +32,100 @@ export default function ProfileSettings() {
   };
 
   return (
-    <Card className="card-shadow" sx={{ borderRadius: "12px" }}>
-      <CardContent sx={{ p: "28px !important" }}>
-        <div className="d-flex justify-between align-center">
-          <Box sx={{ display: "flex", gap: "14px", alignItems: "center" }}>
-            <Avatar src={profile?.avatar} sx={{ width: "72px", height: "72px", border: "2px solid rgba(0,0,0,0.06)" }}>{profile?.name?.charAt(0)}</Avatar>
-            <div>
-              <Typography sx={{ color: "black", fontSize: 16, fontWeight: 600, letterSpacing: "-0.2px" }}>{profile?.name}</Typography>
-              <Typography sx={{ color: "#64748b", fontSize: 13, mt: "2px" }}>{profile?.email}</Typography>
-              <Typography sx={{ color: "#64748b", mt: 1, fontSize: 12 }}>Attività: <span style={{ fontWeight: 600, color: "#333" }}>{profile?.activity}</span></Typography>
-            </div>
-          </Box>
-          <Button hidden={isMobile} onClick={handleSubmit} variant="contained" startIcon={<Save />} color="secondary" sx={{ borderRadius: "8px", textTransform: "none", fontWeight: 600, px: 2.5 }}>Salva</Button>
+    <div className="dash-card p-7">
+      {/* Avatar + save header */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3.5">
+          <Avatar src={profile?.avatar} className="!w-[72px] !h-[72px] !border-2 !border-[#e5e7ec]">
+            {profile?.name?.charAt(0)}
+          </Avatar>
+          <div>
+            <p className="text-base font-semibold tracking-tight text-[#13131f] m-0">{profile?.name}</p>
+            <p className="text-[13px] text-slate-500 mt-0.5 mb-0">{profile?.email}</p>
+            <p className="text-xs text-slate-500 mt-1 mb-0">
+              Attività: <span className="font-semibold text-[#333]">{profile?.activity}</span>
+            </p>
+          </div>
         </div>
+        <Button
+          onClick={handleSubmit}
+          variant="contained"
+          startIcon={<Save />}
+          color="secondary"
+          sx={{ borderRadius: "8px", textTransform: "none", fontWeight: 600, px: 2.5 }}
+          className="hidden sm:flex"
+        >
+          Salva
+        </Button>
+      </div>
 
-        <hr style={{ width: "100%", border: "none", borderTop: "1px solid rgba(0,0,0,0.06)", margin: "20px 0" }} />
-        <Typography sx={{ fontSize: "18px", fontWeight: 700, textAlign: "center", mb: 2.5, letterSpacing: "-0.3px" }}>Informazioni Personali</Typography>
+      <hr className="border-0 border-t border-[#eef0f4] my-5" />
 
-        <Grid container spacing={2} mb={3}>
-          <Grid size={{ xs: 12, md: 6, lg: 6 }}>
-            <Typography sx={{ color: "#333", mb: 0.5, fontSize: 13, fontWeight: 600 }}>Nome*</Typography>
-            <TextField fullWidth variant="outlined" placeholder="Inserisci nome" value={tempProfile.name} error={!!error.name} helperText={error.name}
+      <h3 className="text-lg font-bold tracking-tight text-center mb-5">Informazioni Personali</h3>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
+        {([
+          { key: "name", label: "Nome*", placeholder: "Inserisci nome",
+            validate: (v: string) => !v.trim() ? "Il nome è obbligatorio" : v.length < 2 ? "Il nome deve contenere almeno 2 caratteri" : "" },
+          { key: "email", label: "Email*", placeholder: "Inserisci la tua email",
+            validate: (v: string) => !v.trim() ? "L'email è obbligatoria" : !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? "Inserisci un'email valida" : "" },
+          { key: "mobile", label: "Cellulare*", placeholder: "Inserisci il tuo numero di cellulare",
+            validate: (v: string) => !v.trim() ? "Il numero di cellulare è obbligatorio" : !/^[0-9]{10}$/.test(v) ? "Inserisci un numero di 10 cifre valido" : "" },
+          { key: "phone", label: "Telefono Fisso", placeholder: "Inserisci il tuo numero fisso",
+            validate: (v: string) => v && !/^[0-9\s]{5,15}$/.test(v) ? "Inserisci un numero di telefono valido" : "" },
+        ] as { key: keyof UserProfile; label: string; placeholder: string; validate: (v: string) => string }[]).map(({ key, label, placeholder, validate }) => (
+          <div key={key}>
+            <p className="text-[13px] font-semibold text-[#333] mb-1.5">{label}</p>
+            <TextField
+              fullWidth
+              variant="outlined"
+              placeholder={placeholder}
+              value={(tempProfile[key] as string) ?? ""}
+              error={!!error[key]}
+              helperText={error[key]}
               sx={{ "& .MuiOutlinedInput-root": { borderRadius: "8px" } }}
               onChange={(e) => {
                 const v = e.target.value;
-                setTempProfile((p) => ({ ...p, name: v }));
-                if (!v.trim()) setError((p) => ({ ...p, name: "Il nome è obbligatorio" }));
-                else if (v.length < 2) setError((p) => ({ ...p, name: "Il nome deve contenere almeno 2 caratteri" }));
-                else setError((p) => ({ ...p, name: "" }));
-              }} />
-          </Grid>
-          <Grid size={{ xs: 12, md: 6, lg: 6 }}>
-            <Typography sx={{ color: "#333", mb: 0.5, fontSize: 13, fontWeight: 600 }}>Email*</Typography>
-            <TextField fullWidth variant="outlined" placeholder="Inserisci la tua email" value={tempProfile.email} error={!!error.email} helperText={error.email}
-              sx={{ "& .MuiOutlinedInput-root": { borderRadius: "8px" } }}
-              onChange={(e) => {
-                const v = e.target.value;
-                setTempProfile((p) => ({ ...p, email: v }));
-                if (!v.trim()) setError((p) => ({ ...p, email: "L'email è obbligatoria" }));
-                else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) setError((p) => ({ ...p, email: "Inserisci un'email valida" }));
-                else setError((p) => ({ ...p, email: "" }));
-              }} />
-          </Grid>
-          <Grid size={{ xs: 12, md: 6, lg: 6 }}>
-            <Typography sx={{ color: "#333", mb: 0.5, fontSize: 13, fontWeight: 600 }}>Cellulare*</Typography>
-            <TextField fullWidth variant="outlined" placeholder="Inserisci il tuo numero di cellulare" value={tempProfile.mobile} error={!!error.mobile} helperText={error.mobile}
-              sx={{ "& .MuiOutlinedInput-root": { borderRadius: "8px" } }}
-              onChange={(e) => {
-                const v = e.target.value;
-                setTempProfile((p) => ({ ...p, mobile: v }));
-                if (!v.trim()) setError((p) => ({ ...p, mobile: "Il numero di cellulare è obbligatorio" }));
-                else if (!/^[0-9]{10}$/.test(v)) setError((p) => ({ ...p, mobile: "Inserisci un numero di 10 cifre valido" }));
-                else setError((p) => ({ ...p, mobile: "" }));
-              }} />
-          </Grid>
-          <Grid size={{ xs: 12, md: 6, lg: 6 }}>
-            <Typography sx={{ color: "#333", mb: 0.5, fontSize: 13, fontWeight: 600 }}>Telefono Fisso</Typography>
-            <TextField fullWidth variant="outlined" placeholder="Inserisci il tuo numero fisso" value={tempProfile.phone ?? ""} error={!!error.phone} helperText={error.phone}
-              sx={{ "& .MuiOutlinedInput-root": { borderRadius: "8px" } }}
-              onChange={(e) => {
-                const v = e.target.value;
-                setTempProfile((p) => ({ ...p, phone: v }));
-                if (!/^[0-9\s]{5,15}$/.test(v)) setError((p) => ({ ...p, phone: "Inserisci un numero di telefono valido" }));
-                else setError((p) => ({ ...p, phone: "" }));
-              }} />
-          </Grid>
-        </Grid>
+                setTempProfile((p) => ({ ...p, [key]: v }));
+                setError((p) => ({ ...p, [key]: validate(v) }));
+              }}
+            />
+          </div>
+        ))}
+      </div>
 
-        <hr style={{ width: "100%", border: "none", borderTop: "1px solid rgba(0,0,0,0.06)", margin: "20px 0" }} />
+      {profile?.activity && Object.keys(activitiesFields).includes(profile.activity) && (
+        <>
+          <hr className="border-0 border-t border-[#eef0f4] my-5" />
+          <h3 className="text-lg font-bold tracking-tight text-center mb-5">Attività</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+            {activitiesFields[profile.activity].filter((f) => f !== "paragraph").map((field, i) => (
+              <div key={i}>
+                <p className="text-[13px] font-semibold text-[#333] mb-1.5">{field}*</p>
+                <TextField
+                  fullWidth
+                  variant="outlined"
+                  placeholder={`Inserisci ${field}`}
+                  value={tempProfile.business_info?.[field] ?? ""}
+                  error={!!error[field]}
+                  helperText={error[field]}
+                  sx={{ "& .MuiOutlinedInput-root": { borderRadius: "8px" } }}
+                  onChange={(e) => {
+                    const v = e.target.value;
+                    setTempProfile((p) => ({ ...p, business_info: { ...p.business_info, [field]: v } }));
+                    setError((p) => ({ ...p, [field]: !v.trim() ? "Il campo è obbligatorio" : "" }));
+                  }}
+                />
+              </div>
+            ))}
+          </div>
+        </>
+      )}
 
-        {profile?.activity && Object.keys(activitiesFields).includes(profile.activity) && (
-          <>
-            <Typography sx={{ fontSize: "18px", fontWeight: 700, textAlign: "center", mb: 2.5, letterSpacing: "-0.3px" }}>Attività</Typography>
-            <Grid container spacing={2} mb={5}>
-              {activitiesFields[profile.activity].filter((f) => f !== "paragraph").map((field, i) => (
-                <Grid size={{ xs: 12, md: 6, lg: 6 }} key={i}>
-                  <Typography sx={{ color: "#333", mb: 0.5, fontSize: 13, fontWeight: 600 }}>{field}*</Typography>
-                  <TextField fullWidth variant="outlined" placeholder={`Inserisci ${field}`}
-                    value={tempProfile.business_info?.[field] ?? ""}
-                    error={!!error[field]} helperText={error[field]}
-                    sx={{ "& .MuiOutlinedInput-root": { borderRadius: "8px" } }}
-                    onChange={(e) => {
-                      const v = e.target.value;
-                      setTempProfile((p) => ({ ...p, business_info: { ...p.business_info, [field]: v } }));
-                      if (!v.trim()) setError((p) => ({ ...p, [field]: "Il campo è obbligatorio" }));
-                      else setError((p) => ({ ...p, [field]: "" }));
-                    }} />
-                </Grid>
-              ))}
-            </Grid>
-          </>
-        )}
-
-        <div className="d-flex justify-center align-center mb-3">
-          <Button hidden={!isMobile} onClick={handleSubmit} variant="contained" startIcon={<Save />} color="secondary" sx={{ borderRadius: "8px", textTransform: "none", fontWeight: 600, px: 2.5 }}>Salva</Button>
-        </div>
-      </CardContent>
-    </Card>
+      {/* Mobile save button */}
+      <div className="flex justify-center sm:hidden mt-2">
+        <Button onClick={handleSubmit} variant="contained" startIcon={<Save />} color="secondary" sx={{ borderRadius: "8px", textTransform: "none", fontWeight: 600, px: 2.5 }}>Salva</Button>
+      </div>
+    </div>
   );
 }

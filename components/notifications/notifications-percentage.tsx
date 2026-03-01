@@ -39,12 +39,12 @@ export default function NotificationsPercentage() {
 
   return (
     <div className="px-2">
-      <div className="bg-white shadowBox mb-2 mt-1" style={{ maxWidth: "1200px", margin: "auto", borderRadius: "10px" }}>
+      <div className="bg-white mb-2 mt-1" style={{ maxWidth: "1200px", margin: "auto", borderRadius: "16px", border: '1px solid #eef0f4', boxShadow: '0 1px 2px rgba(19, 19, 31, 0.04), 0 4px 16px rgba(19, 19, 31, 0.04)' }}>
         <div className="p-2">
           <h3>Notifiche</h3>
           <div className="d-flex gap-1 mb-0">
-            <Button style={{ borderRadius: "20px", color: flag === "all" ? "white" : "black" }} variant={flag === "all" ? "contained" : "outlined"} onClick={() => setFlag("all")}>Tutte</Button>
-            <Button style={{ borderRadius: "20px", color: flag === "pending" ? "white" : "black" }} variant={flag === "pending" ? "contained" : "outlined"} onClick={() => setFlag("pending")}>In Attesa</Button>
+            <Button style={{ borderRadius: "20px", color: flag === "all" ? "white" : "#13131f" }} variant={flag === "all" ? "contained" : "outlined"} onClick={() => setFlag("all")}>Tutte</Button>
+            <Button style={{ borderRadius: "20px", color: flag === "pending" ? "white" : "#13131f" }} variant={flag === "pending" ? "contained" : "outlined"} onClick={() => setFlag("pending")}>In Attesa</Button>
           </div>
 
           {loading ? (
@@ -58,7 +58,7 @@ export default function NotificationsPercentage() {
                     <div key={notification.id} className="d-flex mb-5 gap-2 align-center">
                         <div className="d-flex align-center">
                         {!notification.is_read && (
-                          <span style={{ display: "inline-block", width: "12px", height: "12px", backgroundColor: "black", borderRadius: "50%" }} />
+                          <span style={{ display: "inline-block", width: "12px", height: "12px", backgroundColor: "#13131f", borderRadius: "50%" }} />
                         )}
                       </div>
                       <div className="flex-1"><p>{notification.message}</p></div>

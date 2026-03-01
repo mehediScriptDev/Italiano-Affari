@@ -10,15 +10,15 @@ export default function Loading() {
         minHeight: "100vh",
         backgroundColor: "#f6f8fb",
         flexDirection: "column",
-        gap: 2,
+        gap: 3,
       }}
     >
       <img
         src="/assets/images/logo_psicopatici.png"
         alt="Logo"
-        style={{ width: "160px", opacity: 0.85 }}
+        style={{ width: "160px", opacity: 0.9 }}
       />
-      <CircularProgress color="secondary" size={40} />
+      <CircularProgress sx={{ color: "#13131f" }} size={36} thickness={3.5} />
     </Box>
   );
 }

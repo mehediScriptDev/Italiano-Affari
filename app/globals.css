@@ -1,37 +1,206 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f6f8fb;
+  --foreground: #13131f;
+  --primary: #13131f;
+  --surface: #ffffff;
+  --border: #e5e7ec;
+  --border-light: #eef0f4;
+  --text-muted: #64748b;
+  --shadow-sm:
+    0 1px 2px rgba(19, 19, 31, 0.04), 0 1px 4px rgba(19, 19, 31, 0.03);
+  --shadow-md:
+    0 2px 8px rgba(19, 19, 31, 0.06), 0 4px 16px rgba(19, 19, 31, 0.04);
+  --shadow-lg:
+    0 4px 12px rgba(19, 19, 31, 0.06), 0 8px 32px rgba(19, 19, 31, 0.08);
+  --shadow-xl:
+    0 8px 24px rgba(19, 19, 31, 0.08), 0 16px 48px rgba(19, 19, 31, 0.1);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --color-primary: var(--primary);
+  --font-sans: "Inter", var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+}
+
+/* Center + pad the container */
+@layer base {
+  .container {
+    @apply mx-auto px-4 sm:px-6 lg:px-10;
+    max-width: 1280px;
+  }
 }
 
 body {
   background-color: #f6f8fb;
-  color: #171717;
-  font-family: Arial, Helvetica, sans-serif;
+  color: #13131f;
+  font-family: "Inter", "Segoe UI", Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.01em;
+  line-height: 1.6;
 }
 
+/* ── Signup textarea ── */
+.signup-textarea {
+  @apply w-full rounded-lg border border-[#e5e7ec] bg-transparent p-3 text-sm resize-y
+         outline-none mt-2
+         focus:border-[#13131f] focus:ring-1 focus:ring-[#13131f]/10;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.signup-textarea:focus {
+  box-shadow: 0 0 0 3px rgba(19, 19, 31, 0.06);
+}
 
-/* =========================================================
-   Custom component styles — Tailwind way
-   ========================================================= */
-@layer components {
-  /* Black back-button hover — keeps MUI IconButton background black */
-  .customHover:hover {
-    @apply bg-black;
-  }
+/* ── Reusable card ── */
+.dash-card {
+  @apply bg-white rounded-2xl border border-[#e5e7ec];
+  box-shadow: var(--shadow-sm);
+  transition:
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-  /* Signup textarea — replaces signup.css */
-  .signup-textarea {
-    @apply w-full rounded border border-gray-400 bg-transparent p-3 text-sm resize-y
-           outline-none shadow-[0_0_5px_rgba(0,0,0,0.5)] mt-2
-           focus:border-black focus:shadow-[0_0_8px_rgba(0,0,0,0.7)];
+/* ── Section title ── */
+.page-title {
+  @apply text-xl font-bold tracking-tight text-[#13131f];
+  letter-spacing: -0.025em;
+}
+.page-subtitle {
+  @apply text-sm text-slate-500 mt-0.5;
+  letter-spacing: -0.01em;
+}
+
+/* ── Smooth transition default ── */
+.dash-card,
+button,
+a {
+  transition-property:
+    box-shadow, transform, background-color, color, border-color, opacity;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Card hover uplift ── */
+.dash-card-hover:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+/* ── Accent line for gradient cards ── */
+.gradient-card {
+  background: linear-gradient(135deg, #13131f 0%, #1e1e30 60%, #252540 100%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  position: relative;
+  overflow: hidden;
+}
+.gradient-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.04) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+/* ── Scrollbar styling ── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* ── Selection styling ── */
+::selection {
+  background-color: rgba(19, 19, 31, 0.12);
+  color: #13131f;
+}
+
+/* ── Focus ring utility ── */
+*:focus-visible {
+  outline: 2px solid rgba(19, 19, 31, 0.3);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ── Custom gradient text ── */
+.gradient-text {
+  background: linear-gradient(135deg, #13131f 0%, #2d2d4a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Skeleton animation ── */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
   }
+  100% {
+    background-position: 200% 0;
+  }
+}
+.skeleton {
+  background: linear-gradient(90deg, #eef0f4 25%, #f6f8fb 50%, #eef0f4 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+/* ── Fade-in animation ── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-in-up {
+  animation: fadeInUp 0.35s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* ── Pulse badge ── */
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.8);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+.pulse-badge::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  animation: pulse-ring 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  background: inherit;
 }

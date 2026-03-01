@@ -53,7 +53,7 @@ export default function SecurityComponent() {
                 <Box sx={{ flex: 1, display: "flex", flexDirection: "column", gap: 1 }}>
                   <Typography variant="subtitle2">Backup Secret Key:</Typography>
                   <Paper sx={{ p: 1, display: "flex", alignItems: "center", width: "100%", backgroundColor: "#f5f5f5" }}>
-                    <Box ref={secretRef} component="code" sx={{ color: "black", maxWidth: "250px", fontFamily: "monospace", letterSpacing: "0.5px", whiteSpace: "nowrap", overflowX: "auto", msOverflowStyle: "none", scrollbarWidth: "none", "&::-webkit-scrollbar": { display: "none" }, userSelect: "text", cursor: "text" }}>
+                    <Box ref={secretRef} component="code" sx={{ color: "#13131f", maxWidth: "250px", fontFamily: "monospace", letterSpacing: "0.5px", whiteSpace: "nowrap", overflowX: "auto", msOverflowStyle: "none", scrollbarWidth: "none", "&::-webkit-scrollbar": { display: "none" }, userSelect: "text", cursor: "text" }}>
                       {twoFactorSecret}
                     </Box>
                   </Paper>
@@ -65,7 +65,7 @@ export default function SecurityComponent() {
               </Box>
             </Box>
             <Box sx={{ maxWidth: "fit-content", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-              <Typography textAlign="center" variant="h6" sx={{ color: "black", fontSize: 16 }}>
+              <Typography textAlign="center" variant="h6" sx={{ color: "#13131f", fontSize: 16 }}>
                 Stato 2FA {isMobile ? "" : "(Two-Factor Authentication)"}: {secure ? <Check sx={{ color: "green" }} /> : <Close sx={{ color: "red" }} />}
               </Typography>
               {!secure && <Button variant="contained" color="secondary" onClick={handleActivate2FA} sx={{ mt: 1, width: "30%" }}>Attiva</Button>}

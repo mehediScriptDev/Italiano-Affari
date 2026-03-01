@@ -47,14 +47,14 @@ export default function NotificationMenu({ anchorEl, open, onClose, notification
             <h3>Notifiche</h3>
             <div className="d-flex gap-1 mb-0">
               <Button
-                style={{ borderRadius: "20px", color: notificationsFlag === "all" ? "white" : "black" }}
+                style={{ borderRadius: "20px", color: notificationsFlag === "all" ? "white" : "#13131f" }}
                 variant={notificationsFlag === "all" ? "contained" : "outlined"}
                 onClick={() => setNotificationFlag("all")}
               >
                 Tutte
               </Button>
               <Button
-                style={{ borderRadius: "20px", color: notificationsFlag === "pending" ? "white" : "black" }}
+                style={{ borderRadius: "20px", color: notificationsFlag === "pending" ? "white" : "#13131f" }}
                 variant={notificationsFlag === "pending" ? "contained" : "outlined"}
                 onClick={() => setNotificationFlag("pending")}
               >
@@ -82,7 +82,7 @@ export default function NotificationMenu({ anchorEl, open, onClose, notification
                       </div>
                       <div className="d-flex align-center">
                         {!notification.is_read && (
-                          <span style={{ display: "inline-block", width: "12px", height: "12px", backgroundColor: "black", borderRadius: "50%" }} />
+                          <span style={{ display: "inline-block", width: "12px", height: "12px", backgroundColor: "#13131f", borderRadius: "50%" }} />
                         )}
                       </div>
                     </div>

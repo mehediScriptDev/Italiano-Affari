@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import {
-  Box, Button, Dialog, DialogContent, Grid, IconButton, TextField, Typography, Tooltip,
+  Button, Dialog, DialogContent, IconButton, TextField, Tooltip,
 } from "@mui/material";
 import { AttachMoney, ContentCopy, InfoOutlined, IosShareOutlined } from "@mui/icons-material";
 import { ReactQRCode } from "@lglab/react-qr-code";
@@ -43,22 +43,22 @@ export default function DashboardPartner() {
     {
       label: "Importo (Guadagno)", field: "label",
       render: (row: OrderRow) => (
-        <Box display="flex" alignItems="center" gap={1}>
+        <div className="flex items-center gap-2">
           <span>{`${row.total}€ (${row.earnings}€)`}</span>
           <Tooltip
             title={
-              <Box>
+              <div>
                 {row.commissions?.filter((c) => c.amount !== 0).map((c, i) => {
                   const tipo = { direct: "Vendita Diretta", affiliate: "Affiliazione", level2: "Livello 2" }[c.type] ?? "Livello 3+";
                   return <div key={i}>{tipo}: {c.amount.toFixed(2)}€</div>;
                 })}
-              </Box>
+              </div>
             }
             arrow
           >
             <IconButton size="small"><InfoOutlined fontSize="small" /></IconButton>
           </Tooltip>
-        </Box>
+        </div>
       ),
     },
     { label: "Agente", field: "agent" },
@@ -106,128 +106,91 @@ export default function DashboardPartner() {
 
   return (
     <>
-      <div className="d-flex justify-center px-2" style={{ backgroundColor: "#f6f8fb" }}>
-        <div style={{ maxWidth: "1200px" }} className="mt-5 w-100 d-flex flex-column justify-center paddingContainer p-0">
-          <div className="d-flex justify-between align-center mb-2">
+      <div className="container py-8">
+        {/* Page header */}
+        <div className="mb-6">
+          <h1 className="page-title">Dashboard</h1>
+          <p className="page-subtitle">Panoramica delle tue attività</p>
+        </div>
+
+        {/* KPI grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+
+          {/* Profile card */}
+          <div className="rounded-2xl p-6 text-white flex flex-col justify-between gradient-card">
             <div>
-              <h5 className="mb-0" style={{ fontSize: "20px", fontWeight: 700, letterSpacing: "-0.3px" }}>Dashboard</h5>
-              <p style={{ fontSize: "13px", color: "#64748b", margin: "2px 0 0" }}>Panoramica delle tue attività</p>
+              <p className="text-lg font-bold tracking-tight m-0" style={{ letterSpacing: '-0.025em' }}>{profile?.name}</p>
+              <p className="text-[13px] text-gray-400 mt-0.5 mb-0">{profile?.activity}</p>
+              <Button
+                size="small"
+                variant="contained"
+                color="secondary"
+                sx={{ mt: 2.5, borderRadius: "8px", textTransform: "none", fontWeight: 600, fontSize: "13px", px: 2.5 }}
+                onClick={handleAssetButtonClick}
+              >
+                Mostra Assets
+              </Button>
+              <Dialog className="p-0" open={openAssetsDialog} maxWidth="lg" onClose={() => setOpenAssetsDialog(false)}>
+                <DialogContent className="p-0"><PaymentAssets /></DialogContent>
+              </Dialog>
+              <Dialog open={openShareDialog} onClose={() => setOpenShareDialog(false)} PaperProps={{ className: "!rounded-2xl" }}>
+                <DialogContent sx={{ textAlign: "center", p: 4 }}>
+                  <p className="text-lg font-bold mb-4 m-0">Condividi il tuo codice</p>
+                  <ReactQRCode value={couponToShare} size={150} marginSize={0}
+                    dataModulesSettings={{ color: "#000000", style: "rounded", randomSize: false }}
+                    finderPatternOuterSettings={{ style: "rounded" }}
+                    finderPatternInnerSettings={{ style: "rounded-sm" }}
+                    imageSettings={{ src: "/assets/images/qr-code-logo.png", width: 30, height: 30, excavate: true }}
+                  />
+                  <div className="flex items-center mt-4 gap-2">
+                    <TextField variant="outlined" value={couponToShare} fullWidth slotProps={{ input: { readOnly: true } }}
+                      sx={{ "& .MuiOutlinedInput-root": { borderRadius: "8px" } }}
+                    />
+                    <Tooltip title={copySuccess ? "Copiato!" : "Copia"}>
+                      <IconButton onClick={handleCopyLink} sx={{ border: "1px solid rgba(0,0,0,0.1)", borderRadius: "8px" }}>
+                        <ContentCopy />
+                      </IconButton>
+                    </Tooltip>
+                  </div>
+                </DialogContent>
+              </Dialog>
+            </div>
+            <div className="flex items-center mt-4 pt-3 border-t border-white/8">
+              <p className="text-[13px] text-gray-400 flex-1 m-0">Condividi il tuo codice QR</p>
+              <IconButton onClick={handleOpenShare}>
+                <IosShareOutlined color="secondary" sx={{ fontSize: 20 }} />
+              </IconButton>
             </div>
           </div>
 
-          <Grid container justifyContent="center" spacing={2}>
-            <Grid size={{ xs: 12, lg: 4 }}>
-              <Box
-                className="card"
-                sx={{
-                  background: "linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%)",
-                  borderRadius: "12px",
-                  p: 3,
-                  color: "white",
-                  justifyContent: "space-between",
-                  border: "1px solid rgba(255,255,255,0.06)",
-                }}
-              >
-                <div>
-                  <Typography sx={{ fontSize: "20px", fontWeight: 700, letterSpacing: "-0.3px" }}>
-                    {profile?.name}
-                  </Typography>
-                  <Typography sx={{ color: "#9ca3af", fontSize: "13px", mt: "2px" }}>
-                    {profile?.activity}
-                  </Typography>
-                  <Button
-                    size="small"
-                    variant="contained"
-                    color="secondary"
-                    sx={{ mt: 2.5, borderRadius: "8px", textTransform: "none", fontWeight: 600, fontSize: "13px", px: 2.5 }}
-                    onClick={handleAssetButtonClick}
-                  >
-                    Mostra Assets
-                  </Button>
-                  <Dialog className="p-0" open={openAssetsDialog} maxWidth="lg" onClose={() => setOpenAssetsDialog(false)}>
-                    <DialogContent className="p-0"><PaymentAssets /></DialogContent>
-                  </Dialog>
-                  <Dialog open={openShareDialog} onClose={() => setOpenShareDialog(false)}>
-                    <DialogContent sx={{ textAlign: "center", p: 4 }}>
-                      <Typography variant="h6" sx={{ mb: 2, fontWeight: 700 }}>Condividi il tuo codice</Typography>
-                      <ReactQRCode value={couponToShare} size={150} marginSize={0}
-                        dataModulesSettings={{ color: "#000000", style: "rounded", randomSize: false }}
-                        finderPatternOuterSettings={{ style: "rounded" }}
-                        finderPatternInnerSettings={{ style: "rounded-sm" }}
-                        imageSettings={{ src: "/assets/images/qr-code-logo.png", width: 30, height: 30, excavate: true }}
-                      />
-                      <Box sx={{ display: "flex", alignItems: "center", mt: 3, gap: 1 }}>
-                        <TextField variant="outlined" value={couponToShare} fullWidth slotProps={{ input: { readOnly: true } }}
-                          sx={{ "& .MuiOutlinedInput-root": { borderRadius: "8px" } }}
-                        />
-                        <Tooltip title={copySuccess ? "Copiato!" : "Copia"}>
-                          <IconButton onClick={handleCopyLink} sx={{ border: "1px solid rgba(0,0,0,0.1)", borderRadius: "8px" }}>
-                            <ContentCopy />
-                          </IconButton>
-                        </Tooltip>
-                      </Box>
-                    </DialogContent>
-                  </Dialog>
-                </div>
-                <div className="d-flex align-center" style={{ marginTop: "16px", paddingTop: "12px", borderTop: "1px solid rgba(255,255,255,0.08)" }}>
-                  <Typography sx={{ fontSize: "13px", color: "#9ca3af" }}>Condividi il tuo codice QR</Typography>
-                  <IconButton style={{ bottom: "2px" }} className="position-relative" onClick={handleOpenShare}>
-                    <IosShareOutlined color="secondary" sx={{ fontSize: 20 }} />
-                  </IconButton>
-                </div>
-              </Box>
-            </Grid>
+          {/* Earnings KPI */}
+          <ChartPreview label="Guadagno Netto" icon={<AttachMoney style={{ color: "#13131f", fontSize: "22px" }} />} obj={earningsPreview} />
 
-            <Grid size={{ xs: 12, sm: 6, lg: 4 }}>
-              <ChartPreview label="Guadagno Netto" icon={<AttachMoney style={{ color: "black", fontSize: "22px" }} />} obj={earningsPreview} sx={{ paddingBottom: "10px" }} />
-            </Grid>
-
-            <Grid size={{ xs: 12, sm: 6, lg: 4 }}>
-              <Box
-                className="card1"
-                sx={{
-                  backgroundColor: "white",
-                  border: "1px solid rgba(0,0,0,0.06)",
-                  borderRadius: "12px",
-                  p: 3,
-                  color: "black",
-                  boxShadow: "0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.04)",
-                  transition: "box-shadow 0.25s ease, transform 0.25s ease",
-                  "&:hover": { boxShadow: "0 4px 20px rgba(0,0,0,0.08)", transform: "translateY(-1px)" },
-                }}
-              >
-                <Box sx={{ display: "flex", alignItems: "center", gap: "14px", mb: 2 }}>
-                  <Box sx={{ width: 44, height: 44, borderRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: "#f6f8fb" }}>
-                    <Typography sx={{ fontSize: "18px", fontWeight: 700 }}>🛒</Typography>
-                  </Box>
-                  <div>
-                    <Typography sx={{ fontSize: "12px", fontWeight: 500, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.3px" }}>
-                      Ordini nella rete
-                    </Typography>
-                    <Typography sx={{ fontSize: "22px", fontWeight: 700, letterSpacing: "-0.5px", lineHeight: 1.2 }}>
-                      {networkInfo.count}
-                    </Typography>
-                  </div>
-                </Box>
-                <Box sx={{ borderTop: "1px solid rgba(0,0,0,0.06)", pt: 1.5 }}>
-                  <Typography sx={{ fontSize: "13px", color: "#64748b" }}>
-                    Valore della rete: <span style={{ fontWeight: 700, color: "#000" }}>{networkInfo.earnings}€</span>
-                  </Typography>
-                </Box>
-              </Box>
-            </Grid>
-          </Grid>
-
-          <div style={{ marginTop: "32px" }}>
-            <div className="d-flex justify-between align-center" style={{ marginBottom: "12px" }}>
+          {/* Network card */}
+          <div className="dash-card dash-card-hover p-6 transition-all duration-200">
+            <div className="flex items-center gap-3.5 mb-4">
+          <div className="w-11 h-11 rounded-xl bg-[#f6f8fb] flex items-center justify-center shrink-0" style={{ boxShadow: '0 1px 3px rgba(19, 19, 31, 0.06)' }}>
+                <span className="text-lg">🛒</span>
+              </div>
               <div>
-                <h5 className="mb-0" style={{ fontSize: "18px", fontWeight: 700, letterSpacing: "-0.3px" }}>Ultimi Ordini</h5>
-                <p style={{ fontSize: "13px", color: "#64748b", margin: "2px 0 0" }}>Le tue transazioni più recenti</p>
+                <p className="text-[11px] font-medium text-slate-500 uppercase tracking-wide m-0">Ordini nella rete</p>
+                <p className="text-[22px] font-bold tracking-tight leading-tight m-0 text-[#13131f]" style={{ letterSpacing: '-0.03em' }}>{networkInfo.count}</p>
               </div>
             </div>
+            <div className="border-t border-[#eef0f4] pt-3">
+              <p className="text-[13px] text-slate-500 m-0">
+                Valore della rete: <span className="font-bold text-[#13131f]">{networkInfo.earnings}€</span>
+              </p>
+            </div>
           </div>
-          <DataTable columns={columns} data={orders} showCheckbox={true} />
         </div>
+
+        {/* Orders table */}
+        <div className="mb-2">
+          <h2 className="text-lg font-bold tracking-tight text-[#13131f] mb-0.5">Ultimi Ordini</h2>
+          <p className="page-subtitle mb-4">Le tue transazioni più recenti</p>
+        </div>
+        <DataTable columns={columns} data={orders} showCheckbox={true} />
       </div>
     </>
   );

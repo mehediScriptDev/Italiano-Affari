@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Button, Card, CardContent, IconButton, Typography } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Delete, Edit } from "@mui/icons-material";
 import { showToast } from "@/lib/utils/notifications";
@@ -56,10 +56,7 @@ export default function PaymentAssets() {
       vatNumber: asset.vatNumber ?? "",
       fiscalCode: asset.fiscalCode ?? "",
       iban: asset.iban,
-      email: "",
-      address: "",
-      city: "",
-      zipCode: "",
+      email: "", address: "", city: "", zipCode: "",
     });
     setEditingIndex(index);
     setFreePercentage((prev) => prev + Number(asset.percentage));
@@ -75,13 +72,11 @@ export default function PaymentAssets() {
   };
 
   const handleSubmit = (formData: Record<string, unknown>) => {
-    // If editing, delete old asset first
     if (editingIndex !== null) {
       const oldAsset = assets[editingIndex];
       deleteAsset(oldAsset.id);
       setAssets((prev) => prev.filter((_, i) => i !== editingIndex));
     }
-
     setFreePercentage((p) => p - Number(formData.percentage));
     if (formData.entityType === "individual") {
       createAssetWithEmail(formData.email as string, formData.percentage as number);
@@ -100,64 +95,67 @@ export default function PaymentAssets() {
   };
 
   const renderAsset = (asset: Asset, index: number) => (
-    <div className="mt-1" key={`card-${index}`}>
-      <Card className="text-white" style={{ background: "linear-gradient(135deg, #1a1a2e 0%, #0a0a0a 100%)", minWidth: "320px" }} elevation={0} sx={{ borderRadius: "12px", border: "1px solid rgba(255,255,255,0.06)" }}>
-        <CardContent className="position-relative" style={{ padding: "16px 20px" }}>
-          <p style={{ fontSize: "11px", color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.5px" }} className="mb-0">IBAN</p>
-          <p style={{ fontSize: "16px", letterSpacing: "0.5px" }} className="mt-0">{asset.iban}</p>
-          {asset.vatNumber ? (
-            <><p style={{ fontSize: "11px", color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.5px" }} className="mb-0 mt-1">Partita IVA</p><p style={{ fontSize: "14px" }} className="mt-0">{asset.vatNumber}</p></>
-          ) : (
-            <><p style={{ fontSize: "11px", color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.5px" }} className="mb-0 mt-1">Codice Fiscale</p><p style={{ fontSize: "14px" }} className="mt-0">{asset.fiscalCode}</p></>
-          )}
-          <p style={{ fontSize: "11px", color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.5px" }} className="mb-0 mt-1">Percentuale</p>
-          <p className="mt-0">{asset.percentage}%</p>
-          <p className="mt-1">{asset.entityType === "company" ? asset.companyName : `${asset.firstName} ${asset.lastName}`}</p>
-          <div className="d-flex justify-end position-absolute top-0 end-0">
-            <IconButton style={{ padding: "5px 5px" }} color="error" onClick={() => handleDeleteAsset(index)}><Delete /></IconButton>
-            <IconButton style={{ padding: "5px 5px", color: "white" }} onClick={() => handleEditAsset(index)}><Edit /></IconButton>
-          </div>
-        </CardContent>
-      </Card>
+    <div key={`card-${index}`} className="relative rounded-2xl text-white min-w-[320px] p-5" style={{ background: "linear-gradient(135deg, #1e1e30 0%, #13131f 100%)", border: "1px solid rgba(255,255,255,0.08)" }}>
+      {/* Action buttons */}
+      <div className="absolute top-2 right-2 flex">
+        <IconButton size="small" color="error" onClick={() => handleDeleteAsset(index)}><Delete sx={{ fontSize: 18 }} /></IconButton>
+        <IconButton size="small" className="!text-white" onClick={() => handleEditAsset(index)}><Edit sx={{ fontSize: 18 }} /></IconButton>
+      </div>
+
+      <p className="text-[11px] text-gray-400 uppercase tracking-wide m-0">IBAN</p>
+      <p className="text-base tracking-wide mt-1 mb-3">{asset.iban}</p>
+
+      {asset.vatNumber ? (
+        <><p className="text-[11px] text-gray-400 uppercase tracking-wide m-0">Partita IVA</p><p className="text-sm mt-1 mb-3">{asset.vatNumber}</p></>
+      ) : (
+        <><p className="text-[11px] text-gray-400 uppercase tracking-wide m-0">Codice Fiscale</p><p className="text-sm mt-1 mb-3">{asset.fiscalCode}</p></>
+      )}
+
+      <p className="text-[11px] text-gray-400 uppercase tracking-wide m-0">Percentuale</p>
+      <p className="text-sm mt-1 mb-2">{asset.percentage}%</p>
+      <p className="text-sm font-medium mt-1">{asset.entityType === "company" ? asset.companyName : `${asset.firstName} ${asset.lastName}`}</p>
     </div>
   );
 
   return (
-    <Card className="card-shadow" sx={{ borderRadius: "12px", minHeight: "650px", position: "relative" }}>
-      <CardContent sx={{ p: "28px !important" }}>
-        <Typography sx={{ fontSize: "20px", fontWeight: 700, textAlign: "center", letterSpacing: "-0.3px" }}>Gestisci Pagamenti</Typography>
-        <Typography align="center" sx={{ fontSize: "14px", color: "#64748b", mt: 0.5 }}>In questa sezione puoi visualizzare i tuoi pagamenti, aggiungere un nuovo metodo di pagamento e gestire i tuoi asset</Typography>
-        <hr style={{ width: "100%", border: "none", borderTop: "1px solid rgba(0,0,0,0.06)", margin: "20px 0" }} />
-        <Typography sx={{ fontSize: "16px", fontWeight: 700, textAlign: "center", mb: 0 }}>Asset di pagamento</Typography>
-        <Box sx={{ mt: 2 }}>
-          <div className="d-flex justify-end me-3">
-            <Button variant="contained" color="secondary" onClick={handleOpenDialog} sx={{ borderRadius: "8px", textTransform: "none", fontWeight: 600, px: 2.5 }}>Aggiungi</Button>
-            <AssetDialog
-              open={openDialog}
-              onAdd={handleSubmit}
-              onClose={() => {
-                setOpenDialog(false);
-                if (editingIndex !== null) {
-                  // Restore the percentage if dialog is canceled during edit
-                  const asset = assets[editingIndex];
-                  if (asset) setFreePercentage((prev) => prev - Number(asset.percentage));
-                  setEditingAsset(null);
-                  setEditingIndex(null);
-                }
-              }}
-              freePercentage={freePercentage}
-              initialData={editingAsset}
-              isEditing={editingIndex !== null}
-            />
-          </div>
-          {assets.length === 0 && (
-            <Box sx={{ position: "absolute", width: "97%", textAlign: "center", top: "50%" }}>
-              <Typography variant="body1">Non hai registrato ancora nessun asset di pagamento</Typography>
-            </Box>
-          )}
-          <div className="d-flex gap-2">{assets.map(renderAsset)}</div>
-        </Box>
-      </CardContent>
-    </Card>
+    <div className="dash-card p-7 min-h-[500px] relative">
+      {/* Header */}
+      <h2 className="text-xl font-bold tracking-tight text-center mb-1">Gestisci Pagamenti</h2>
+      <p className="text-sm text-slate-500 text-center mb-5">
+        In questa sezione puoi visualizzare i tuoi pagamenti, aggiungere un nuovo metodo di pagamento e gestire i tuoi asset
+      </p>
+
+      <hr className="border-0 border-t border-[#eef0f4] my-5" />
+
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="text-base font-bold m-0">Asset di pagamento</h3>
+        <Button variant="contained" color="secondary" onClick={handleOpenDialog} sx={{ borderRadius: "8px", textTransform: "none", fontWeight: 600, px: 2.5 }}>Aggiungi</Button>
+      </div>
+
+      <AssetDialog
+        open={openDialog}
+        onAdd={handleSubmit}
+        onClose={() => {
+          setOpenDialog(false);
+          if (editingIndex !== null) {
+            const asset = assets[editingIndex];
+            if (asset) setFreePercentage((prev) => prev - Number(asset.percentage));
+            setEditingAsset(null);
+            setEditingIndex(null);
+          }
+        }}
+        freePercentage={freePercentage}
+        initialData={editingAsset}
+        isEditing={editingIndex !== null}
+      />
+
+      {assets.length === 0 ? (
+        <div className="flex items-center justify-center h-48">
+          <p className="text-slate-400 text-sm">Non hai registrato ancora nessun asset di pagamento</p>
+        </div>
+      ) : (
+        <div className="flex flex-wrap gap-3">{assets.map(renderAsset)}</div>
+      )}
+    </div>
   );
 }

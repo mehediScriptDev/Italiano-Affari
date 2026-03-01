@@ -2,8 +2,8 @@
 
 import { Fragment, useState, type ReactNode } from "react";
 import {
-  Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
-  Paper, Typography, FormControl, Select, MenuItem, InputAdornment,
+  Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
+  Paper, FormControl, Select, MenuItem, InputAdornment,
   TextField, Collapse, type SelectChangeEvent,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
@@ -70,14 +70,14 @@ export default function DynamicDataTable({ columns, data }: DynamicDataTableProp
                   top: "-1px",
                   bottom: "0px",
                   width: "3px",
-                  backgroundColor: "#12715b",
+                  backgroundColor: "#13131f",
                   marginLeft: paddingLeft,
                 }}
               />
               {hasSubagents && (
                 <hr
                   className="opacity1 border-0 position-relative"
-                  style={{ backgroundColor: "#12715b", height: "3px", right: "2px" }}
+                  style={{ backgroundColor: "#13131f", height: "3px", right: "2px" }}
                 />
               )}
               {hasSubagents &&
@@ -108,7 +108,7 @@ export default function DynamicDataTable({ columns, data }: DynamicDataTableProp
           <TableRow>
             <TableCell style={{ padding: 0 }} colSpan={columns.length + 1}>
               <Collapse in={expandedRows[row.id]} timeout="auto" unmountOnExit>
-                <Box>
+                <div>
                   <Table size="small" sx={{ width: "100%", tableLayout: "auto" }}>
                     <colgroup>
                       <col style={{ width: toggleColWidth }} />
@@ -120,7 +120,7 @@ export default function DynamicDataTable({ columns, data }: DynamicDataTableProp
                       {row.subagents!.map((subRow) => renderRow(subRow, level + 1))}
                     </TableBody>
                   </Table>
-                </Box>
+                </div>
               </Collapse>
             </TableCell>
           </TableRow>
@@ -130,29 +130,34 @@ export default function DynamicDataTable({ columns, data }: DynamicDataTableProp
   };
 
   return (
-    <Box
-      sx={{
-        backgroundColor: "white", borderRadius: "10px", p: 2, mb: 3,
-        boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-        overflowX: "auto", minWidth: "600px", width: "100%",
-      }}
-    >
-      <TextField
-        variant="outlined" placeholder="Cerca..." size="small"
-        value={search} onChange={(e) => setSearch(e.target.value)}
-        sx={{ mb: 2, "& .MuiOutlinedInput-root": { "&:hover fieldset": { borderColor: "black" }, "&.Mui-focused fieldset": { borderColor: "black" } } }}
-        slotProps={{
-          input: {
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon sx={{ color: "black" }} />
-              </InputAdornment>
-            ),
-          },
-        }}
-      />
+    <div className="dash-card mb-6 overflow-x-auto min-w-[600px] w-full">
+      <div className="p-4 pb-0">
+        <TextField
+          variant="outlined" placeholder="Cerca..." size="small"
+          value={search} onChange={(e) => setSearch(e.target.value)}
+          className="!mb-4"
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              borderRadius: "8px",
+              backgroundColor: "#f6f8fb",
+              "& fieldset": { borderColor: "transparent" },
+              "&:hover fieldset": { borderColor: "#c4c8d0" },
+              "&.Mui-focused fieldset": { borderColor: "#13131f" },
+            },
+          }}
+          slotProps={{
+            input: {
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon sx={{ color: "#64748b", fontSize: 20 }} />
+                </InputAdornment>
+              ),
+            },
+          }}
+        />
+      </div>
 
-      <TableContainer component={Paper} sx={{ borderRadius: "10px", boxShadow: "none", width: "100%", overflowX: "auto" }}>
+      <TableContainer component={Paper} sx={{ borderRadius: "0 0 12px 12px", boxShadow: "none", width: "100%", overflowX: "auto" }}>
         <Table size="small" sx={{ tableLayout: "auto" }}>
           <colgroup>
             <col style={{ width: toggleColWidth }} />
@@ -160,12 +165,12 @@ export default function DynamicDataTable({ columns, data }: DynamicDataTableProp
               <col key={col.field} style={{ width: col.width || otherColsWidth }} />
             ))}
           </colgroup>
-          <TableHead sx={{ backgroundColor: "#f8f9fa" }}>
+          <TableHead sx={{ backgroundColor: "#f8f9fb" }}>
             <TableRow>
               <TableCell />
               {columns.map((col) => (
-                <TableCell key={col.field}>
-                  <Typography fontSize={14} fontWeight="bold">{col.label}</Typography>
+                <TableCell key={col.field} sx={{ borderBottom: "1px solid #eef0f4", py: 1.5 }}>
+                  <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide">{col.label}</span>
                 </TableCell>
               ))}
             </TableRow>
@@ -174,15 +179,23 @@ export default function DynamicDataTable({ columns, data }: DynamicDataTableProp
         </Table>
       </TableContainer>
 
-      <Box display="flex" justifyContent="flex-end" alignItems="center" mt={2}>
+      <div className="flex justify-end items-center p-3">
         <FormControl size="small" sx={{ width: 80 }}>
-          <Select value={rowsPerPage} onChange={(e: SelectChangeEvent<number>) => setRowsPerPage(Number(e.target.value))}>
+          <Select
+            value={rowsPerPage}
+            onChange={(e: SelectChangeEvent<number>) => setRowsPerPage(Number(e.target.value))}
+            sx={{
+              borderRadius: "8px",
+              fontSize: 13,
+              "& .MuiOutlinedInput-notchedOutline": { borderColor: "#e5e7ec" },
+            }}
+          >
             <MenuItem value={10}>10</MenuItem>
             <MenuItem value={25}>25</MenuItem>
             <MenuItem value={50}>50</MenuItem>
           </Select>
         </FormControl>
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 }

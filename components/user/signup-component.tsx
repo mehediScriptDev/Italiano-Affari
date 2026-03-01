@@ -154,7 +154,7 @@ export default function SignupComponent() {
           onClick={handlePreviousStep}
           className="customHover"
           size={isMobile ? "small" : "medium"}
-          sx={{ color: "white", backgroundColor: "black" }}
+          sx={{ color: "white", backgroundColor: "#13131f" }}
         >
           <ArrowBack />
         </IconButton>

@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import type { CSSProperties } from "react";
 
 const navLinks = [
   { href: "/dashboard", label: "Dashboard" },
@@ -11,83 +10,39 @@ const navLinks = [
   { href: "/orders", label: "Ordini / Report" },
   { href: "/contacts", label: "Contatti" },
   { href: "/wallet", label: "Portafoglio" },
+  { href: "/media-library", label: "Libreria Contenuti" },
 ];
-
-const styles: Record<string, CSSProperties> = {
-  navContainer: {
-    backgroundColor: "white",
-    padding: "0 16px",
-    borderBottom: "1px solid rgba(0,0,0,0.06)",
-    boxShadow: "0 1px 2px rgba(0,0,0,0.03)",
-  },
-  navList: {
-    display: "flex",
-    gap: "4px",
-    listStyle: "none",
-    margin: 0,
-    padding: 0,
-    height: "48px",
-    alignItems: "center",
-  },
-  navItem: {
-    position: "relative",
-  },
-  navLink: {
-    textDecoration: "none",
-    fontSize: "13px",
-    color: "#64748b",
-    fontWeight: 500,
-    padding: "6px 14px",
-    borderRadius: "8px",
-    transition: "all 0.2s ease",
-    display: "inline-block",
-    letterSpacing: "0.1px",
-  },
-  activeLink: {
-    backgroundColor: "#000",
-    color: "#fff",
-    fontWeight: 600,
-  },
-  hoverStyle: {
-    backgroundColor: "#f6f8fb",
-  },
-};
 
 export default function NavPartner() {
   const pathname = usePathname();
 
   return (
-    <nav className="nav-container" style={styles.navContainer}>
-      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
-        <ul className="nav-list" style={styles.navList}>
+    <nav className="bg-white border-b border-[#eef0f4]" style={{ boxShadow: '0 1px 3px rgba(19, 19, 31, 0.04)' }}>
+      <div className="container">
+        <ul className="flex items-center gap-1 h-12 overflow-x-auto scrollbar-none">
           {navLinks.map(({ href, label }) => {
             const isActive = pathname === href;
             return (
-              <li key={href} style={styles.navItem}>
+              <li key={href} className="shrink-0">
                 <Link
                   href={href}
-                  style={{
-                    ...styles.navLink,
-                    ...(isActive ? styles.activeLink : {}),
-                  }}
+                  className={[
+                    "inline-block text-[13px] font-medium px-3.5 py-1.5 rounded-lg no-underline",
+                    "transition-all duration-200 ease-out",
+                    isActive
+                      ? "text-white font-semibold"
+                      : "text-slate-500 hover:bg-[#f6f8fb] hover:text-[#13131f]",
+                  ].join(" ")}
+                  style={isActive ? { background: 'linear-gradient(135deg, #13131f 0%, #1e1e30 100%)', boxShadow: '0 2px 6px rgba(19, 19, 31, 0.2)' } : undefined}
                 >
                   {label}
                 </Link>
               </li>
             );
           })}
-          <li style={styles.navItem}>
-            <a
-              href="https://contents.psicopatici.com/"
-              style={styles.navLink}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Libreria Contenuti
-            </a>
-          </li>
         </ul>
       </div>
     </nav>
   );
 }
+

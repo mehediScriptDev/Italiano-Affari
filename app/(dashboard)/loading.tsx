@@ -11,7 +11,7 @@ export default function DashboardLoading() {
         width: "100%",
       }}
     >
-      <CircularProgress color="secondary" size={40} />
+      <CircularProgress sx={{ color: "#13131f" }} size={36} thickness={3.5} />
     </Box>
   );
 }

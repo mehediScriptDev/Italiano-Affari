@@ -25,14 +25,14 @@ const lineBarOptions: ChartOptions<"line" | "bar"> = {
   },
   scales: {
     y: {
-      ticks: { color: "#000000", font: { size: 13 } },
-      grid: { color: "rgba(0, 0, 0, 0.1)" },
+      ticks: { color: "#64748b", font: { size: 12 } },
+      grid: { color: "rgba(19, 19, 31, 0.06)" },
       min: 0,
       beginAtZero: true,
     },
     x: {
-      ticks: { color: "#000000", font: { size: 13 } },
-      grid: { color: "rgba(0, 0, 0, 0.1)" },
+      ticks: { color: "#64748b", font: { size: 12 } },
+      grid: { color: "rgba(19, 19, 31, 0.06)" },
     },
   },
 };
@@ -43,7 +43,7 @@ const doughnutOptions: ChartOptions<"doughnut"> = {
   plugins: {
     legend: {
       position: "bottom",
-      labels: { color: "#000000", font: { size: 13 }, boxWidth: 10, padding: 5 },
+      labels: { color: "#64748b", font: { size: 12, family: "'Inter', sans-serif" }, boxWidth: 10, padding: 5 },
     },
   },
 };
@@ -78,13 +78,13 @@ function PeriodSelector({
           label="Periodo"
           onChange={(e) => onPeriodChange(e.target.value)}
           sx={{
-            color: "black",
+            color: "#13131f",
             borderRadius: "8px",
             fontSize: "13px",
             backgroundColor: "#f6f8fb",
             ".MuiOutlinedInput-notchedOutline": { borderColor: "transparent" },
-            "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "rgba(0,0,0,0.15)" },
-            "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "black" },
+            "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#c4c8d0" },
+            "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#13131f" },
             ".MuiSvgIcon-root": { color: "#64748b" },
           }}
         >
@@ -105,7 +105,7 @@ function PeriodSelector({
               slotProps={{ textField: { size: "small" } }}
               sx={{
                 width: "120px",
-                "& .MuiInputBase-root": { color: "black", borderRadius: "8px", fontSize: "13px", backgroundColor: "#f6f8fb", "& fieldset": { borderColor: "transparent" }, "&:hover fieldset": { borderColor: "rgba(0,0,0,0.15)" } },
+                "& .MuiInputBase-root": { color: "#13131f", borderRadius: "8px", fontSize: "13px", backgroundColor: "#f6f8fb", "& fieldset": { borderColor: "transparent" }, "&:hover fieldset": { borderColor: "#c4c8d0" } },
                 "& .MuiInputLabel-root": { color: "rgba(0,0,0,0.5)", fontSize: "13px" },
                 "& .MuiSvgIcon-root": { color: "#64748b" },
               }}
@@ -117,7 +117,7 @@ function PeriodSelector({
               slotProps={{ textField: { size: "small" } }}
               sx={{
                 width: "120px",
-                "& .MuiInputBase-root": { color: "black", borderRadius: "8px", fontSize: "13px", backgroundColor: "#f6f8fb", "& fieldset": { borderColor: "transparent" }, "&:hover fieldset": { borderColor: "rgba(0,0,0,0.15)" } },
+                "& .MuiInputBase-root": { color: "#13131f", borderRadius: "8px", fontSize: "13px", backgroundColor: "#f6f8fb", "& fieldset": { borderColor: "transparent" }, "&:hover fieldset": { borderColor: "#c4c8d0" } },
                 "& .MuiInputLabel-root": { color: "rgba(0,0,0,0.5)", fontSize: "13px" },
                 "& .MuiSvgIcon-root": { color: "#64748b" },
               }}
@@ -181,8 +181,8 @@ export default function StatsChart({ label, chartType, fetchData }: StatsChartPr
     labels: datasets[0]?.labels ?? [],
     datasets: datasets.map((ds) => ({
       ...ds,
-      borderColor: "blue",
-      backgroundColor: "rgba(0, 0, 255, 0.2)",
+      borderColor: "#13131f",
+      backgroundColor: "rgba(19, 19, 31, 0.08)",
       fill: true,
     })),
   } as ChartData<typeof chartType>;
