@@ -82,8 +82,29 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     if (savedToken) {
       axios.defaults.headers.common["Authorization"] = `Bearer ${savedToken}`;
       setTokenState(savedToken);
+      // Re-hydrate profile from JWT on every load so fields like coupon_code
+      // are always up to date even if the stored profile is stale.
+      const decoded = jwtDecode<DecodedToken>(savedToken);
+      if (decoded?.user) {
+        const storedProfile = (() => {
+          try { return JSON.parse(localStorage.getItem("profile") ?? "null"); } catch { return null; }
+        })();
+        setProfile({
+          id: decoded.user.id,
+          email: decoded.user.email,
+          name: `${decoded.user.first_name} ${decoded.user.last_name}`,
+          activity: decoded.user.activity,
+          mobile: decoded.user.phone,
+          avatar: decoded.user.avatar,
+          coupon_code: decoded.user.coupon_code,
+          percentage: decoded.user.percentage,
+          secret: storedProfile?.secret ?? "",
+          secure: storedProfile?.secure ?? false,
+          business_info: JSON.parse(decoded.user.info_business),
+        });
+      }
     }
-  }, []);
+  }, [setProfile]);
 
   // Note: The 401 refresh interceptor is handled exclusively in lib/api/client.ts
   // to avoid duplicate interceptors causing race conditions.
