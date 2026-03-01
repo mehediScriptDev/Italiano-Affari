@@ -99,7 +99,7 @@ export default function PaymentAssets() {
       {/* Action buttons */}
       <div className="absolute top-2 right-2 flex">
         <IconButton size="small" color="error" onClick={() => handleDeleteAsset(index)}><Delete sx={{ fontSize: 18 }} /></IconButton>
-        <IconButton size="small" className="!text-white" onClick={() => handleEditAsset(index)}><Edit sx={{ fontSize: 18 }} /></IconButton>
+        <IconButton size="small" className="text-white!" onClick={() => handleEditAsset(index)}><Edit sx={{ fontSize: 18 }} /></IconButton>
       </div>
 
       <p className="text-[11px] text-gray-400 uppercase tracking-wide m-0">IBAN</p>
@@ -118,7 +118,7 @@ export default function PaymentAssets() {
   );
 
   return (
-    <div className="dash-card p-7 min-h-[500px] relative">
+    <div className="dash-card p-7 min-h-125 relative">
       {/* Header */}
       <h2 className="text-xl font-bold tracking-tight text-center mb-1">Gestisci Pagamenti</h2>
       <p className="text-sm text-slate-500 text-center mb-5">

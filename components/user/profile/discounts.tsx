@@ -72,7 +72,7 @@ export default function Discounts() {
   );
 
   return (
-    <div className="dash-card p-7 min-h-[500px] relative">
+    <div className="dash-card p-7 min-h-125 relative">
       <h2 className="text-xl font-bold tracking-tight text-center text-[#13131f] mb-1">Promozioni</h2>
       <p className="text-sm text-slate-500 text-center mb-5">
         In questa sezione puoi visualizzare o creare le promozioni per i tuoi clienti

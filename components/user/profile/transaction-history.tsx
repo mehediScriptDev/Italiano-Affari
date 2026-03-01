@@ -47,7 +47,7 @@ export default function TransactionHistory() {
   ];
 
   return (
-    <div className="dash-card p-7 min-h-[500px]">
+    <div className="dash-card p-7 min-h-125">
       <h2 className="text-xl font-bold tracking-tight text-center text-[#13131f] mb-1">Storico Pagamenti</h2>
       <p className="text-sm text-slate-500 text-center mb-5">
         In questa sezione puoi visualizzare i tuoi pagamenti, aggiungere un nuovo metodo di pagamento e gestire i tuoi asset

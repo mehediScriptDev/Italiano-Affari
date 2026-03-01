@@ -15,8 +15,6 @@ import {
   Contacts,
   AccountBalanceWallet,
   PhotoLibrary,
-  ChevronLeft,
-  ChevronRight,
   AccountCircle,
   Logout,
   Handyman,
@@ -54,7 +52,7 @@ export interface SidebarConfig {
 
 export const partnerSidebarConfig: SidebarConfig = {
   logoSrc: "https://cdn.psicopaticiservice.com/logo/materialeweb/psi-v3-white.png",
-  logoText: "Partners",
+  logoText: "Partner",
   items: menuItems,
 };
 
@@ -72,7 +70,6 @@ export default function DashboardShell({ config, children }: DashboardShellProps
   const { profile } = useAppContext();
   const { token, setToken } = useAuth();
 
-  const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
@@ -114,22 +111,16 @@ export default function DashboardShell({ config, children }: DashboardShellProps
         className={[
           "fixed inset-y-0 left-0 z-1200 flex flex-col overflow-hidden",
           "bg-[#13131f] border-r border-white/6",
-          "transition-all duration-300 ease-in-out",
-          collapsed ? "w-18" : "w-75",
+          "transition-transform duration-300 ease-in-out w-75",
           /* Mobile: off-screen by default, full width when open */
-          "max-lg:-translate-x-full max-lg:w-75!",
+          "max-lg:-translate-x-full",
           mobileOpen ? "max-lg:translate-x-0" : "",
         ].join(" ")}
       >
         {/* Logo */}
         <div className="flex items-center gap-3 px-5 h-15 shrink-0 border-b border-white/6">
           <img src={config.logoSrc} alt="Logo" className="w-8 h-8 shrink-0" />
-          <span
-            className={[
-              "text-base font-bold text-white whitespace-nowrap transition-opacity duration-200",
-              collapsed ? "opacity-0 pointer-events-none max-lg:opacity-100 max-lg:pointer-events-auto" : "opacity-100",
-            ].join(" ")}
-          >
+          <span className="text-base lg:text-lg xl:text-xl font-bold text-white whitespace-nowrap">
             {config.logoText}
           </span>
         </div>
@@ -139,44 +130,27 @@ export default function DashboardShell({ config, children }: DashboardShellProps
           {config.items.map((item) => {
             const active = isActive(item.href);
             return (
-              <Tooltip
-                key={item.id}
-                title={collapsed ? item.label : ""}
-                placement="right"
-                arrow
-                disableHoverListener={!collapsed}
-              >
-                <Link
+              <Link
+                  key={item.id}
                   href={item.href ?? "/"}
                   className={[
-                    "flex items-center gap-3 px-3 py-2.5 mb-0.5 rounded-xl no-underline!",
-                    "text-sm font-medium whitespace-nowrap cursor-pointer relative",
+                    "flex items-center gap-3 px-3 py-2.5 mb-0.5 rounded-md no-underline!",
+                    "text-sm lg:text-base font-medium whitespace-nowrap cursor-pointer relative",
                     "transition-all duration-150 ease-out",
                     active
                       ? "text-white! bg-[#12715b]/25 font-semibold"
                       : "text-white/65! hover:text-white! hover:bg-white/8",
-                    collapsed
-                      ? "justify-center px-2.5! max-lg:justify-start max-lg:px-3!"
-                      : "",
                   ].join(" ")}
                 >
                   {/* Active indicator bar */}
                   {active && (
-                    <span className="absolute -left-2 top-2 bottom-2 w-[3px] bg-[#12715b] rounded-r" />
+                    <span className="absolute -left-2 top-2 bottom-2 w-0.75 bg-[#12715b] rounded-r" />
                   )}
                   <span className="flex items-center justify-center size-6 shrink-0 text-xl">
                     {item.icon && iconMap[item.icon] ? iconMap[item.icon] : <Dashboard fontSize="small" />}
                   </span>
-                  <span
-                    className={[
-                      "transition-opacity duration-200",
-                      collapsed ? "opacity-0 pointer-events-none max-lg:opacity-100 max-lg:pointer-events-auto" : "opacity-100",
-                    ].join(" ")}
-                  >
-                    {item.label}
-                  </span>
+                  <span>{item.label}</span>
                 </Link>
-              </Tooltip>
             );
           })}
         </nav>
@@ -192,23 +166,19 @@ export default function DashboardShell({ config, children }: DashboardShellProps
           >
             {profile?.name?.charAt(0)}
           </Avatar>
-          <div
-            className={[
-              "overflow-hidden whitespace-nowrap transition-opacity duration-200",
-              collapsed ? "opacity-0 pointer-events-none w-0 max-lg:opacity-100 max-lg:pointer-events-auto max-lg:w-auto" : "opacity-100",
-            ].join(" ")}
-          >
-            <div className="text-[13px] font-semibold text-white">{profile?.name}</div>
-            <div className="text-[11px] text-white/45 truncate">{profile?.email}</div>
+          <div className="overflow-hidden whitespace-nowrap">
+            <div className="text-sm font-semibold text-white">{profile?.name}</div>
+            <div className="text-xs text-white/45 truncate">{profile?.email}</div>
           </div>
         </div>
 
-        {/* Collapse toggle (desktop only) */}
+        {/* Logout button */}
         <div
-          className="hidden lg:flex items-center justify-center p-3 border-t border-white/6 shrink-0 cursor-pointer text-white/65 hover:text-white transition-colors duration-150"
-          onClick={() => setCollapsed((c) => !c)}
+          className="flex items-center gap-3 px-4 py-2 border-t border-white/6 shrink-0 cursor-pointer text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-colors duration-150"
+          onClick={() => setToken()}
         >
-          {collapsed ? <ChevronRight fontSize="small" /> : <ChevronLeft fontSize="small" />}
+          <Logout fontSize="small" className="shrink-0" />
+          <span className="text-sm font-medium">Esci</span>
         </div>
       </aside>
 
@@ -225,8 +195,7 @@ export default function DashboardShell({ config, children }: DashboardShellProps
         className={[
           "fixed top-0 right-0 h-15 flex items-center justify-end px-6",
           "z-1100 bg-white border-b border-[#eef0f4] shadow-sm",
-          "transition-[left] duration-300 ease-in-out",
-          collapsed ? "left-18" : "left-75",
+          "left-75",
           "max-lg:left-0!",
         ].join(" ")}
       >
@@ -324,8 +293,7 @@ export default function DashboardShell({ config, children }: DashboardShellProps
       <div
         className={[
           "min-h-screen bg-[#f6f8fb] pt-15",
-          "transition-[margin-left] duration-300 ease-in-out",
-          collapsed ? "ml-18" : "ml-75",
+          "ml-75",
           "max-lg:ml-0!",
         ].join(" ")}
       >

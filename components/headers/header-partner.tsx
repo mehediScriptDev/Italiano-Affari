@@ -133,7 +133,7 @@ export default function HeaderPartner() {
                 className="flex items-center gap-3 px-4 py-3.5 mb-1 cursor-pointer"
                 onClick={handleProfileClose}
               >
-                <Avatar src={profile?.avatar} className="!w-9 !h-9">
+                <Avatar src={profile?.avatar} className="w-9! h-9!">
                   {profile?.name?.charAt(0)}
                 </Avatar>
                 <div>

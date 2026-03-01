@@ -172,9 +172,8 @@ export default function DashboardPartner() {
 
     return (
         <>
-            <div className="d-flex justify-center px-2" style={{backgroundColor: "#f6f8fb"}}>
-                <div style={{maxWidth: "1200px"}}
-                     className="mt-5 w-100 d-flex flex-column justify-center paddingContainer p-0">
+            <div className="w-100 paddingContainer" style={{backgroundColor: "#f6f8fb"}}>
+                <div className="mt-3 w-100 d-flex flex-column">
                     <div className="d-flex justify-between align-center mb-2">
                         <h5 className=" mb-0">Dashboard</h5>
                     </div>

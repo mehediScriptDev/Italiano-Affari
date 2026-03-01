@@ -130,12 +130,12 @@ export default function DynamicDataTable({ columns, data }: DynamicDataTableProp
   };
 
   return (
-    <div className="dash-card mb-6 overflow-x-auto min-w-[600px] w-full">
+    <div className="dash-card mb-6 overflow-x-auto min-w-150 w-full">
       <div className="p-4 pb-0">
         <TextField
           variant="outlined" placeholder="Cerca..." size="small"
           value={search} onChange={(e) => setSearch(e.target.value)}
-          className="!mb-4"
+          className="mb-4!"
           sx={{
             "& .MuiOutlinedInput-root": {
               borderRadius: "8px",

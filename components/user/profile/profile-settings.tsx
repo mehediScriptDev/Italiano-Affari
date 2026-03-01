@@ -36,7 +36,7 @@ export default function ProfileSettings() {
       {/* Avatar + save header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3.5">
-          <Avatar src={profile?.avatar} className="!w-[72px] !h-[72px] !border-2 !border-[#e5e7ec]">
+          <Avatar src={profile?.avatar} className="w-18! h-18! border-2! border-[#e5e7ec]!">
             {profile?.name?.charAt(0)}
           </Avatar>
           <div>
