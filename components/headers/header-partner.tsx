@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type MouseEvent } from "react";
+import { useState, type MouseEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Avatar from "@mui/material/Avatar";
@@ -10,61 +10,20 @@ import { ListItemIcon, useMediaQuery, useTheme } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { Handyman } from "@mui/icons-material";
-import NotificationRightMenu from "@/components/notifications/notification-right-menu";
-
 import { openMobileMenu } from "@/lib/utils/toggle-mobile-menu";
 import { useAppContext } from "@/lib/context/app-context";
 import { useAuth } from "@/lib/context/auth-context";
-import { fetchNotifications } from "@/lib/api/notifications";
 import { downloadAssetFile } from "@/lib/api/partners";
-import type { Notification } from "@/lib/types";
-import NotificationMenu from "./notification-menu";
 import NavPartner from "./nav-partner";
 
 export default function HeaderPartner() {
   const theme = useTheme();
-  const { token, setToken } = useAuth();
+  const { setToken } = useAuth();
   const { profile } = useAppContext();
   const isMd = useMediaQuery(theme.breakpoints.up("md"));
   const router = useRouter();
 
-  const [notificationAnchorEl, setNotificationAnchorEl] = useState<HTMLElement | null>(null);
-  const [openNotification, setOpenNotification] = useState(false);
-  const [openRightMenu, setOpenRightMenu] = useState(false);
-  const [notifications, setNotifications] = useState<Notification[]>([]);
   const [anchorElProfile, setAnchorElProfile] = useState<HTMLElement | null>(null);
-
-  useEffect(() => {
-    let intervalId: ReturnType<typeof setInterval> | null = null;
-
-    const fetchData = async () => {
-      try {
-        const response = await fetchNotifications();
-        setNotifications(response.data);
-      } catch (e) {
-        console.error("Error fetching notifications:", e);
-      }
-    };
-
-    if (token) {
-      fetchData();
-      intervalId = setInterval(fetchData, 60000);
-    }
-
-    return () => {
-      if (intervalId) clearInterval(intervalId);
-    };
-  }, [token]);
-
-  const handleNotificationClick = (event: MouseEvent<HTMLElement>) => {
-    setNotificationAnchorEl(event.currentTarget);
-    setOpenNotification(true);
-  };
-
-  const handleNotificationClose = () => {
-    setOpenNotification(false);
-    setNotificationAnchorEl(null);
-  };
 
   const handleProfileClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorElProfile(event.currentTarget);
@@ -95,24 +54,6 @@ export default function HeaderPartner() {
             >
               {profile?.name?.charAt(0)}
             </Avatar>
-
-            {openNotification && (
-              <NotificationMenu
-                anchorEl={notificationAnchorEl}
-                open={openNotification}
-                onClose={handleNotificationClose}
-                notifications={notifications.filter((i) => i.type === "operation")}
-              />
-            )}
-
-            {openRightMenu && (
-              <NotificationRightMenu
-                open={openRightMenu}
-                onClose={() => setOpenRightMenu(false)}
-                notifications={notifications.filter((i) => i.type === "system")}
-                setNotifications={setNotifications}
-              />
-            )}
 
             {/* Profile dropdown */}
             <Menu

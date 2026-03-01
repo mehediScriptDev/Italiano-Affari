@@ -30,17 +30,6 @@ export interface DecodedToken {
   iat: number;
 }
 
-export interface Notification {
-  id: number;
-  title: string;
-  message: string;
-  type: "operation" | "system";
-  is_read: boolean;
-  current_percentage?: number;
-  proposed_percentage?: number;
-  created_at: string;
-}
-
 export interface Order {
   id: number;
   name: string;

@@ -76,7 +76,7 @@ export default function DynamicDataTable({ columns, data }: DynamicDataTableProp
               />
               {hasSubagents && (
                 <hr
-                  className="!opacity-100 border-0 position-relative"
+                  className="opacity-100! border-0 position-relative"
                   style={{ backgroundColor: "#13131f", height: "3px", right: "2px" }}
                 />
               )}

@@ -19,18 +19,13 @@ import {
   Logout,
   Handyman,
   Menu as MenuIcon,
-  NotificationsNone,
 } from "@mui/icons-material";
 import IconButton from "@mui/material/IconButton";
-import Badge from "@mui/material/Badge";
 
 import { menuItems, type MenuItem } from "@/lib/data/menu";
 import { useAppContext } from "@/lib/context/app-context";
 import { useAuth } from "@/lib/context/auth-context";
-import { fetchNotifications } from "@/lib/api/notifications";
 import { downloadAssetFile } from "@/lib/api/partners";
-import NotificationRightMenu from "@/components/notifications/notification-right-menu";
-import type { Notification } from "@/lib/types";
 
 /* ── Icon map ─────────────────────────────────── */
 const iconMap: Record<string, React.ReactNode> = {
@@ -73,24 +68,6 @@ export default function DashboardShell({ config, children }: DashboardShellProps
   const [mobileOpen, setMobileOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
-  /* Notifications */
-  const [notifications, setNotifications] = useState<Notification[]>([]);
-  const [rightMenuOpen, setRightMenuOpen] = useState(false);
-
-  useEffect(() => {
-    if (!token) return;
-    let id: ReturnType<typeof setInterval> | null = null;
-    const fetch = async () => {
-      try {
-        const res = await fetchNotifications();
-        setNotifications(res.data ?? []);
-      } catch { /* ignore */ }
-    };
-    fetch();
-    id = setInterval(fetch, 60_000);
-    return () => { if (id) clearInterval(id); };
-  }, [token]);
-
   /* Close mobile sidebar on route change */
   useEffect(() => {
     setMobileOpen(false);
@@ -102,7 +79,6 @@ export default function DashboardShell({ config, children }: DashboardShellProps
   const handleProfileOpen = (e: MouseEvent<HTMLElement>) => setAnchorEl(e.currentTarget);
   const handleProfileClose = () => setAnchorEl(null);
 
-  const unreadCount = notifications.filter((n) => !n.is_read).length;
 
   return (
     <>
@@ -209,13 +185,6 @@ export default function DashboardShell({ config, children }: DashboardShellProps
         </IconButton>
 
         <div className="flex items-center gap-2 ml-auto">
-          {/* Notifications bell */}
-          <IconButton onClick={() => setRightMenuOpen(true)}>
-            <Badge badgeContent={unreadCount} color="error" max={99}>
-              <NotificationsNone />
-            </Badge>
-          </IconButton>
-
           {/* Avatar */}
           <Avatar
             src={profile?.avatar}
@@ -278,16 +247,6 @@ export default function DashboardShell({ config, children }: DashboardShellProps
           Esci
         </MuiMenuItem>
       </MuiMenu>
-
-      {/* Notification right menu */}
-      {rightMenuOpen && (
-        <NotificationRightMenu
-          open={rightMenuOpen}
-          onClose={() => setRightMenuOpen(false)}
-          notifications={notifications.filter((n) => n.type === "system")}
-          setNotifications={setNotifications}
-        />
-      )}
 
       {/* ── Content area ──────────────────────── */}
       <div
