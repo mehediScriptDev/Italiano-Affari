@@ -2,9 +2,20 @@
 
 import { useState, type ReactNode } from "react";
 import {
-  Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
-  Paper, Checkbox, FormControl, Select, MenuItem,
-  InputAdornment, TextField, type SelectChangeEvent,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Checkbox,
+  FormControl,
+  Select,
+  MenuItem,
+  InputAdornment,
+  TextField,
+  type SelectChangeEvent,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
@@ -33,21 +44,21 @@ export default function DataTable<T extends { id: string | number }>({
     columns.some((col) =>
       String((row as Record<string, unknown>)[col.field] ?? "")
         .toLowerCase()
-        .includes(search.toLowerCase())
-    )
+        .includes(search.toLowerCase()),
+    ),
   );
 
   const handleSelectAll = () => {
     setSelectedRows(
       selectedRows.length === filteredData.length
         ? []
-        : filteredData.map((row) => row.id)
+        : filteredData.map((row) => row.id),
     );
   };
 
   const handleSelectRow = (id: string | number) => {
     setSelectedRows((prev) =>
-      prev.includes(id) ? prev.filter((r) => r !== id) : [...prev, id]
+      prev.includes(id) ? prev.filter((r) => r !== id) : [...prev, id],
     );
   };
 
@@ -82,7 +93,11 @@ export default function DataTable<T extends { id: string | number }>({
 
       <TableContainer
         component={Paper}
-        sx={{ borderRadius: "8px", boxShadow: "none", border: "1px solid #e5e7ec" }}
+        sx={{
+          borderRadius: "8px",
+          boxShadow: "none",
+          border: "1px solid #e5e7ec",
+        }}
       >
         <Table>
           <TableHead sx={{ backgroundColor: "#f8f9fb" }}>
@@ -90,16 +105,25 @@ export default function DataTable<T extends { id: string | number }>({
               {showCheckbox && (
                 <TableCell sx={{ borderBottom: "1px solid #eef0f4", py: 1.5 }}>
                   <Checkbox
-                    checked={selectedRows.length === filteredData.length && filteredData.length > 0}
-                    indeterminate={selectedRows.length > 0 && selectedRows.length < filteredData.length}
+                    checked={
+                      selectedRows.length === filteredData.length &&
+                      filteredData.length > 0
+                    }
+                    indeterminate={
+                      selectedRows.length > 0 &&
+                      selectedRows.length < filteredData.length
+                    }
                     onChange={handleSelectAll}
                     size="small"
                   />
                 </TableCell>
               )}
               {columns.map((col) => (
-                <TableCell key={col.field} sx={{ borderBottom: "1px solid #eef0f4", py: 1.5 }}>
-                  <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide">
+                <TableCell
+                  key={col.field}
+                  sx={{ borderBottom: "1px solid #eef0f4", py: 1.5 }}
+                >
+                  <span className="text-[14px] whitespace-nowrap font-semibold text-slate-500 uppercase tracking-wide">
                     {col.label}
                   </span>
                 </TableCell>
@@ -117,7 +141,9 @@ export default function DataTable<T extends { id: string | number }>({
                 }}
               >
                 {showCheckbox && (
-                  <TableCell sx={{ borderBottom: "1px solid #eef0f4", py: 1.5 }}>
+                  <TableCell
+                    sx={{ borderBottom: "1px solid #eef0f4", py: 1.5 }}
+                  >
                     <Checkbox
                       checked={selectedRows.includes(row.id)}
                       onChange={() => handleSelectRow(row.id)}
@@ -128,11 +154,18 @@ export default function DataTable<T extends { id: string | number }>({
                 {columns.map((col) => (
                   <TableCell
                     key={col.field}
-                    sx={{ borderBottom: "1px solid #eef0f4", py: 1.5, fontSize: 14, color: "#333" }}
+                    sx={{
+                      borderBottom: "1px solid #eef0f4",
+                      py: 1.5,
+                      fontSize: 14,
+                      color: "#333",
+                    }}
                   >
                     {typeof col.render === "function"
                       ? col.render(row)
-                      : String((row as Record<string, unknown>)[col.field] ?? "")}
+                      : String(
+                          (row as Record<string, unknown>)[col.field] ?? "",
+                        )}
                   </TableCell>
                 ))}
               </TableRow>
@@ -142,17 +175,25 @@ export default function DataTable<T extends { id: string | number }>({
       </TableContainer>
 
       <div className="flex items-center justify-between mt-4 px-1">
-        <span className="text-[13px] text-slate-500">Selezionati: {selectedRows.length}</span>
+        <span className="text-[13px] text-slate-500">
+          Selezionati: {selectedRows.length}
+        </span>
         <FormControl size="small" sx={{ width: 80 }}>
           <Select
             value={rowsPerPage}
-            onChange={(e: SelectChangeEvent<number>) => setRowsPerPage(Number(e.target.value))}
+            onChange={(e: SelectChangeEvent<number>) =>
+              setRowsPerPage(Number(e.target.value))
+            }
             sx={{
               borderRadius: "8px",
               fontSize: 13,
               "& .MuiOutlinedInput-notchedOutline": { borderColor: "#e5e7ec" },
-              "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#c4c8d0" },
-              "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#13131f" },
+              "&:hover .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#c4c8d0",
+              },
+              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#13131f",
+              },
             }}
           >
             <MenuItem value={10}>10</MenuItem>

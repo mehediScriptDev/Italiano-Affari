@@ -91,7 +91,7 @@ function ChartPreview({ obj, icon, label, sx, iconBg = '#6366f1', suffix = '' }:
                         {icon}
                     </Box>
                     <Box sx={{ flex: 1, minWidth: 0 }}>
-                        <Typography sx={{ color: '#64748b', fontSize: '12px', fontWeight: 500, lineHeight: 1.3 }}>
+                        <Typography sx={{ color: '#64748b', fontSize: '16px', fontWeight: 500, lineHeight: 1.3 }}>
                             {label}
                         </Typography>
                         <Typography sx={{ fontWeight: 700, fontSize: '22px', color: '#13131f', lineHeight: 1.3, mt: 0.25 }}>
@@ -111,11 +111,11 @@ function ChartPreview({ obj, icon, label, sx, iconBg = '#6366f1', suffix = '' }:
                         {isPositive
                             ? <ArrowUpward sx={{ fontSize: 13, color: trendColor }} />
                             : <ArrowDownward sx={{ fontSize: 13, color: trendColor }} />}
-                        <Typography sx={{ fontSize: '12px', fontWeight: 600, color: trendColor }}>
+                        <Typography sx={{ fontSize: '14px', fontWeight: 600, color: trendColor }}>
                             {difference}
                         </Typography>
                     </Box>
-                    <Typography sx={{ fontSize: '11px', color: '#94a3b8' }}>
+                    <Typography sx={{ fontSize: '14px', color: '#94a3b8' }}>
                         vs periodo prec.
                     </Typography>
                 </Box>

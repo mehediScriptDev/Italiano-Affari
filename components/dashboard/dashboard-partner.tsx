@@ -203,7 +203,7 @@ export default function DashboardPartner() {
           >
             <Grid size={{ xs: 12, lg: 4 }} sx={{ display: "flex" }}>
               <Box
-                className="min-h-50!"
+                className=""
                 sx={{
                   backgroundColor: "#13131f",
                   borderRadius: '6px',
@@ -237,7 +237,7 @@ export default function DashboardPartner() {
                     >
                       Welcome, {profile?.name}
                     </Typography>
-                    <Typography sx={{ color: "#b2b2b2", fontSize: "13px" }}>
+                    <Typography sx={{ color: "#b2b2b2", fontSize: "14px" }}>
                       {profile?.activity}
                     </Typography>
                   </div>
@@ -351,47 +351,44 @@ export default function DashboardPartner() {
             </Grid>
 
             <Grid size={{ xs: 12, sm: 6, lg: 4 }} sx={{ display: "flex" }}>
-                <Box
+              <Box
                 className="min-h-27.5 lg:min-h-50"
                 sx={{
                   backgroundColor: "white",
                   borderRadius: '6px',
-                  p: 3,
+                  border: '1px solid #eef0f4',
                   boxShadow: '0 1px 2px rgba(0,0,0,0.06)',
+                  transition: 'box-shadow 0.2s',
+                  '&:hover': { boxShadow: '0 4px 10px rgba(0,0,0,0.06)' },
                   width: "100%",
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "space-between",
+                  p: 3,
                 }}
               >
-                <div className="d-flex align-center">
-                  <div
-                    style={{
-                      backgroundColor: "#1976d2",
-                      borderRadius: '6px',
-                      padding: "10px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexShrink: 0,
-                    }}
-                  >
-                    <ShoppingCart
-                      style={{ color: "white", fontSize: "22px" }}
-                    />
-                  </div>
-                  <div className="ms-3">
-                    <Typography variant="body2" color="textSecondary">
+                <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.5 }}>
+                  <Box sx={{
+                    backgroundColor: '#1976d21a',
+                    borderRadius: '6px',
+                    width: 44,
+                    height: 44,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                  }}>
+                    <ShoppingCart style={{ color: "#1976d2", fontSize: "22px" }} />
+                  </Box>
+                  <Box sx={{ flex: 1, minWidth: 0 }}>
+                    <Typography sx={{ color: '#64748b', fontSize: '16px', fontWeight: 500, lineHeight: 1.3 }}>
                       Ordini Totali
                     </Typography>
-                    <Typography
-                      variant="h5"
-                      sx={{ fontWeight: 700, lineHeight: 1.2 }}
-                    >
+                    <Typography sx={{ fontWeight: 700, fontSize: '22px', color: '#13131f', lineHeight: 1.3, mt: 0.25 }}>
                       {networkInfo.count}
                     </Typography>
-                  </div>
-                </div>
+                  </Box>
+                </Box>
                 <Typography variant="body2" sx={{ mt: 2, color: "#64748b" }}>
                   Valore della rete: <strong>{networkInfo.earnings}€</strong>
                 </Typography>
