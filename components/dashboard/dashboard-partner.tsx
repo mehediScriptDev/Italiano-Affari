@@ -206,7 +206,8 @@ export default function DashboardPartner() {
                 className="min-h-50!"
                 sx={{
                   backgroundColor: "#13131f",
-                  borderRadius: "10px",
+                  borderRadius: '6px',
+                  boxShadow: '0 1px 2px rgba(0,0,0,0.06)',
                   p: 3,
                   color: "white",
                   display: "flex",
@@ -318,14 +319,7 @@ export default function DashboardPartner() {
                         excavate: true,
                       }}
                     />
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        mt: 3,
-                        gap: 1,
-                      }}
-                    >
+                    <Box sx={{ display: 'flex', alignItems: 'center', mt: 3, gap: 1 }}>
                       <TextField
                         variant="outlined"
                         value={couponToShare}
@@ -357,13 +351,13 @@ export default function DashboardPartner() {
             </Grid>
 
             <Grid size={{ xs: 12, sm: 6, lg: 4 }} sx={{ display: "flex" }}>
-              <Box
+                <Box
                 className="min-h-27.5 lg:min-h-50"
                 sx={{
                   backgroundColor: "white",
-                  borderRadius: 2,
+                  borderRadius: '6px',
                   p: 3,
-                  boxShadow: "rgba(0,0,0,0.24) 0px 3px 8px",
+                  boxShadow: '0 1px 2px rgba(0,0,0,0.06)',
                   width: "100%",
                   display: "flex",
                   flexDirection: "column",
@@ -374,7 +368,7 @@ export default function DashboardPartner() {
                   <div
                     style={{
                       backgroundColor: "#1976d2",
-                      borderRadius: "10px",
+                      borderRadius: '6px',
                       padding: "10px",
                       display: "flex",
                       alignItems: "center",

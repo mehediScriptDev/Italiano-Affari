@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import {useEffect, useState} from 'react';
-import {Box, Card, CardContent, Grid, Typography, useMediaQuery} from "@mui/material";
+import {Box, Grid, Typography} from "@mui/material";
 import {
     ArcElement,
     BarElement,
@@ -19,7 +19,6 @@ import StatsChart from "@/components/common/stats-chart";
 import {AttachMoney, Handshake, ShoppingBag} from "@mui/icons-material";
 import ChartPreview from "@/components/common/chart-preview";
 import {fetchAffiliates, fetchEarnings, fetchSales} from "@/lib/api/partners";
-import type { Theme } from "@mui/material/styles";
 
 ChartJS.register(
     CategoryScale,
@@ -35,8 +34,6 @@ ChartJS.register(
 );
 
 export default function StatsPage() {
-    const [previewMode,setPreviewMode] = useState('today');
-
     const [chartsPreview,setChartsPreview] = useState({
         sales:null,
         earnings:null,
@@ -124,153 +121,80 @@ export default function StatsPage() {
                 });
             }
 
-            return getChartData(chartType, Object.values(res.data.data), labels);
+            return [{ labels, label: chartType, data: Object.values(res.data.data) as number[] }];
         });
     }
 
-    const config: Record<string, { label: string; colors: string[]; borderColors?: string[] }> = {
-        vendite: {
-            label: 'Vendite Dirette',
-            colors: ['rgba(75, 192, 192, 1)', 'rgba(75, 192, 192, 0.2)']
-        },
-        commissioni: {
-            label: 'Commissioni Generate',
-            colors: ['rgba(255, 159, 64, 0.6)', 'rgba(255, 159, 64, 1)']
-        },
-        guadagni: {
-            label: 'Guadagni Maturati',
-            colors: ['rgba(54, 162, 235, 0.6)', 'rgba(54, 162, 235, 1)']
-        },
-        affiliati: {
-            label: 'Nuovi Affiliati',
-            colors: [
-                'rgba(255, 99, 132, 0.6)', 'rgba(153, 102, 255, 0.6)', 'rgba(255, 206, 86, 0.6)',
-                'rgba(75, 192, 192, 0.6)', 'rgba(54, 162, 235, 0.6)', 'rgba(255, 159, 64, 0.6)'
-            ],
-            borderColors: [
-                'rgba(255, 99, 132, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 159, 64, 1)'
-            ]
-        }
-    };
-
-
-    const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
-
-    const getChartData = (chartType: string, data: number[], labels: string[]) => {
-
-        const {label, colors, borderColors} = config[chartType];
-
-        if (chartType === 'affiliati') {
-            return [{
-                labels: labels,
-                label,
-                data: data,
-                backgroundColor: colors,
-                borderColor: borderColors,
-                borderWidth: 1
-            }];
-        } else {
-            return [{
-                labels: labels,
-                label,
-                data: data,
-                borderColor: colors[0],
-                backgroundColor: colors[1],
-                pointRadius: 0,
-                fill: true,
-                fillOpacity: 1,
-                tension: 0.5,
-                borderWidth: 1
-            }];
-        }
-    };
-
-    const generateRandomData = (min: number, max: number, count: number) => {
-        return Array.from({length: count}, () =>
-            Math.floor(Math.random() * (max - min + 1)) + min
-        );
-    };
-
-    const togglePreviewMode = () =>{
-        setPreviewMode(previewMode === 'today' ? "year" : "today");
-    }
-
     return (
-        <Box className="w-100 paddingContainer mt-3" sx={{backgroundColor: 'transparent'}}>
-            <div className="flex items-center justify-between mb-2">
+        <Box className="w-100 paddingContainer mt-3" sx={{ backgroundColor: 'transparent' }}>
+            <div className="flex items-center justify-between mb-3">
                 <h1 className="page-title">Statistiche</h1>
             </div>
-            <div className="row d-flex justify-center">
-                <Grid className={isMobile ? 'px-0' : "px-1"} container spacing={isMobile ? 2 : 1} sx={{mt:2, p:0}}>
-                    <Grid size={{ xs: 12, md: 4 }}>
-                        <ChartPreview label={"Vendite Dirette"}
-                                      icon={<ShoppingBag style={{color: "black", fontSize: "24px"}}/>}
-                                      obj={chartsPreview.sales}
-                        />
-                    </Grid>
-                    <Grid size={{ xs: 12, md: 4 }}>
-                        <ChartPreview label={"Guadagni Maturati"}
-                                      icon={<AttachMoney style={{color: "black", fontSize: "24px"}}/>}
-                                      obj={chartsPreview.earnings}
-                        />
-                    </Grid>
-                    
-                    <Grid size={{ xs: 12, md: 4 }}>
-                        <ChartPreview label={"Co-Partner"}
-                                      icon={<Handshake style={{color: "black", fontSize: "24px"}}/>}
-                                      obj={chartsPreview.affiliates}
-                        />
-                    </Grid>
+
+            {/* KPI Cards */}
+            <Grid container spacing={2} sx={{ mb: 3 }}>
+                <Grid size={{ xs: 12, md: 4 }}>
+                    <ChartPreview
+                        label="Vendite Dirette"
+                        icon={<ShoppingBag style={{ fontSize: '20px' }} />}
+                        obj={chartsPreview.sales}
+                        iconBg="#6366f1"
+                    />
                 </Grid>
-                <div className="col-12 mb-4">
-                    <Grid container mt={2} spacing={isMobile ? 2 : 0}>
-                        <Grid size={{ xs: 12, md: 12 }}>
-                            <Card sx={{borderRadius: 2, boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}>
-                                <CardContent>
-                                    <Typography align={"center"} variant="h6"
-                                                sx={{color: 'black', mb: 1, fontSize: 16}}>
-                                        Totale Commissioni Generate
-                                    </Typography>
+                <Grid size={{ xs: 12, md: 4 }}>
+                    <ChartPreview
+                        label="Guadagni Maturati"
+                        icon={<AttachMoney style={{ fontSize: '20px' }} />}
+                        obj={chartsPreview.earnings}
+                        iconBg="#10b981"
+                    />
+                </Grid>
+                <Grid size={{ xs: 12, md: 4 }}>
+                    <ChartPreview
+                        label="Co-Partner"
+                        icon={<Handshake style={{ fontSize: '20px' }} />}
+                        obj={chartsPreview.affiliates}
+                        iconBg="#f59e0b"
+                    />
+                </Grid>
+            </Grid>
 
-                                    <StatsChart label={"commissioni"} chartType={"line"} fetchData={fetchBigChart}/>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                    </Grid>
-                </div>
+            {/* Main chart */}
+            <Box sx={{ mb: 3, backgroundColor: '#fff', borderRadius: 3, border: '1px solid #eef0f4', p: 3 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+                    <Box sx={{ width: 4, height: 18, borderRadius: 2, backgroundColor: '#6366f1', flexShrink: 0 }} />
+                    <Typography sx={{ fontWeight: 700, fontSize: '14px', color: '#13131f' }}>
+                        Totale Commissioni Generate
+                    </Typography>
+                </Box>
+                <StatsChart label="commissioni" chartType="line" fetchData={fetchBigChart} />
+            </Box>
 
-                <div className="col-12 mb-4">
-
-                    <Grid container spacing={isMobile ? 2 : 0}>
-                        <Grid size={{ xs: 12, md: 6, lg: 6 }}
-                              sx={{borderRight: {md: '1px solid rgba(255, 255, 255, 0.12)'}, pr: {md: 2}}}>
-                            <Card sx={{borderRadius: 2, boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}>
-                                <CardContent>
-                                    <Typography align={"center"} variant="h6"
-                                                sx={{color: 'black', mb: 1, fontSize: 16}}>
-                                        Totale Vendite Dirette
-                                    </Typography>
-                                    <StatsChart label={"vendite"} chartType={"line"} fetchData={fetchBigChart}/>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                        <Grid size={{ xs: 12, md: 6 }} sx={{pl: {md: 2}}}>
-                            <Card sx={{borderRadius: 2, boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}>
-                                <CardContent>
-                                    <Typography align={"center"} variant="h6"
-                                                sx={{color: 'black', mb: 1, fontSize: 16}}>
-                                        Nuovi Affiliati Registrati
-                                    </Typography>
-
-
-                                    <StatsChart label={"affiliati"} chartType={"bar"} fetchData={fetchBigChart}/>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                    </Grid>
-                </div>
-            </div>
+            {/* Bottom two charts */}
+            <Grid container spacing={2} sx={{ mb: 3 }}>
+                <Grid size={{ xs: 12, md: 6 }}>
+                    <Box sx={{ backgroundColor: '#fff', borderRadius: 3, border: '1px solid #eef0f4', p: 3, height: '100%' }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+                            <Box sx={{ width: 4, height: 18, borderRadius: 2, backgroundColor: '#10b981', flexShrink: 0 }} />
+                            <Typography sx={{ fontWeight: 700, fontSize: '14px', color: '#13131f' }}>
+                                Totale Vendite Dirette
+                            </Typography>
+                        </Box>
+                        <StatsChart label="vendite" chartType="line" fetchData={fetchBigChart} />
+                    </Box>
+                </Grid>
+                <Grid size={{ xs: 12, md: 6 }}>
+                    <Box sx={{ backgroundColor: '#fff', borderRadius: 3, border: '1px solid #eef0f4', p: 3, height: '100%' }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+                            <Box sx={{ width: 4, height: 18, borderRadius: 2, backgroundColor: '#f59e0b', flexShrink: 0 }} />
+                            <Typography sx={{ fontWeight: 700, fontSize: '14px', color: '#13131f' }}>
+                                Nuovi Affiliati Registrati
+                            </Typography>
+                        </Box>
+                        <StatsChart label="affiliati" chartType="bar" fetchData={fetchBigChart} />
+                    </Box>
+                </Grid>
+            </Grid>
         </Box>
     );
 }

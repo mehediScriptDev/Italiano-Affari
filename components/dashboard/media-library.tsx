@@ -174,7 +174,7 @@ export default function MediaLibrary() {
 
   return (
     <Box className="w-100 paddingContainer mt-3">
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-3">
         <div>
           <h1 className="page-title">Libreria Contenuti</h1>
           <p className="page-subtitle">Sfoglia e scarica i contenuti ufficiali per le tue campagne di promozione</p>

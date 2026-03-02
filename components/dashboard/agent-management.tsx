@@ -82,7 +82,7 @@ export default function AgentManagement() {
   return (
     <>
       <div className="w-100 paddingContainer mt-3">
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between mb-3">
           <div>
             <h1 className="page-title">Gestione Agenti</h1>
             <p className="page-subtitle">La tua rete di partner</p>

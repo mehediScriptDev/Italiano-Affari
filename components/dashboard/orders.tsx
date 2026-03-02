@@ -92,7 +92,7 @@ export default function Orders() {
   return (
     <div className="w-100 paddingContainer mt-3">
       {/* Header row */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-3">
         <div>
           <h1 className="page-title">Ordini / Report</h1>
           <p className="page-subtitle">Storico degli ordini con filtri per data</p>
