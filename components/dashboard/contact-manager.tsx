@@ -120,12 +120,12 @@ export default function ContactManager() {
   return (
     <>
       <div className="w-100 paddingContainer mt-3">
-        <div className="flex items-center justify-between mb-3">
+        <div className="flex flex-wrap items-center justify-between mb-3 gap-3">
           <div>
             <h1 className="page-title">Gestione Contatti</h1>
             <p className="page-subtitle">Gestisci la tua rubrica contatti</p>
           </div>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <Button
               component="label"
               color="secondary"

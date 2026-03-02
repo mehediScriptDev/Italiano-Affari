@@ -249,7 +249,7 @@ export default function DashboardPartner() {
                 </div>
 
                 {/* Buttons row */}
-                <div className="d-flex gap-2 flex-wrap">
+                <div className="d-flex gap-1 2xl:gap-2 flex-wrap">
                   <Button
                     size="small"
                     variant="contained"

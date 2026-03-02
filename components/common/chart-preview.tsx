@@ -16,8 +16,8 @@ interface ChartPreviewProps {
     suffix?: string;
 }
 
-const ChartSkeleton = () => (
-    <Card sx={{ borderRadius: '6px', border: '1px solid #eef0f4', boxShadow: '0 1px 2px rgba(0,0,0,0.06)' }}>
+const ChartSkeleton = ({ sx }: { sx?: SxProps }) => (
+    <Card sx={{ borderRadius: '6px', border: '1px solid #eef0f4', boxShadow: '0 1px 2px rgba(0,0,0,0.06)', width: '100%', ...sx }}>
         <CardContent>
             <ContentLoader
                 speed={2}
@@ -39,7 +39,7 @@ const ChartSkeleton = () => (
 
 function ChartPreview({ obj, icon, label, sx, iconBg = '#6366f1', suffix = '' }: ChartPreviewProps) {
     if (!obj)
-        return <ChartSkeleton />;
+        return <ChartSkeleton sx={sx} />;
 
     const total = obj.total;
     const data = (obj.data ? Object.values(obj.data) : []) as number[];
