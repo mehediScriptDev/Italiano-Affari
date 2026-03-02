@@ -1,6 +1,7 @@
 "use client";
 
 import { Fragment, useState, type ReactNode } from "react";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import {
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
   Paper, FormControl, Select, MenuItem, InputAdornment,
@@ -33,8 +34,11 @@ interface DynamicDataTableProps {
 
 export default function DynamicDataTable({ columns, data }: DynamicDataTableProps) {
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [expandedRows, setExpandedRows] = useState<Record<string | number, boolean>>({});
+
+  const isMobile = useMediaQuery("(max-width: 600px)");
 
   const toggleColWidth = "10%";
   const otherColsWidth = `${90 / columns.length}%`;
@@ -44,6 +48,9 @@ export default function DynamicDataTable({ columns, data }: DynamicDataTableProp
       String(row[col.field] ?? "").toLowerCase().includes(search.toLowerCase())
     )
   );
+
+  const totalPages = Math.max(1, Math.ceil(filteredData.length / rowsPerPage));
+  const pagedData = filteredData.slice((page - 1) * rowsPerPage, page * rowsPerPage);
 
   const toggleExpand = (id: string | number) => {
     setExpandedRows((prev) => ({ ...prev, [id]: !prev[id] }));
@@ -134,7 +141,7 @@ export default function DynamicDataTable({ columns, data }: DynamicDataTableProp
       <div className="p-4 pb-0">
         <TextField
           variant="outlined" placeholder="Cerca..." size="small"
-          value={search} onChange={(e) => setSearch(e.target.value)}
+          value={search} onChange={(e) => { setSearch(e.target.value); setPage(1); }}
           className="mb-4!"
           sx={{
             "& .MuiOutlinedInput-root": {
@@ -170,31 +177,150 @@ export default function DynamicDataTable({ columns, data }: DynamicDataTableProp
               <TableCell />
               {columns.map((col) => (
                 <TableCell key={col.field} sx={{ borderBottom: "1px solid #eef0f4", py: 1.5 }}>
-                  <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide">{col.label}</span>
+                  <span className="text-[14px] font-semibold text-slate-500 uppercase tracking-wide">{col.label}</span>
                 </TableCell>
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>{filteredData.slice(0, rowsPerPage).map((row) => renderRow(row))}</TableBody>
+          <TableBody>{pagedData.map((row) => renderRow(row))}</TableBody>
         </Table>
       </TableContainer>
 
-      <div className="flex justify-end items-center p-3">
-        <FormControl size="small" sx={{ width: 80 }}>
-          <Select
-            value={rowsPerPage}
-            onChange={(e: SelectChangeEvent<number>) => setRowsPerPage(Number(e.target.value))}
-            sx={{
-              borderRadius: "8px",
-              fontSize: 13,
-              "& .MuiOutlinedInput-notchedOutline": { borderColor: "#e5e7ec" },
+      {/* Footer */}
+      <div className="flex flex-col sm:flex-row items-center justify-between mt-4 px-3 pb-3 gap-3">
+
+        {/* Left: Mostra [N] righe per pagina */}
+        <div className="flex items-center gap-2">
+          <span className="text-[13px] text-slate-400 whitespace-nowrap">Mostra</span>
+          <FormControl size="small" sx={{ width: 68 }}>
+            <Select
+              value={rowsPerPage}
+              onChange={(e: SelectChangeEvent<number>) => {
+                setRowsPerPage(Number(e.target.value));
+                setPage(1);
+              }}
+              sx={{
+                height: 32,
+                borderRadius: "8px",
+                fontSize: 13,
+                "& .MuiOutlinedInput-notchedOutline": { borderColor: "#e5e7ec" },
+                "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#c4c8d0" },
+                "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#13131f" },
+              }}
+            >
+              <MenuItem value={10}>10</MenuItem>
+              <MenuItem value={25}>25</MenuItem>
+              <MenuItem value={50}>50</MenuItem>
+            </Select>
+          </FormControl>
+          <span className="text-[13px] text-slate-400 whitespace-nowrap hidden sm:inline">righe per pagina</span>
+        </div>
+
+        {/* Right: Precedente  1  2  3 …  Successivo */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+          {/* Precedente */}
+          <button
+            onClick={() => setPage((p) => Math.max(1, p - 1))}
+            disabled={page === 1}
+            style={{
+              height: 32, padding: '0 12px', borderRadius: 6, border: '1px solid',
+              borderColor: page === 1 ? '#f1f3f5' : '#e5e7ec',
+              backgroundColor: 'transparent',
+              color: page === 1 ? '#cbd5e1' : '#374151',
+              fontSize: 13, cursor: page === 1 ? 'not-allowed' : 'pointer',
+              whiteSpace: 'nowrap', transition: 'all 0.15s',
+              display: isMobile ? 'none' : 'flex', alignItems: 'center',
             }}
+            onMouseEnter={(e) => { if (page !== 1) { (e.currentTarget as HTMLButtonElement).style.backgroundColor = '#f6f8fb'; (e.currentTarget as HTMLButtonElement).style.borderColor = '#c4c8d0'; } }}
+            onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.backgroundColor = 'transparent'; (e.currentTarget as HTMLButtonElement).style.borderColor = page === 1 ? '#f1f3f5' : '#e5e7ec'; }}
           >
-            <MenuItem value={10}>10</MenuItem>
-            <MenuItem value={25}>25</MenuItem>
-            <MenuItem value={50}>50</MenuItem>
-          </Select>
-        </FormControl>
+            Precedente
+          </button>
+
+          {/* Mobile prev arrow */}
+          {isMobile && (
+            <button
+              onClick={() => setPage((p) => Math.max(1, p - 1))}
+              disabled={page === 1}
+              style={{ height: 32, width: 32, borderRadius: 6, border: '1px solid', borderColor: page === 1 ? '#f1f3f5' : '#e5e7ec', backgroundColor: 'transparent', color: page === 1 ? '#cbd5e1' : '#374151', fontSize: 16, cursor: page === 1 ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            >
+              ‹
+            </button>
+          )}
+
+          {/* Page number pills */}
+          {(() => {
+            const pills: (number | 'ellipsis-l' | 'ellipsis-r')[] = [];
+            if (isMobile) {
+              pills.push(page);
+            } else if (totalPages <= 5) {
+              for (let i = 1; i <= totalPages; i++) pills.push(i);
+            } else {
+              pills.push(1);
+              if (page > 3) pills.push('ellipsis-l');
+              const start = Math.max(2, page - 1);
+              const end   = Math.min(totalPages - 1, page + 1);
+              for (let i = start; i <= end; i++) pills.push(i);
+              if (page < totalPages - 2) pills.push('ellipsis-r');
+              pills.push(totalPages);
+            }
+            return pills.map((p, idx) =>
+              typeof p === 'string' ? (
+                <span key={p + idx} style={{ fontSize: 13, color: '#94a3b8', width: 24, textAlign: 'center' }}>…</span>
+              ) : (
+                <button
+                  key={p}
+                  onClick={() => setPage(p)}
+                  style={{
+                    height: 32, minWidth: 32, paddingLeft: 4, paddingRight: 4,
+                    borderRadius: 6,
+                    border: p === page ? 'none' : '1px solid transparent',
+                    backgroundColor: p === page ? '#12715b' : 'transparent',
+                    color: p === page ? '#fff' : '#374151',
+                    fontSize: 13, fontWeight: p === page ? 600 : 400,
+                    cursor: p === page ? 'default' : 'pointer',
+                    transition: 'all 0.15s',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  }}
+                  onMouseEnter={(e) => { if (p !== page) { (e.currentTarget as HTMLButtonElement).style.backgroundColor = '#f6f8fb'; (e.currentTarget as HTMLButtonElement).style.borderColor = '#e5e7ec'; } }}
+                  onMouseLeave={(e) => { if (p !== page) { (e.currentTarget as HTMLButtonElement).style.backgroundColor = 'transparent'; (e.currentTarget as HTMLButtonElement).style.borderColor = 'transparent'; } }}
+                >
+                  {p}
+                </button>
+              )
+            );
+          })()}
+
+          {/* Mobile next arrow */}
+          {isMobile && (
+            <button
+              onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+              disabled={page === totalPages}
+              style={{ height: 32, width: 32, borderRadius: 6, border: '1px solid', borderColor: page === totalPages ? '#f1f3f5' : '#e5e7ec', backgroundColor: 'transparent', color: page === totalPages ? '#cbd5e1' : '#374151', fontSize: 16, cursor: page === totalPages ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            >
+              ›
+            </button>
+          )}
+
+          {/* Successivo */}
+          <button
+            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+            disabled={page === totalPages}
+            style={{
+              height: 32, padding: '0 12px', borderRadius: 6, border: '1px solid',
+              borderColor: page === totalPages ? '#f1f3f5' : '#e5e7ec',
+              backgroundColor: 'transparent',
+              color: page === totalPages ? '#cbd5e1' : '#374151',
+              fontSize: 13, cursor: page === totalPages ? 'not-allowed' : 'pointer',
+              whiteSpace: 'nowrap', transition: 'all 0.15s',
+              display: isMobile ? 'none' : 'flex', alignItems: 'center',
+            }}
+            onMouseEnter={(e) => { if (page !== totalPages) { (e.currentTarget as HTMLButtonElement).style.backgroundColor = '#f6f8fb'; (e.currentTarget as HTMLButtonElement).style.borderColor = '#c4c8d0'; } }}
+            onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.backgroundColor = 'transparent'; (e.currentTarget as HTMLButtonElement).style.borderColor = page === totalPages ? '#f1f3f5' : '#e5e7ec'; }}
+          >
+            Successivo
+          </button>
+        </div>
       </div>
     </div>
   );

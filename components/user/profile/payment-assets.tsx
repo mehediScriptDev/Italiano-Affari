@@ -118,16 +118,16 @@ export default function PaymentAssets() {
   );
 
   return (
-    <div className="dash-card p-7 min-h-125 relative">
+    <div className="dash-card p-7 min-h-120 relative">
       {/* Header */}
       <h2 className="text-xl font-bold tracking-tight text-center mb-1">Gestisci Pagamenti</h2>
-      <p className="text-sm text-slate-500 text-center mb-5">
+      <p className="text-sm text-slate-500 text-center mb-3">
         In questa sezione puoi visualizzare i tuoi pagamenti, aggiungere un nuovo metodo di pagamento e gestire i tuoi asset
       </p>
 
       <hr className="border-0 border-t border-[#eef0f4] my-5" />
 
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-3">
         <h3 className="text-base font-bold m-0">Asset di pagamento</h3>
         <Button variant="contained" color="secondary" onClick={handleOpenDialog} sx={{ borderRadius: "8px", textTransform: "none", fontWeight: 600, px: 2.5 }}>Aggiungi</Button>
       </div>

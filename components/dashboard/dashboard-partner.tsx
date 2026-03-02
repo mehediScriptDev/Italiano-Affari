@@ -6,6 +6,8 @@ import {
   Button,
   Dialog,
   DialogContent,
+  DialogTitle,
+  Divider,
   Grid,
   IconButton,
   TextField,
@@ -18,7 +20,10 @@ import PaymentAssets from "@/components/user/profile/payment-assets";
 import Avatar from "@mui/material/Avatar";
 import {
   AttachMoney,
+  Close,
+  ContentCopyOutlined,
   ContentCopy,
+  CheckCircleOutline,
   InfoOutlined,
   IosShareOutlined,
   QrCode2,
@@ -296,41 +301,132 @@ export default function DashboardPartner() {
                 <Dialog
                   open={openShareDialog}
                   onClose={() => setOpenShareDialog(false)}
+                  PaperProps={{
+                    sx: {
+                      borderRadius: '16px',
+                      width: 380,
+                      maxWidth: '95vw',
+                      overflow: 'hidden',
+                    },
+                  }}
                 >
-                  <DialogContent sx={{ textAlign: "center", p: 4 }}>
-                    <Typography variant="h6" sx={{ mb: 2 }}>
-                      Condividi il tuo codice
-                    </Typography>
-                    <ReactQRCode
-                      value={couponToShare}
-                      size={150}
-                      marginSize={0}
-                      dataModulesSettings={{
-                        color: "#000000",
-                        style: "rounded",
-                        randomSize: false,
-                      }}
-                      finderPatternOuterSettings={{ style: "rounded" }}
-                      finderPatternInnerSettings={{ style: "rounded-sm" }}
-                      imageSettings={{
-                        src: "/assets/images/qr-code-logo.png",
-                        width: 30,
-                        height: 30,
-                        excavate: true,
-                      }}
-                    />
-                    <Box sx={{ display: 'flex', alignItems: 'center', mt: 3, gap: 1 }}>
-                      <TextField
-                        variant="outlined"
-                        value={couponToShare}
-                        fullWidth
-                        slotProps={{ input: { readOnly: true } }}
-                      />
-                      <Tooltip title={copySuccess ? "Copiato!" : "Copia"}>
-                        <IconButton onClick={handleCopyLink}>
-                          <ContentCopy />
-                        </IconButton>
-                      </Tooltip>
+                  {/* Header */}
+                  <DialogTitle sx={{ p: 0 }}>
+                    <Box sx={{
+                      background: 'linear-gradient(135deg, #12715b 0%, #0e5a48 100%)',
+                      px: 3,
+                      pt: 3,
+                      pb: 2.5,
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      justifyContent: 'space-between',
+                    }}>
+                      <Box>
+                        <Typography sx={{ fontWeight: 700, fontSize: '18px', color: '#fff', lineHeight: 1.2 }}>
+                          Condividi il tuo codice
+                        </Typography>
+                        <Typography sx={{ fontSize: '13px', color: 'rgba(255,255,255,0.7)', mt: 0.5 }}>
+                          Scansiona il QR o copia il link
+                        </Typography>
+                      </Box>
+                      <IconButton
+                        onClick={() => setOpenShareDialog(false)}
+                        size="small"
+                        sx={{ color: 'rgba(255,255,255,0.7)', '&:hover': { color: '#fff', backgroundColor: 'rgba(255,255,255,0.1)' }, mt: '-4px', mr: '-6px' }}
+                      >
+                        <Close fontSize="small" />
+                      </IconButton>
+                    </Box>
+                  </DialogTitle>
+
+                  {/* Body */}
+                  <DialogContent sx={{ p: 0, backgroundColor: '#fff' }}>
+                    {/* QR area */}
+                    <Box sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      pt: 3.5,
+                      pb: 1,
+                      px: 3,
+                    }}>
+                      <Box sx={{
+                        p: '18px',
+                        borderRadius: '16px',
+                        backgroundColor: '#f4faf8',
+                        border: '1px solid #d6ede7',
+                        display: 'inline-flex',
+                        boxShadow: '0 2px 12px rgba(18,113,91,0.10)',
+                      }}>
+                        <ReactQRCode
+                          value={couponToShare}
+                          size={172}
+                          marginSize={0}
+                          dataModulesSettings={{
+                            color: "#12715b",
+                            style: "rounded",
+                            randomSize: false,
+                          }}
+                          finderPatternOuterSettings={{ style: "rounded" }}
+                          finderPatternInnerSettings={{ style: "rounded-sm" }}
+                          imageSettings={{
+                            src: "/assets/images/qr-code-logo.png",
+                            width: 34,
+                            height: 34,
+                            excavate: true,
+                          }}
+                        />
+                      </Box>
+                    </Box>
+
+                    {/* <Divider sx={{ mx: 3, borderColor: '#eef0f4' }} /> */}
+
+                    {/* URL copy row */}
+                    <Box sx={{ px: 3, py: 2.5 }}>
+                      <Typography sx={{ fontSize: '12px', fontWeight: 600, color: '#64748b', mb: 1, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                        Il tuo link
+                      </Typography>
+                      <Box sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        backgroundColor: '#f6f8fb',
+                        border: '1px solid',
+                        borderColor: copySuccess ? '#12715b' : '#e5e7ec',
+                        borderRadius: '10px',
+                        px: 1.5,
+                        py: 0.5,
+                        gap: 1,
+                        transition: 'border-color 0.2s',
+                      }}>
+                        <Typography
+                          sx={{
+                            flex: 1,
+                            fontSize: '13px',
+                            color: '#374151',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap',
+                            py: 0.75,
+                          }}
+                        >
+                          {couponToShare}
+                        </Typography>
+                        <Tooltip title={copySuccess ? "Copiato!" : "Copia link"}>
+                          <IconButton
+                            onClick={handleCopyLink}
+                            size="small"
+                            sx={{
+                              color: copySuccess ? '#12715b' : '#64748b',
+                              backgroundColor: copySuccess ? 'rgba(18,113,91,0.08)' : 'transparent',
+                              '&:hover': { backgroundColor: copySuccess ? 'rgba(18,113,91,0.12)' : '#eef0f4' },
+                              borderRadius: '8px',
+                              transition: 'all 0.2s',
+                            }}
+                          >
+                            {copySuccess ? <CheckCircleOutline fontSize="small" /> : <ContentCopyOutlined fontSize="small" />}
+                          </IconButton>
+                        </Tooltip>
+                      </Box>
                     </Box>
                   </DialogContent>
                 </Dialog>
@@ -396,7 +492,7 @@ export default function DashboardPartner() {
             </Grid>
           </Grid>
 
-          <div className=" mt-2">
+          <div className="mt-2">
             <div className="d-flex justify-between align-center">
               <h5 className="mb-1 text-lg font-medium">Ultimi Ordini</h5>
             </div>

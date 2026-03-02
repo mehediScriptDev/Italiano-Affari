@@ -156,7 +156,7 @@ export default function Wallet() {
         {/* Coupon table */}
         <div className="mb-2">
           <h2 className="text-lg font-bold tracking-tight text-[#13131f] mb-0.5">Tabella Coupon</h2>
-          <p className="page-subtitle mb-4">I tuoi coupon generati</p>
+          <p className="page-subtitle mb-2">I tuoi coupon generati</p>
         </div>
         <DataTable columns={columns} data={tableData} showCheckbox />
       </div>

@@ -71,7 +71,7 @@ body {
 
 /* ── Reusable card ── */
 .dash-card {
-  @apply bg-white rounded-2xl border border-[#e5e7ec];
+  @apply bg-white rounded-sm border border-[#e5e7ec];
   box-shadow: var(--shadow-sm);
   transition:
     box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),

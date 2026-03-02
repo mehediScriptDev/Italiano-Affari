@@ -160,10 +160,10 @@ export default function StatsPage() {
             </Grid>
 
             {/* Main chart */}
-            <Box sx={{ mb: 3, backgroundColor: '#fff', borderRadius: 3, border: '1px solid #eef0f4', p: 3 }}>
+            <Box sx={{ mb: 3, backgroundColor: '#fff', borderRadius: '8px', border: '1px solid #eef0f4', p: 3 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
                     <Box sx={{ width: 4, height: 18, borderRadius: 2, backgroundColor: '#6366f1', flexShrink: 0 }} />
-                    <Typography sx={{ fontWeight: 700, fontSize: '14px', color: '#13131f' }}>
+                    <Typography sx={{ fontWeight: 700, fontSize: '18px', color: '#13131f' }}>
                         Totale Commissioni Generate
                     </Typography>
                 </Box>
@@ -173,10 +173,10 @@ export default function StatsPage() {
             {/* Bottom two charts */}
             <Grid container spacing={2} sx={{ mb: 3 }}>
                 <Grid size={{ xs: 12, md: 6 }}>
-                    <Box sx={{ backgroundColor: '#fff', borderRadius: 3, border: '1px solid #eef0f4', p: 3, height: '100%' }}>
+                    <Box sx={{ backgroundColor: '#fff', borderRadius: '8px', border: '1px solid #eef0f4', p: 3, height: '100%' }}>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
                             <Box sx={{ width: 4, height: 18, borderRadius: 2, backgroundColor: '#10b981', flexShrink: 0 }} />
-                            <Typography sx={{ fontWeight: 700, fontSize: '14px', color: '#13131f' }}>
+                            <Typography sx={{ fontWeight: 700, fontSize: '18px', color: '#13131f' }}>
                                 Totale Vendite Dirette
                             </Typography>
                         </Box>
@@ -184,10 +184,10 @@ export default function StatsPage() {
                     </Box>
                 </Grid>
                 <Grid size={{ xs: 12, md: 6 }}>
-                    <Box sx={{ backgroundColor: '#fff', borderRadius: 3, border: '1px solid #eef0f4', p: 3, height: '100%' }}>
+                    <Box sx={{ backgroundColor: '#fff', borderRadius: '8px', border: '1px solid #eef0f4', p: 3, height: '100%' }}>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
                             <Box sx={{ width: 4, height: 18, borderRadius: 2, backgroundColor: '#f59e0b', flexShrink: 0 }} />
-                            <Typography sx={{ fontWeight: 700, fontSize: '14px', color: '#13131f' }}>
+                            <Typography sx={{ fontWeight: 700, fontSize: '18px', color: '#13131f' }}>
                                 Nuovi Affiliati Registrati
                             </Typography>
                         </Box>

@@ -37,13 +37,13 @@ export default function ProfilePage({ index = 0 }: ProfilePageProps) {
   return (
     <div className="w-100 paddingContainer mt-3 mb-8">
       {/* Page header */}
-      <div className="mb-4">
+      <div className="mb-2">
         <h1 className="page-title">Il mio account</h1>
         <p className="page-subtitle">Gestisci il tuo profilo e le impostazioni</p>
       </div>
 
       {/* Tab bar card */}
-      <div className="dash-card mb-4 overflow-x-auto">
+      <div className="dash-card mb-2 overflow-x-auto">
         <Tabs
           value={value}
           onChange={(_, v) => setValue(v)}
