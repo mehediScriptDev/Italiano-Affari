@@ -9,6 +9,7 @@ import {
   useCallback,
   type ReactNode,
 } from "react";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { useAppContext } from "./app-context";
@@ -31,6 +32,7 @@ export function useAuth() {
 }
 
 export default function AuthProvider({ children }: { children: ReactNode }) {
+  const router = useRouter();
   const [token, setTokenState] = useState<string | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const { setProfile } = useAppContext();
@@ -45,7 +47,12 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
         localStorage.removeItem("token");
         localStorage.removeItem("profile");
         setProfile(null);
-        window.location.href = "/sign-in";
+        // Prefer client-side navigation to avoid a full page reload (avoids 403 from server)
+        try {
+          router.replace("/sign-in");
+        } catch {
+          if (typeof window !== "undefined") window.location.href = "/sign-in";
+        }
       }
       setTokenState(newToken ?? null);
     },
