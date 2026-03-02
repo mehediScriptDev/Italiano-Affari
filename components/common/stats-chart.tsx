@@ -31,7 +31,7 @@ function makeGradientPlugin(primary: string) {
             const { ctx, chartArea } = chart;
             if (!chartArea) return;
             chart.data.datasets.forEach((ds) => {
-                const d = ds as Record<string, unknown>;
+                const d = ds as unknown as Record<string, unknown>;
                 if (d.fill) {
                     const grad = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
                     grad.addColorStop(0,    hexToRgba(primary, 0.28));
@@ -236,10 +236,8 @@ const StatsChart = ({ label, chartType, fetchData }: StatsChartProps) => {
                     </Box>
                 ) : (
                     chartType === 'line' ? (
-                        /* @ts-expect-error chart.js generic typing */
                         <Line data={chartData} options={getOptions(period !== 'custom')} plugins={[gradientPlugin]} />
                     ) : (
-                        /* @ts-expect-error chart.js generic typing */
                         <Bar data={chartData} options={getOptions(period !== 'custom')} />
                     )
                 )}
