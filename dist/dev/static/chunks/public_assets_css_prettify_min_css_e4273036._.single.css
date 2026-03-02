@@ -1,0 +1,57 @@
+/* [project]/public/assets/css/prettify.min.css [app-client] (css, layer(vendor)) */
+@layer vendor {
+.com {
+  color: #6b7188;
+}
+
+.lit {
+  color: #ebc66d;
+}
+
+.pun, .opn, .clo {
+  color: #93a1a1;
+}
+
+.fun {
+  color: #fa6f6c;
+}
+
+.str, .atv {
+  color: #6cb8f7;
+}
+
+.kwd, .linenums .tag {
+  color: #7281b2;
+}
+
+.typ, .atn, .dec, .var {
+  color: #fff;
+}
+
+.pln {
+  color: #f477b1;
+}
+
+.prettyprint {
+  background-color: #f7f7f9;
+  border: 1px solid #e1e1e8;
+  padding: 8px;
+}
+
+.prettyprint.linenums {
+  box-shadow: inset 40px 0 #fbfbfc, inset 41px 0 #ececf0;
+}
+
+ol.linenums {
+  margin: 0 0 0 33px;
+}
+
+ol.linenums li {
+  color: #bebec5;
+  text-shadow: 0 1px #fff;
+  padding-left: 12px;
+  line-height: 18px;
+}
+
+}
+/*# sourceMappingURL=public_assets_css_prettify_min_css_e4273036._.single.css.map*/

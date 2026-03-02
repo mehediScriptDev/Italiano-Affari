@@ -11,10 +11,10 @@ export default function SignupPage() {
           <div className="panel">
             <div className="panel row child-cols-12 md:child-cols-6 g-0">
               <div className="order-2 d-none lg:d-block md:order-1">
-                <div className="panel overflow-hidden min-h-300px h-100 lg:h-screen">
-                  <figure className="panel h-100 m-0 rounded">
-                    <canvas className="h-100 w-100" />
-                    <Image className="media-cover image" alt="Hero login image" src="/assets/images/common/Homepage_Partner_.jpg" width={1500} height={1000} priority />
+                <div className="panel overflow-hidden min-h-300px lg:h-screen">
+                  <figure className="panel m-0 rounded" style={{ position: "relative", height: "100%" }}>
+                    <canvas style={{ height: "100%", width: "100%" }} />
+                    <Image className="media-cover image" alt="Hero login image" src="/assets/images/common/Homepage_Partner_.jpg" fill style={{ objectFit: "cover" }} priority />
                   </figure>
                   <div className="position-cover text-white vstack justify-end p-4 lg:p-6 xl:py-8">
                     <div className="position-cover from-black to-transparent opacity-50" />
