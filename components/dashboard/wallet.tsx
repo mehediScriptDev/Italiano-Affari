@@ -147,7 +147,7 @@ export default function Wallet() {
         </div>
 
         {/* KPI cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-1 mb-4 lg:mb-6">
           <ChartPreview label="Saldo attuale disponibile" icon={<Savings style={{ color: "#13131f", fontSize: "22px" }} />} obj={chartsPreview.sales} />
           <ChartPreview label="Saldo utilizzato" icon={<MoneyOff style={{ color: "#13131f", fontSize: "22px" }} />} obj={chartsPreview.earnings} />
           <ChartPreview label="Saldo totale" icon={<MonetizationOn style={{ color: "#13131f", fontSize: "22px" }} />} obj={chartsPreview.affiliates} />

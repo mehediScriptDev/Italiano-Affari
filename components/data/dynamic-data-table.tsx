@@ -69,18 +69,6 @@ export default function DynamicDataTable({ columns, data }: DynamicDataTableProp
               onClick={() => toggleExpand(row.id)}
               style={{ paddingLeft, cursor: "pointer" }}
             >
-              <div
-                style={{
-                  position: "absolute",
-                  left: "4px",
-                  height: "54px",
-                  top: "-1px",
-                  bottom: "0px",
-                  width: "3px",
-                  backgroundColor: "#13131f",
-                  marginLeft: paddingLeft,
-                }}
-              />
               {hasSubagents && (
                 <hr
                   className="opacity-100! border-0 position-relative"
@@ -137,7 +125,7 @@ export default function DynamicDataTable({ columns, data }: DynamicDataTableProp
   };
 
   return (
-    <div className="dash-card mb-6 overflow-x-auto min-w-150 w-full">
+    <div className="dash-card mb-6 w-full min-w-0">
       <div className="p-4 pb-0">
         <TextField
           variant="outlined" placeholder="Cerca..." size="small"
@@ -164,7 +152,7 @@ export default function DynamicDataTable({ columns, data }: DynamicDataTableProp
         />
       </div>
 
-      <TableContainer component={Paper} sx={{ borderRadius: "0 0 12px 12px", boxShadow: "none", width: "100%", overflowX: "auto" }}>
+      <TableContainer component={Paper} sx={{ borderRadius: "0 0 12px 12px", boxShadow: "none", width: "100%", overflowX: "auto", WebkitOverflowScrolling: "touch", scrollbarWidth: "none", "&::-webkit-scrollbar": { display: "none" } }}>
         <Table size="small" sx={{ tableLayout: "auto" }}>
           <colgroup>
             <col style={{ width: toggleColWidth }} />

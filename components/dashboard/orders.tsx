@@ -92,13 +92,13 @@ export default function Orders() {
   return (
     <div className="w-100 paddingContainer mt-3">
       {/* Header row */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-3">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3">
         <div>
           <h1 className="page-title">Ordini / Report</h1>
           <p className="page-subtitle">Storico degli ordini con filtri per data</p>
         </div>
         <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={it}>
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex flex-wrap items-center gap-1">
             <div className="flex items-center gap-2">
               <label className="text-[13px] font-semibold text-slate-500 whitespace-nowrap">Data inizio:</label>
               <DatePicker value={startDate} onChange={(v) => v && setStartDate(v)} slotProps={{ textField: { size: "small" } }} sx={datePickerSx} />
