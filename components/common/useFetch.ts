@@ -5,10 +5,17 @@ import useSWR from "swr";
 export default function useFetch<T = any>(
   key: string,
   fetcher: () => Promise<T>,
-  options?: Parameters<typeof useSWR>[2]
+  options?: any
 ) {
-  const { data, error, isLoading, mutate } = useSWR<T>(key, fetcher as any, options);
-  return { data, error: error?.message ?? null, isLoading, mutate } as {
+  const swr = useSWR(key, fetcher as any, options as any);
+  const { data, error, isLoading, mutate } = swr as {
+    data?: T;
+    error?: any;
+    isLoading?: boolean;
+    mutate: () => Promise<any>;
+  };
+
+  return { data, error: error?.message ?? null, isLoading: !!isLoading, mutate } as {
     data: T | undefined;
     error: string | null;
     isLoading: boolean;
