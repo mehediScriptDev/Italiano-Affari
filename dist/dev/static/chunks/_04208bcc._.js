@@ -36,7 +36,7 @@ function DataTable({ columns, data, showCheckbox = false }) {
     const [page, setPage] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(1);
     const [search, setSearch] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
     const [selectedRows, setSelectedRows] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
-    const isMobile = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$material$2f$esm$2f$useMediaQuery$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"])("(max-width: 600px)");
+    const isMobile = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$material$2f$esm$2f$useMediaQuery$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"])("(max-width: 900px)");
     const filteredData = data.filter((row)=>columns.some((col)=>String(row[col.field] ?? "").toLowerCase().includes(search.toLowerCase())));
     const totalPages = Math.max(1, Math.ceil(filteredData.length / rowsPerPage));
     const pagedData = filteredData.slice((page - 1) * rowsPerPage, page * rowsPerPage);
@@ -103,7 +103,123 @@ function DataTable({ columns, data, showCheckbox = false }) {
                 lineNumber: 74,
                 columnNumber: 7
             }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$material$2f$esm$2f$TableContainer$2f$TableContainer$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__TableContainer$3e$__["TableContainer"], {
+            isMobile && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                style: {
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 10,
+                    marginBottom: 4
+                },
+                children: pagedData.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                    style: {
+                        textAlign: "center",
+                        color: "#94a3b8",
+                        fontSize: 14,
+                        padding: "24px 0"
+                    },
+                    children: "Nessun risultato trovato"
+                }, void 0, false, {
+                    fileName: "[project]/components/data/data-table.tsx",
+                    lineNumber: 104,
+                    columnNumber: 13
+                }, this) : pagedData.map((row)=>{
+                    const dataColumns = columns.filter((c)=>c.field !== "action");
+                    const actionColumn = columns.find((c)=>c.field === "action");
+                    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        style: {
+                            background: "#fff",
+                            border: "1px solid #eef0f4",
+                            borderRadius: 12,
+                            padding: "14px 16px",
+                            boxShadow: "0 1px 6px rgba(0,0,0,0.05)"
+                        },
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            style: {
+                                display: "flex",
+                                alignItems: "flex-start",
+                                justifyContent: "space-between",
+                                gap: 8
+                            },
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    style: {
+                                        flex: 1,
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        gap: 6
+                                    },
+                                    children: dataColumns.map((col)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            style: {
+                                                display: "flex",
+                                                flexDirection: "column",
+                                                gap: 1
+                                            },
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                    style: {
+                                                        fontSize: 13,
+                                                        fontWeight: 700,
+                                                        color: "#94a3b8",
+                                                        textTransform: "uppercase",
+                                                        letterSpacing: "0.05em"
+                                                    },
+                                                    children: col.label
+                                                }, void 0, false, {
+                                                    fileName: "[project]/components/data/data-table.tsx",
+                                                    lineNumber: 115,
+                                                    columnNumber: 27
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                    style: {
+                                                        fontSize: 16,
+                                                        color: "#1e293b",
+                                                        wordBreak: "break-word"
+                                                    },
+                                                    children: typeof col.render === "function" ? col.render(row) : String(row[col.field] ?? "")
+                                                }, void 0, false, {
+                                                    fileName: "[project]/components/data/data-table.tsx",
+                                                    lineNumber: 116,
+                                                    columnNumber: 27
+                                                }, this)
+                                            ]
+                                        }, col.field, true, {
+                                            fileName: "[project]/components/data/data-table.tsx",
+                                            lineNumber: 114,
+                                            columnNumber: 25
+                                        }, this))
+                                }, void 0, false, {
+                                    fileName: "[project]/components/data/data-table.tsx",
+                                    lineNumber: 112,
+                                    columnNumber: 21
+                                }, this),
+                                actionColumn && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    style: {
+                                        flexShrink: 0
+                                    },
+                                    children: typeof actionColumn.render === "function" ? actionColumn.render(row) : String(row[actionColumn.field] ?? "")
+                                }, void 0, false, {
+                                    fileName: "[project]/components/data/data-table.tsx",
+                                    lineNumber: 125,
+                                    columnNumber: 23
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/components/data/data-table.tsx",
+                            lineNumber: 111,
+                            columnNumber: 19
+                        }, this)
+                    }, row.id, false, {
+                        fileName: "[project]/components/data/data-table.tsx",
+                        lineNumber: 110,
+                        columnNumber: 17
+                    }, this);
+                })
+            }, void 0, false, {
+                fileName: "[project]/components/data/data-table.tsx",
+                lineNumber: 102,
+                columnNumber: 9
+            }, this),
+            !isMobile && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$material$2f$esm$2f$TableContainer$2f$TableContainer$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__TableContainer$3e$__["TableContainer"], {
                 component: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$material$2f$esm$2f$Paper$2f$Paper$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Paper$3e$__["Paper"],
                 sx: {
                     borderRadius: "8px",
@@ -130,12 +246,12 @@ function DataTable({ columns, data, showCheckbox = false }) {
                                             size: "small"
                                         }, void 0, false, {
                                             fileName: "[project]/components/data/data-table.tsx",
-                                            lineNumber: 114,
+                                            lineNumber: 152,
                                             columnNumber: 19
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/components/data/data-table.tsx",
-                                        lineNumber: 113,
+                                        lineNumber: 151,
                                         columnNumber: 17
                                     }, this),
                                     columns.map((col)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$material$2f$esm$2f$TableCell$2f$TableCell$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__TableCell$3e$__["TableCell"], {
@@ -148,23 +264,23 @@ function DataTable({ columns, data, showCheckbox = false }) {
                                                 children: col.label
                                             }, void 0, false, {
                                                 fileName: "[project]/components/data/data-table.tsx",
-                                                lineNumber: 133,
+                                                lineNumber: 171,
                                                 columnNumber: 19
                                             }, this)
                                         }, col.field, false, {
                                             fileName: "[project]/components/data/data-table.tsx",
-                                            lineNumber: 129,
+                                            lineNumber: 167,
                                             columnNumber: 17
                                         }, this))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/data/data-table.tsx",
-                                lineNumber: 111,
+                                lineNumber: 149,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/data/data-table.tsx",
-                            lineNumber: 110,
+                            lineNumber: 148,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$material$2f$esm$2f$TableBody$2f$TableBody$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__TableBody$3e$__["TableBody"], {
@@ -190,12 +306,12 @@ function DataTable({ columns, data, showCheckbox = false }) {
                                                 size: "small"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/data/data-table.tsx",
-                                                lineNumber: 154,
+                                                lineNumber: 192,
                                                 columnNumber: 21
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/components/data/data-table.tsx",
-                                            lineNumber: 151,
+                                            lineNumber: 189,
                                             columnNumber: 19
                                         }, this),
                                         columns.map((col)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$material$2f$esm$2f$TableCell$2f$TableCell$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__TableCell$3e$__["TableCell"], {
@@ -208,30 +324,30 @@ function DataTable({ columns, data, showCheckbox = false }) {
                                                 children: typeof col.render === "function" ? col.render(row) : String(row[col.field] ?? "")
                                             }, col.field, false, {
                                                 fileName: "[project]/components/data/data-table.tsx",
-                                                lineNumber: 162,
+                                                lineNumber: 200,
                                                 columnNumber: 19
                                             }, this))
                                     ]
                                 }, row.id, true, {
                                     fileName: "[project]/components/data/data-table.tsx",
-                                    lineNumber: 142,
+                                    lineNumber: 180,
                                     columnNumber: 15
                                 }, this))
                         }, void 0, false, {
                             fileName: "[project]/components/data/data-table.tsx",
-                            lineNumber: 140,
+                            lineNumber: 178,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/data/data-table.tsx",
-                    lineNumber: 109,
+                    lineNumber: 147,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/data/data-table.tsx",
-                lineNumber: 101,
-                columnNumber: 7
+                lineNumber: 139,
+                columnNumber: 21
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "flex flex-col sm:flex-row items-center justify-between mt-4 px-1 gap-3",
@@ -244,7 +360,7 @@ function DataTable({ columns, data, showCheckbox = false }) {
                                 children: "Mostra"
                             }, void 0, false, {
                                 fileName: "[project]/components/data/data-table.tsx",
-                                lineNumber: 189,
+                                lineNumber: 227,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$material$2f$esm$2f$FormControl$2f$FormControl$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__FormControl$3e$__["FormControl"], {
@@ -278,7 +394,7 @@ function DataTable({ columns, data, showCheckbox = false }) {
                                             children: "10"
                                         }, void 0, false, {
                                             fileName: "[project]/components/data/data-table.tsx",
-                                            lineNumber: 206,
+                                            lineNumber: 244,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$material$2f$esm$2f$MenuItem$2f$MenuItem$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__MenuItem$3e$__["MenuItem"], {
@@ -286,7 +402,7 @@ function DataTable({ columns, data, showCheckbox = false }) {
                                             children: "25"
                                         }, void 0, false, {
                                             fileName: "[project]/components/data/data-table.tsx",
-                                            lineNumber: 207,
+                                            lineNumber: 245,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$material$2f$esm$2f$MenuItem$2f$MenuItem$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__MenuItem$3e$__["MenuItem"], {
@@ -294,18 +410,18 @@ function DataTable({ columns, data, showCheckbox = false }) {
                                             children: "50"
                                         }, void 0, false, {
                                             fileName: "[project]/components/data/data-table.tsx",
-                                            lineNumber: 208,
+                                            lineNumber: 246,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/data/data-table.tsx",
-                                    lineNumber: 191,
+                                    lineNumber: 229,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/components/data/data-table.tsx",
-                                lineNumber: 190,
+                                lineNumber: 228,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -313,13 +429,13 @@ function DataTable({ columns, data, showCheckbox = false }) {
                                 children: "righe per pagina"
                             }, void 0, false, {
                                 fileName: "[project]/components/data/data-table.tsx",
-                                lineNumber: 211,
+                                lineNumber: 249,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/data/data-table.tsx",
-                        lineNumber: 188,
+                        lineNumber: 226,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -360,7 +476,7 @@ function DataTable({ columns, data, showCheckbox = false }) {
                                 children: "Precedente"
                             }, void 0, false, {
                                 fileName: "[project]/components/data/data-table.tsx",
-                                lineNumber: 217,
+                                lineNumber: 255,
                                 columnNumber: 11
                             }, this),
                             isMobile && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -383,7 +499,7 @@ function DataTable({ columns, data, showCheckbox = false }) {
                                 children: "‹"
                             }, void 0, false, {
                                 fileName: "[project]/components/data/data-table.tsx",
-                                lineNumber: 243,
+                                lineNumber: 281,
                                 columnNumber: 13
                             }, this),
                             (()=>{
@@ -411,7 +527,7 @@ function DataTable({ columns, data, showCheckbox = false }) {
                                         children: "…"
                                     }, p + idx, false, {
                                         fileName: "[project]/components/data/data-table.tsx",
-                                        lineNumber: 270,
+                                        lineNumber: 308,
                                         columnNumber: 17
                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                         onClick: ()=>setPage(p),
@@ -447,7 +563,7 @@ function DataTable({ columns, data, showCheckbox = false }) {
                                         children: p
                                     }, p, false, {
                                         fileName: "[project]/components/data/data-table.tsx",
-                                        lineNumber: 272,
+                                        lineNumber: 310,
                                         columnNumber: 17
                                     }, this));
                             })(),
@@ -471,7 +587,7 @@ function DataTable({ columns, data, showCheckbox = false }) {
                                 children: "›"
                             }, void 0, false, {
                                 fileName: "[project]/components/data/data-table.tsx",
-                                lineNumber: 301,
+                                lineNumber: 339,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -505,19 +621,19 @@ function DataTable({ columns, data, showCheckbox = false }) {
                                 children: "Successivo"
                             }, void 0, false, {
                                 fileName: "[project]/components/data/data-table.tsx",
-                                lineNumber: 311,
+                                lineNumber: 349,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/data/data-table.tsx",
-                        lineNumber: 215,
+                        lineNumber: 253,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/data/data-table.tsx",
-                lineNumber: 185,
+                lineNumber: 223,
                 columnNumber: 7
             }, this)
         ]

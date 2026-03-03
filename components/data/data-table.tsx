@@ -42,7 +42,7 @@ export default function DataTable<T extends { id: string | number }>({
   const [search, setSearch] = useState("");
   const [selectedRows, setSelectedRows] = useState<(string | number)[]>([]);
 
-  const isMobile = useMediaQuery("(max-width: 600px)");
+  const isMobile = useMediaQuery("(max-width: 900px)");
 
   const filteredData = data.filter((row) =>
     columns.some((col) =>
@@ -98,7 +98,45 @@ export default function DataTable<T extends { id: string | number }>({
         }}
       />
 
-      <TableContainer
+      {isMobile && (
+        <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 4 }}>
+          {pagedData.length === 0 ? (
+            <p style={{ textAlign: "center", color: "#94a3b8", fontSize: 14, padding: "24px 0" }}>Nessun risultato trovato</p>
+          ) : (
+            pagedData.map((row) => {
+              const dataColumns = columns.filter((c) => c.field !== "action");
+              const actionColumn = columns.find((c) => c.field === "action");
+              return (
+                <div key={row.id} style={{ background: "#fff", border: "1px solid #eef0f4", borderRadius: 12, padding: "14px 16px", boxShadow: "0 1px 6px rgba(0,0,0,0.05)" }}>
+                  <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 8 }}>
+                    <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 6 }}>
+                      {dataColumns.map((col) => (
+                        <div key={col.field} style={{ display: "flex", flexDirection: "column", gap: 1 }}>
+                          <span style={{ fontSize: 13, fontWeight: 700, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.05em" }}>{col.label}</span>
+                          <span style={{ fontSize: 16, color: "#1e293b", wordBreak: "break-word" }}>
+                            {typeof col.render === "function"
+                              ? col.render(row)
+                              : String((row as Record<string, unknown>)[col.field] ?? "")}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                    {actionColumn && (
+                      <div style={{ flexShrink: 0 }}>
+                        {typeof actionColumn.render === "function"
+                          ? actionColumn.render(row)
+                          : String((row as Record<string, unknown>)[actionColumn.field] ?? "")}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })
+          )}
+        </div>
+      )}
+
+      {!isMobile && <TableContainer
         component={Paper}
         sx={{
           borderRadius: "8px",
@@ -179,7 +217,7 @@ export default function DataTable<T extends { id: string | number }>({
             ))}
           </TableBody>
         </Table>
-      </TableContainer>
+      </TableContainer>}
 
       {/* Footer */}
       <div className="flex flex-col sm:flex-row items-center justify-between mt-4 px-1 gap-3">

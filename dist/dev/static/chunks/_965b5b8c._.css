@@ -20104,10 +20104,6 @@ textarea.form-control-lg {
     position: sticky;
   }
 
-  .sticky\! {
-    position: sticky !important;
-  }
-
   .inset-0 {
     inset: calc(var(--spacing) * 0);
   }
@@ -20560,10 +20556,6 @@ textarea.form-control-lg {
     margin-left: calc(var(--spacing) * 0);
   }
 
-  .ml-0\.5 {
-    margin-left: calc(var(--spacing) * .5);
-  }
-
   .ml-1 {
     margin-left: calc(var(--spacing) * 1);
   }
@@ -20647,6 +20639,10 @@ textarea.form-control-lg {
   .size-6 {
     width: calc(var(--spacing) * 6);
     height: calc(var(--spacing) * 6);
+  }
+
+  .h-1 {
+    height: calc(var(--spacing) * 1);
   }
 
   .h-7 {
@@ -21002,6 +20998,10 @@ textarea.form-control-lg {
     gap: calc(var(--spacing) * 9);
   }
 
+  .gap-30 {
+    gap: calc(var(--spacing) * 30);
+  }
+
   .self-center {
     align-self: center;
   }
@@ -21191,6 +21191,10 @@ textarea.form-control-lg {
     }
   }
 
+  .bg-\[\16 Q\$\] {
+    background-color:  Q$ ;
+  }
+
   .bg-\[\#12715b\] {
     background-color: #12715b;
   }
@@ -21205,6 +21209,22 @@ textarea.form-control-lg {
 
   .bg-\[\#f6f8fb\] {
     background-color: #f6f8fb;
+  }
+
+  .bg-\[J�\$\] {
+    background-color: J�$ ;
+  }
+
+  .bg-\[xG-\] {
+    background-color: xG-;
+  }
+
+  .bg-\[�P\$\] {
+    background-color: �P$ ;
+  }
+
+  .bg-\[��\$\] {
+    background-color: ��$ ;
   }
 
   .bg-black {
@@ -21555,24 +21575,12 @@ textarea.form-control-lg {
     vertical-align: middle;
   }
 
-  .font-\[\>\f �\,sans-serif\] {
-    font-family: >  �, sans-serif;
+  .font-\[\%\11 �\,sans-serif\] {
+    font-family: %  �, sans-serif;
   }
 
   .font-\[Inter\,sans-serif\] {
     font-family: Inter, sans-serif;
-  }
-
-  .font-\[n\f �\,sans-serif\] {
-    font-family: n �, sans-serif;
-  }
-
-  .font-\[s\f �\,sans-serif\] {
-    font-family: s �, sans-serif;
-  }
-
-  .font-\[�\f �\,sans-serif\] {
-    font-family: � �, sans-serif;
   }
 
   .font-sans {
@@ -22010,36 +22018,8 @@ textarea.form-control-lg {
     app-:  6;
   }
 
-  .\[app-\:\3 �\/\] {
-    app-:  � / ;
-  }
-
-  .\[app-\:\11 �\] {
-    app-:  �;
-  }
-
-  .\[app-c\:\10 �\] {
-    app-c:  �;
-  }
-
-  .\[g\:�\7 \] {
-    g: � ;
-  }
-
-  .\[key\:\14 d\14 \] {
-    key:  d ;
-  }
-
-  .\[key\:-\12 4ng\] {
-    key:  -  4ng;
-  }
-
-  .\[key\:D\12 4ng\] {
-    key: D 4ng;
-  }
-
-  .\[key\:eb\14 \] {
-    key: eb ;
+  .\[app-\:\10 �\1 \] {
+    app-:  � ;
   }
 
   .\[key\:Ҁ4ng\] {
@@ -22050,36 +22030,16 @@ textarea.form-control-lg {
     key: � � ng;
   }
 
-  .\[key\:�\3 4ng\] {
-    key: � 4ng;
-  }
-
-  .\[key\:�\1a \14 \] {
-    key: �  ;
-  }
-
-  .\[key\:�\1b \14 \] {
-    key: �  ;
-  }
-
-  .\[key\:�\1d \14 \] {
-    key: �  ;
-  }
-
-  .\[key\:�\#\14 \] {
-    key: �#  ;
-  }
-
-  .\[key\:�5\14 \] {
-    key: �5 ;
+  .\[key\:�F�\2 ng\] {
+    key: �F� ng;
   }
 
   .\[key\:�\^4ng\] {
     key: �^ 4ng;
   }
 
-  .\[key\:�q��\] {
-    key: �q��;
+  .\[key\:�z��\] {
+    key: �z��;
   }
 
   .\[metatype\:�\5 7\] {
@@ -22102,24 +22062,8 @@ textarea.form-control-lg {
     name: @  �;
   }
 
-  .\[name\:I\7 �ng\] {
-    name: I �ng;
-  }
-
   .\[name\:�\6 �ng\] {
     name: � �ng;
-  }
-
-  .\[name\:�\1d �ng\] {
-    name: � �ng;
-  }
-
-  .\[name\:�\,�ng\] {
-    name: �, �ng;
-  }
-
-  .\[q\:�\5 \] {
-    q: � ;
   }
 
   .placeholder\:text-gray-400::placeholder {
@@ -22501,12 +22445,6 @@ textarea.form-control-lg {
     .xl\:text-xl {
       font-size: var(--text-xl);
       line-height: var(--tw-leading, var(--text-xl--line-height));
-    }
-  }
-
-  @media (min-width: 96rem) {
-    .\32 xl\:block {
-      display: block;
     }
   }
 
@@ -22942,6 +22880,16 @@ body {
   animation: 1.5s cubic-bezier(.4, 0, .2, 1) infinite pulse-ring;
   position: absolute;
   inset: 0;
+}
+
+.uc-offcanvas-bar {
+  transform: translateX(-100%);
+  transition: transform .42s cubic-bezier(.4, 0, .2, 1) !important;
+  left: 0 !important;
+}
+
+.uc-open > .uc-offcanvas-bar {
+  transform: translateX(0);
 }
 
 @property --tw-translate-x {

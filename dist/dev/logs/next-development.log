@@ -8120,3 +8120,385 @@ Import trace:
   Server Component:
     ./components/dashboard/media-library.tsx
     ./app/(dashboard)/media-library/page.tsx
+[01:03:10.154] Server  ERROR   ⨯ ./app/(dashboard)/media-library/page.tsx:1:1
+Module not found: Can't resolve '@/components/dashboard/media-library'
+> 1 | import MediaLibrary from "@/components/dashboard/media-library";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 |
+  3 | export default function MediaLibraryPage() {
+  4 |   return <MediaLibrary />;
+
+Import map: aliased to relative './components/dashboard/media-library' inside of [project]/
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[01:03:10.155] Server  ERROR   ⨯ ./app/(dashboard)/media-library/page.tsx:1:1
+Module not found: Can't resolve '@/components/dashboard/media-library'
+> 1 | import MediaLibrary from "@/components/dashboard/media-library";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 |
+  3 | export default function MediaLibraryPage() {
+  4 |   return <MediaLibrary />;
+
+Import map: aliased to relative './components/dashboard/media-library' inside of [project]/
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[01:03:10.204] Server  LOG     ✓ Compiled in 210ms
+[01:03:11.207] Browser ERROR   ./app/(dashboard)/media-library/page.tsx:1:1
+Module not found: Can't resolve '@/components/dashboard/media-library'
+> 1 | import MediaLibrary from "@/components/dashboard/media-library";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 |
+  3 | export default function MediaLibraryPage() {
+  4 |   return <MediaLibrary />;
+
+Import map: aliased to relative './components/dashboard/media-library' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found
+[01:03:11.207] Browser ERROR   ./app/(dashboard)/media-library/page.tsx:1:1
+Module not found: Can't resolve '@/components/dashboard/media-library'
+> 1 | import MediaLibrary from "@/components/dashboard/media-library";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 |
+  3 | export default function MediaLibraryPage() {
+  4 |   return <MediaLibrary />;
+
+Import map: aliased to relative './components/dashboard/media-library' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found
+[01:05:53.974] Server  LOG     ✓ Compiled in 370ms
+[01:05:55.122] Server  ERROR   ⨯ ./components/dashboard/media-library.tsx:65:5
+Parsing ecmascript source code failed
+  63 |
+  64 | /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• COMPONENT â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+> 65 | export default function MediaLibrary() {
+     |     ^^^^^^^
+  66 |   const theme = useTheme();
+  67 |   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
+  68 |
+
+Expected ';', got 'default'
+
+Import trace:
+  Server Component:
+    ./components/dashboard/media-library.tsx
+    ./app/(dashboard)/media-library/page.tsx
+
+
+[01:05:55.210] Server  LOG     ✓ Compiled in 770ms
+[01:05:55.603] Browser ERROR   uncaughtError: Error: ./components/dashboard/media-library.tsx:65:5
+Parsing ecmascript source code failed
+  63 |
+  64 | /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• COMPONENT â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+> 65 | export default function MediaLibrary() {
+     |     ^^^^^^^
+  66 |   const theme = useTheme();
+  67 |   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
+  68 |
+
+Expected ';', got 'default'
+
+Import trace:
+  Server Component:
+    ./components/dashboard/media-library.tsx
+    ./app/(dashboard)/media-library/page.tsx
+
+
+[01:05:56.208] Browser ERROR   ./components/dashboard/media-library.tsx:65:5
+Parsing ecmascript source code failed
+  63 |
+  64 | /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• COMPONENT â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+> 65 | export default function MediaLibrary() {
+     |     ^^^^^^^
+  66 |   const theme = useTheme();
+  67 |   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
+  68 |
+
+Expected ';', got 'default'
+
+Import trace:
+  Server Component:
+    ./components/dashboard/media-library.tsx
+    ./app/(dashboard)/media-library/page.tsx
+[01:05:56.208] Browser ERROR   ./components/dashboard/media-library.tsx:65:5
+Parsing ecmascript source code failed
+  63 |
+  64 | /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• COMPONENT â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+> 65 | export default function MediaLibrary() {
+     |     ^^^^^^^
+  66 |   const theme = useTheme();
+  67 |   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
+  68 |
+
+Expected ';', got 'default'
+
+Import trace:
+  Server Component:
+    ./components/dashboard/media-library.tsx
+    ./app/(dashboard)/media-library/page.tsx
+[01:05:56.208] Browser ERROR   ./components/dashboard/media-library.tsx:65:5
+Parsing ecmascript source code failed
+  63 |
+  64 | /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• COMPONENT â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+> 65 | export default function MediaLibrary() {
+     |     ^^^^^^^
+  66 |   const theme = useTheme();
+  67 |   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
+  68 |
+
+Expected ';', got 'default'
+
+Import trace:
+  Server Component:
+    ./components/dashboard/media-library.tsx
+    ./app/(dashboard)/media-library/page.tsx
+[01:05:56.208] Browser ERROR   ./components/dashboard/media-library.tsx:65:5
+Parsing ecmascript source code failed
+  63 |
+  64 | /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• COMPONENT â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+> 65 | export default function MediaLibrary() {
+     |     ^^^^^^^
+  66 |   const theme = useTheme();
+  67 |   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
+  68 |
+
+Expected ';', got 'default'
+
+Import trace:
+  Server Component:
+    ./components/dashboard/media-library.tsx
+    ./app/(dashboard)/media-library/page.tsx
+[01:05:57.201] Browser ERROR   ./components/dashboard/media-library.tsx:65:5
+Parsing ecmascript source code failed
+  63 |
+  64 | /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• COMPONENT â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+> 65 | export default function MediaLibrary() {
+     |     ^^^^^^^
+  66 |   const theme = useTheme();
+  67 |   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
+  68 |
+
+Expected ';', got 'default'
+
+Import trace:
+  Server Component:
+    ./components/dashboard/media-library.tsx
+    ./app/(dashboard)/media-library/page.tsx
+[01:05:57.240] Browser ERROR   ./components/dashboard/media-library.tsx:65:5
+Parsing ecmascript source code failed
+  63 |
+  64 | /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• COMPONENT â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+> 65 | export default function MediaLibrary() {
+     |     ^^^^^^^
+  66 |   const theme = useTheme();
+  67 |   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
+  68 |
+
+Expected ';', got 'default'
+
+Import trace:
+  Server Component:
+    ./components/dashboard/media-library.tsx
+    ./app/(dashboard)/media-library/page.tsx
+[01:05:57.240] Browser ERROR   ./components/dashboard/media-library.tsx:65:5
+Parsing ecmascript source code failed
+  63 |
+  64 | /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• COMPONENT â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+> 65 | export default function MediaLibrary() {
+     |     ^^^^^^^
+  66 |   const theme = useTheme();
+  67 |   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
+  68 |
+
+Expected ';', got 'default'
+
+Import trace:
+  Server Component:
+    ./components/dashboard/media-library.tsx
+    ./app/(dashboard)/media-library/page.tsx
+[01:05:57.240] Browser ERROR   ./components/dashboard/media-library.tsx:65:5
+Parsing ecmascript source code failed
+  63 |
+  64 | /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• COMPONENT â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+> 65 | export default function MediaLibrary() {
+     |     ^^^^^^^
+  66 |   const theme = useTheme();
+  67 |   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
+  68 |
+
+Expected ';', got 'default'
+
+Import trace:
+  Server Component:
+    ./components/dashboard/media-library.tsx
+    ./app/(dashboard)/media-library/page.tsx
+[01:05:57.240] Browser ERROR   ./components/dashboard/media-library.tsx:65:5
+Parsing ecmascript source code failed
+  63 |
+  64 | /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• COMPONENT â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+> 65 | export default function MediaLibrary() {
+     |     ^^^^^^^
+  66 |   const theme = useTheme();
+  67 |   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
+  68 |
+
+Expected ';', got 'default'
+
+Import trace:
+  Server Component:
+    ./components/dashboard/media-library.tsx
+    ./app/(dashboard)/media-library/page.tsx
+[01:05:57.240] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/media-lib..." notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="en" dir="ltr">
+                          <head>
+                          <body
+                            className="bg-[#f6f8fb]"
+-                           style={{overflow-x:"hidden",overflow-y:"hidden"}}
+                          >
+                  ...
+
+[01:05:57.240] Browser ERROR   {"code":"MODULE_UNPARSABLE"}
+[01:05:57.240] Browser ERROR   {"code":"MODULE_UNPARSABLE"}
+[01:05:57.240] Browser ERROR   ./components/dashboard/media-library.tsx:65:5
+Parsing ecmascript source code failed
+  63 |
+  64 | /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• COMPONENT â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+> 65 | export default function MediaLibrary() {
+     |     ^^^^^^^
+  66 |   const theme = useTheme();
+  67 |   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
+  68 |
+
+Expected ';', got 'default'
+
+Import trace:
+  Server Component:
+    ./components/dashboard/media-library.tsx
+    ./app/(dashboard)/media-library/page.tsx
+[01:05:57.240] Browser ERROR   ./components/dashboard/media-library.tsx:65:5
+Parsing ecmascript source code failed
+  63 |
+  64 | /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• COMPONENT â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+> 65 | export default function MediaLibrary() {
+     |     ^^^^^^^
+  66 |   const theme = useTheme();
+  67 |   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
+  68 |
+
+Expected ';', got 'default'
+
+Import trace:
+  Server Component:
+    ./components/dashboard/media-library.tsx
+    ./app/(dashboard)/media-library/page.tsx
+[01:05:57.240] Browser ERROR   ./components/dashboard/media-library.tsx:65:5
+Parsing ecmascript source code failed
+  63 |
+  64 | /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• COMPONENT â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+> 65 | export default function MediaLibrary() {
+     |     ^^^^^^^
+  66 |   const theme = useTheme();
+  67 |   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
+  68 |
+
+Expected ';', got 'default'
+
+Import trace:
+  Server Component:
+    ./components/dashboard/media-library.tsx
+    ./app/(dashboard)/media-library/page.tsx
+[01:05:58.017] Server  WARN    ⚠ Fast Refresh had to perform a full reload when ./components/dashboard/media-library.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[01:06:00.205] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[01:06:00.206] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[01:06:01.218] Browser LOG     []
+[01:06:01.218] Browser LOG     []
+[01:06:02.214] Browser LOG     []
+[01:06:02.214] Browser LOG     []
+[01:07:53.205] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[01:08:04.615] Browser LOG     []
+[01:08:05.221] Browser LOG     []
+[01:08:24.477] Browser LOG     []
+[01:08:24.477] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[01:08:24.477] Browser LOG     []
+[01:08:27.711] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[01:08:29.907] Browser LOG     []
+[01:08:29.907] Browser LOG     []
+[01:08:41.871] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[01:08:42.120] Browser LOG     []
+[01:08:42.351] Browser LOG     []
+[01:08:42.819] Browser LOG     []
+[01:08:43.056] Browser LOG     []
+[01:48:30.270] Server  LOG     ✓ Compiled in 985ms
+[01:48:30.617] Server  LOG     ✓ Compiled in 221ms
+[01:48:30.896] Server  LOG     ✓ Compiled in 200ms
+[01:48:31.499] Server  LOG     ✓ Compiled in 209ms
+[01:48:31.727] Server  LOG     ✓ Compiled in 211ms
+[01:48:32.071] Server  LOG     ✓ Compiled in 240ms
+[01:48:32.354] Server  LOG     ✓ Compiled in 222ms
+[01:48:41.013] Server  LOG     ✓ Compiled in 168ms
+[01:49:05.960] Server  LOG     ✓ Compiled in 239ms
+[01:51:48.453] Server  LOG     ✓ Compiled in 216ms
+[01:51:54.100] Browser ERROR   {}
+[01:51:54.100] Browser ERROR   {}
+[01:52:27.892] Server  LOG     ✓ Compiled in 953ms
+[01:55:51.360] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[01:55:52.083] Browser LOG     []
+[01:55:52.333] Browser LOG     []
+[01:59:49.775] Browser LOG     []
+[01:59:49.993] Browser LOG     []
+[02:04:59.651] Server  LOG     ✓ Compiled in 592ms
+[02:06:55.383] Server  LOG     ✓ Compiled in 317ms
+[02:06:55.822] Server  LOG     ✓ Compiled in 231ms
+[02:07:21.133] Server  LOG     ✓ Compiled in 176ms
+[02:07:21.940] Server  LOG     ✓ Compiled in 158ms
+[02:07:53.072] Browser LOG     []
+[02:07:53.258] Browser LOG     []
+[02:37:33.699] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[02:37:34.472] Browser LOG     []
+[02:37:34.683] Browser LOG     []
+[02:39:37.396] Server  LOG     ✓ Compiled in 1405ms
+[02:40:04.310] Server  LOG     ✓ Compiled in 261ms
+[02:40:21.657] Browser LOG     []
+[02:40:21.874] Browser LOG     []
+[02:42:17.785] Server  LOG     ✓ Compiled in 303ms
+[02:46:20.331] Server  LOG     ✓ Compiled in 2.6s
+[02:47:09.099] Server  LOG     ✓ Compiled in 4.2s
+[02:47:35.572] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[02:47:36.377] Browser LOG     []
+[02:47:36.568] Browser LOG     []
+[02:48:07.158] Server  LOG     ✓ Compiled in 2s
+[02:48:32.669] Server  LOG     ✓ Compiled in 2s
