@@ -149,11 +149,6 @@ export default function ContactManager() {
           </div>
         </div>
         <DynamicDataTable columns={columns} data={contacts} showCheckbox />
-        {loading && (
-          <div className="flex justify-center mt-4">
-            <CircularProgress color="secondary" />
-          </div>
-        )}
       </div>
 
       <Dialog open={openModal} fullWidth maxWidth="sm" onClose={() => setOpenModal(false)} PaperProps={{ className: "!rounded-2xl" }}>

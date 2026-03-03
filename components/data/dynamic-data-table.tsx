@@ -38,7 +38,7 @@ export default function DynamicDataTable({ columns, data }: DynamicDataTableProp
   const [search, setSearch] = useState("");
   const [expandedRows, setExpandedRows] = useState<Record<string | number, boolean>>({});
 
-  const isMobile = useMediaQuery("(max-width: 600px)");
+  const isMobile = useMediaQuery("(max-width: 900px)");
 
   const toggleColWidth = "10%";
   const otherColsWidth = `${90 / columns.length}%`;
@@ -152,7 +152,72 @@ export default function DynamicDataTable({ columns, data }: DynamicDataTableProp
         />
       </div>
 
-      <TableContainer component={Paper} sx={{ borderRadius: "0 0 12px 12px", boxShadow: "none", width: "100%", overflowX: "auto", WebkitOverflowScrolling: "touch", scrollbarWidth: "none", "&::-webkit-scrollbar": { display: "none" } }}>
+      {isMobile && (
+        <div style={{ padding: "0 12px 4px", display: "flex", flexDirection: "column", gap: 10 }}>
+          {pagedData.length === 0 ? (
+            <p style={{ textAlign: "center", color: "#94a3b8", fontSize: 14, padding: "24px 0" }}>Nessun risultato trovato</p>
+          ) : (
+            pagedData.map((row) => {
+              const hasSubagents = row.subagents && (row.subagents as DynamicRow[]).length > 0;
+              const dataColumns = columns.filter((c) => c.field !== "action");
+              const actionColumn = columns.find((c) => c.field === "action");
+              return (
+                <div key={row.id} style={{ background: "#fff", border: "1px solid #eef0f4", borderRadius: 12, padding: "14px 16px", boxShadow: "0 1px 6px rgba(0,0,0,0.05)" }}>
+                  <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 8 }}>
+                    <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 6 }}>
+                      {dataColumns.map((col) => (
+                        <div key={col.field} style={{ display: "flex", flexDirection: "column", gap: 1 }}>
+                          <span style={{ fontSize: 13, fontWeight: 700, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.05em" }}>{col.label}</span>
+                          <span style={{ fontSize: 16, color: "#1e293b", wordBreak: "break-word" }}>
+                            {col.renderCell ? col.renderCell(row) : String(row[col.field] ?? "")}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                    {actionColumn?.renderCell && (
+                      <div style={{ flexShrink: 0 }}>{actionColumn.renderCell(row)}</div>
+                    )}
+                  </div>
+                  {hasSubagents && (
+                    <div style={{ marginTop: 10, borderTop: "1px solid #eef0f4", paddingTop: 10 }}>
+                      <button
+                        onClick={() => toggleExpand(row.id)}
+                        style={{ fontSize: 12, color: "#12715b", fontWeight: 700, background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex", alignItems: "center", gap: 4 }}
+                      >
+                        {expandedRows[row.id] ? "▲" : "▼"} {expandedRows[row.id] ? "Nascondi" : "Mostra"} sub-agenti ({(row.subagents as DynamicRow[]).length})
+                      </button>
+                      {expandedRows[row.id] && (
+                        <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 8 }}>
+                          {(row.subagents as DynamicRow[]).map((sub) => {
+                            const actionCol = columns.find((c) => c.field === "action");
+                            return (
+                              <div key={sub.id} style={{ background: "#f8fafc", borderRadius: 8, padding: "10px 12px", border: "1px solid #eef0f4", display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 8 }}>
+                                <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 4 }}>
+                                  {dataColumns.map((col) => (
+                                    <div key={col.field}>
+                                      <span style={{ fontSize: 10, fontWeight: 700, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.05em" }}>{col.label}: </span>
+                                      <span style={{ fontSize: 13, color: "#374151" }}>
+                                        {col.renderCell ? col.renderCell(sub) : String(sub[col.field] ?? "")}
+                                      </span>
+                                    </div>
+                                  ))}
+                                </div>
+                                {actionCol?.renderCell && <div style={{ flexShrink: 0 }}>{actionCol.renderCell(sub)}</div>}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              );
+            })
+          )}
+        </div>
+      )}
+
+      {!isMobile && <TableContainer component={Paper} sx={{ borderRadius: "0 0 12px 12px", boxShadow: "none", width: "100%", overflowX: "auto", WebkitOverflowScrolling: "touch", scrollbarWidth: "none", "&::-webkit-scrollbar": { display: "none" } }}>
         <Table size="small" sx={{ tableLayout: "auto" }}>
           <colgroup>
             <col style={{ width: toggleColWidth }} />
@@ -172,7 +237,7 @@ export default function DynamicDataTable({ columns, data }: DynamicDataTableProp
           </TableHead>
           <TableBody>{pagedData.map((row) => renderRow(row))}</TableBody>
         </Table>
-      </TableContainer>
+      </TableContainer>}
 
       {/* Footer */}
       <div className="flex flex-col sm:flex-row items-center justify-between mt-4 px-3 pb-3 gap-3">

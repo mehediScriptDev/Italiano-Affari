@@ -1,0 +1,6 @@
+1:"$Sreact.fragment"
+2:I[83209,["/_next/static/chunks/752e874c44962a36.js","/_next/static/chunks/8af51354d20d6344.js","/_next/static/chunks/38f5dd9a96faf5b3.js","/_next/static/chunks/a78a0926af495191.js","/_next/static/chunks/9d2b9455dcd69bff.js","/_next/static/chunks/17847b0a61751a3a.js","/_next/static/chunks/9c7501ea1b299b99.js","/_next/static/chunks/ae2801b4e2f19105.js","/_next/static/chunks/b3adb4443d546691.js"],"default"]
+3:I[97367,["/_next/static/chunks/ff1a16fafef87110.js","/_next/static/chunks/d2be314c3ece3fbe.js"],"OutletBoundary"]
+4:"$Sreact.suspense"
+0:{"buildId":"eG0fnsaZGs-AX2x_t5Lyg","rsc":["$","$1","c",{"children":[["$","div",null,{"id":"agent-management","className":"overflow-hidden","children":["$","$L2",null,{}]}],[["$","script","script-0",{"src":"/_next/static/chunks/9c7501ea1b299b99.js","async":true}],["$","script","script-1",{"src":"/_next/static/chunks/ae2801b4e2f19105.js","async":true}],["$","script","script-2",{"src":"/_next/static/chunks/b3adb4443d546691.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
+5:null

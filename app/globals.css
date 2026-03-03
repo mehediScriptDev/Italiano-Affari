@@ -251,3 +251,14 @@ a {
   animation: pulse-ring 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   background: inherit;
 }
+
+/* Mobile sidebar slide-in from left */
+.uc-offcanvas-bar {
+  left: 0 !important;
+  transform: translateX(-100%);
+  transition: transform 0.42s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.uc-open > .uc-offcanvas-bar {
+  transform: translateX(0);
+}
