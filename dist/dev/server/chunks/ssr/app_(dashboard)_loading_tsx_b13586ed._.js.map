@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/MAKTECH/Downloads/psicopatici-partners/dani0421_1200_frontend/app/%28dashboard%29/loading.tsx"],"sourcesContent":["import { Box, CircularProgress } from \"@mui/material\";\r\n\r\nexport default function DashboardLoading() {\r\n  return (\r\n    <Box\r\n      sx={{\r\n        display: \"flex\",\r\n        alignItems: \"center\",\r\n        justifyContent: \"center\",\r\n        minHeight: \"60vh\",\r\n        width: \"100%\",\r\n      }}\r\n    >\r\n      <CircularProgress sx={{ color: \"#13131f\" }} size={36} thickness={3.5} />\r\n    </Box>\r\n  );\r\n}\r\n"],"names":[],"mappings":";;;;;AAAA;AAAA;;;AAEe,SAAS;IACtB,qBACE,8OAAC,+LAAG;QACF,IAAI;YACF,SAAS;YACT,YAAY;YACZ,gBAAgB;YAChB,WAAW;YACX,OAAO;QACT;kBAEA,cAAA,8OAAC,mPAAgB;YAAC,IAAI;gBAAE,OAAO;YAAU;YAAG,MAAM;YAAI,WAAW;;;;;;;;;;;AAGvE"}}]
-}

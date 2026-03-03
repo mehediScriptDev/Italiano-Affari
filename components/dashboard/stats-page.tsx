@@ -45,7 +45,6 @@ export default function StatsPage() {
     },[])
 
     const fetchChartData = () => {
-
         fetchEarnings().then((res) => {
             setChartsPreview((prev) => ({...prev, earnings: res.data}));
         });
@@ -132,7 +131,7 @@ export default function StatsPage() {
             </div>
 
             {/* KPI Cards */}
-            <Grid container spacing={2} sx={{ mb: 3 }}>
+            <Grid container spacing={1.5} sx={{ mb: 3 }}>
                 <Grid size={{ xs: 12, md: 4 }}>
                     <ChartPreview
                         label="Vendite Dirette"

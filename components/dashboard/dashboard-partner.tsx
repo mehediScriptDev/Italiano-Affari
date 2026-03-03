@@ -203,7 +203,7 @@ export default function DashboardPartner() {
           <Grid
             container
             justifyContent="center"
-            spacing={2}
+            spacing={1.5}
             alignItems="stretch"
           >
             <Grid size={{ xs: 12, lg: 4 }} sx={{ display: "flex" }}>

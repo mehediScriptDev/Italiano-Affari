@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 2, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/public/assets/css/prettify.min.css"],"sourcesContent":[".com { color: #6b7188; }\n.lit { color: #ebc66d; }\n.pun, .opn, .clo { color: #93a1a1; }\n.fun { color: #fa6f6c; }\n.str, .atv { color: #6cb8f7; }\n.kwd, .linenums .tag { color: #7281b2; }\n.typ, .atn, .dec, .var { color: #ffffff; }\n.pln { color: #f477b1; }\n\n.prettyprint {\n  padding: 8px;\n  background-color: #f7f7f9;\n  border: 1px solid #e1e1e8;\n}\n.prettyprint.linenums {\n  -webkit-box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;\n     -moz-box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;\n          box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;\n}\n\n/* Specify class=linenums on a pre to get line numbering */\nol.linenums {\n  margin: 0 0 0 33px; /* IE indents via margin-left */\n}\nol.linenums li {\n  padding-left: 12px;\n  color: #bebec5;\n  line-height: 18px;\n  text-shadow: 0 1px 0 #fff;\n}"],"names":[],"mappings":"AAAA;;;;AACA;;;;AACA;;;;AACA;;;;AACA;;;;AACA;;;;AACA;;;;AACA;;;;AAEA;;;;;;AAKA;;;;AAOA;;;;AAGA"}}]
-}

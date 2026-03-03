@@ -108,15 +108,6 @@ export default function Wallet() {
     ) : null,
   }));
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <CircularProgress />
-        <span className="ml-3 text-slate-500 text-sm">Loading data...</span>
-      </div>
-    );
-  }
-
   if (error) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[50vh] gap-3">
@@ -131,7 +122,7 @@ export default function Wallet() {
     <>
       <div className="w-100 paddingContainer mt-3">
         {/* Header */}
-        <div className="flex items-center justify-between mb-3">
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
           <div>
             <h1 className="page-title">Portafoglio</h1>
             <p className="page-subtitle">Gestisci i tuoi crediti e coupon</p>
@@ -147,7 +138,7 @@ export default function Wallet() {
         </div>
 
         {/* KPI cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-1 mb-4 lg:mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-1 mb-3 lg:mb-6">
           <ChartPreview label="Saldo attuale disponibile" icon={<Savings style={{ color: "#13131f", fontSize: "22px" }} />} obj={chartsPreview.sales} />
           <ChartPreview label="Saldo utilizzato" icon={<MoneyOff style={{ color: "#13131f", fontSize: "22px" }} />} obj={chartsPreview.earnings} />
           <ChartPreview label="Saldo totale" icon={<MonetizationOn style={{ color: "#13131f", fontSize: "22px" }} />} obj={chartsPreview.affiliates} />

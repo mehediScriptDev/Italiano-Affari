@@ -7,6 +7,7 @@ import {
   Chip,
   CircularProgress,
   Drawer,
+  Skeleton,
   FormControl,
   IconButton,
   MenuItem,
@@ -1098,102 +1099,129 @@ export default function MediaLibrary() {
         </Box>
       </Box>
 
-      {/* Loading */}
-      {loading && (
-        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: 300 }}>
-          <CircularProgress sx={{ color: COLORS.secondary }} size={36} />
-        </Box>
-      )}
+      {/* Content — sidebar always visible, only cards area swaps */}
+      <Box sx={{ display: "flex", gap: { xs: 0, lg: 2.5 }, alignItems: "flex-start" }}>
+        <Box sx={{ flex: 1, minWidth: 0 }}>
 
-      {/* Error */}
-      {error && !loading && (
-        <Box sx={{ textAlign: "center", py: 8 }}>
-          <Typography color="error" sx={{ mb: 1.5, fontWeight: 600 }}>
-            {error}
-          </Typography>
-          <Button
-            variant="outlined"
-            onClick={() => fetchAllItems()}
-            sx={{ borderColor: COLORS.primary, color: COLORS.primary, borderRadius: "10px", textTransform: "none", fontWeight: 700 }}
-          >
-            Riprova
-          </Button>
-        </Box>
-      )}
-
-      {/* Content */}
-      {!loading && !error && (
-        <Box sx={{ display: "flex", gap: { xs: 0, lg: 2.5 }, alignItems: "flex-start" }}>
-          <Box sx={{ flex: 1, minWidth: 0 }}>
-            {pagedItems.length === 0 ? (
-              <Box sx={{ textAlign: "center", py: 10 }}>
-                <Typography sx={{ color: "#aaa", fontWeight: 600 }}>Nessun contenuto disponibile</Typography>
-              </Box>
-            ) : viewMode === "grid" ? (
-              <>
-                <Box
-                  sx={{
-                    display: "grid",
-                    gridTemplateColumns: {
-                      xs: "repeat(2, 1fr)",
-                      sm: "repeat(3, 1fr)",
-                      md: "repeat(3, 1fr)",
-                      lg: "repeat(3, 1fr)",
-                      xl: "repeat(4, 1fr)",
-                    },
-                    gap: { xs: 1.2, sm: 1.5, md: 2, lg: 2 },
-                  }}
-                >
-                  {pagedItems.map((item) => (
-                    <GridCard key={item.id} item={item} />
-                  ))}
-                </Box>
-
-                {totalPages > 1 && (
-                  <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
-                    <Pagination
-                      count={totalPages}
-                      page={page}
-                      onChange={(_, v) => {
-                        setPage(v);
-                        window.scrollTo({ top: 0, behavior: "smooth" });
-                      }}
-                      shape="rounded"
-                      size={isMobile ? "small" : "medium"}
-                      sx={{
-                        "& .MuiPaginationItem-root": { fontWeight: 700, borderRadius: "9px", fontSize: 13 },
-                        "& .Mui-selected": { bgcolor: `${COLORS.primary} !important`, color: "#fff" },
-                      }}
-                    />
+          {/* Skeleton */}
+          {loading && (
+            <Box
+              sx={{
+                display: "grid",
+                gridTemplateColumns: {
+                  xs: "repeat(2, 1fr)",
+                  sm: "repeat(3, 1fr)",
+                  md: "repeat(3, 1fr)",
+                  lg: "repeat(3, 1fr)",
+                  xl: "repeat(4, 1fr)",
+                },
+                gap: { xs: 1.2, sm: 1.5, md: 2, lg: 2 },
+              }}
+            >
+              {Array.from({ length: 8 }).map((_, i) => (
+                <Box key={i} sx={{ bgcolor: COLORS.surface, borderRadius: "16px", overflow: "hidden", boxShadow: "0 2px 12px rgba(0,0,0,0.07)" }}>
+                  <Box sx={{ position: "relative", width: "100%", paddingBottom: "125%", overflow: "hidden" }}>
+                    <Skeleton variant="rectangular" sx={{ position: "absolute", inset: 0, width: "100%", height: "100%", transform: "none" }} />
                   </Box>
-                )}
-              </>
-            ) : (
-              <ReelsView contents={pagedItems} />
-            )}
-          </Box>
-
-          {/* Desktop sidebar */}
-          {!isMobile && (
-            <Box sx={{ width: 260, flexShrink: 0, position: "sticky", top: 20 }}>
-              <Box sx={{ bgcolor: COLORS.surface, borderRadius: "16px", p: 2.5, boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
-                <Typography sx={{ fontWeight: 800, fontSize: 15, mb: 2, color: COLORS.primary }}>Filtri</Typography>
-                <FilterPanel
-                  inDrawer={false}
-                  pendingFilters={pendingFilters}
-                  setPendingFilters={setPendingFilters}
-                  filters={filters}
-                  availableTags={availableTags}
-                  availableCategories={availableCategories}
-                  onApply={applyFilters}
-                  onReset={resetFilters}
-                  onClose={() => {}}
-                />
-              </Box>
+                  <Box sx={{ p: 1.5, display: "flex", flexDirection: "column", gap: 0.8 }}>
+                    <Skeleton variant="text" height={22} width="70%" sx={{ borderRadius: 1 }} />
+                    <Skeleton variant="text" height={16} width="50%" sx={{ borderRadius: 1 }} />
+                    <Skeleton variant="rounded" height={32} sx={{ borderRadius: "9px", mt: 0.5 }} />
+                  </Box>
+                </Box>
+              ))}
             </Box>
           )}
+
+          {/* Error */}
+          {error && !loading && (
+            <Box sx={{ textAlign: "center", py: 8 }}>
+              <Typography color="error" sx={{ mb: 1.5, fontWeight: 600 }}>
+                {error}
+              </Typography>
+              <Button
+                variant="outlined"
+                onClick={() => fetchAllItems()}
+                sx={{ borderColor: COLORS.primary, color: COLORS.primary, borderRadius: "10px", textTransform: "none", fontWeight: 700 }}
+              >
+                Riprova
+              </Button>
+            </Box>
+          )}
+
+          {/* Cards / Reels */}
+          {!loading && !error && (
+            <>
+              {pagedItems.length === 0 ? (
+                <Box sx={{ textAlign: "center", py: 10 }}>
+                  <Typography sx={{ color: "#aaa", fontWeight: 600 }}>Nessun contenuto disponibile</Typography>
+                </Box>
+              ) : viewMode === "grid" ? (
+                <>
+                  <Box
+                    sx={{
+                      display: "grid",
+                      gridTemplateColumns: {
+                        xs: "repeat(2, 1fr)",
+                        sm: "repeat(3, 1fr)",
+                        md: "repeat(3, 1fr)",
+                        lg: "repeat(3, 1fr)",
+                        xl: "repeat(4, 1fr)",
+                      },
+                      gap: { xs: 1.2, sm: 1.5, md: 2, lg: 2 },
+                    }}
+                  >
+                    {pagedItems.map((item) => (
+                      <GridCard key={item.id} item={item} />
+                    ))}
+                  </Box>
+
+                  {totalPages > 1 && (
+                    <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
+                      <Pagination
+                        count={totalPages}
+                        page={page}
+                        onChange={(_, v) => {
+                          setPage(v);
+                          window.scrollTo({ top: 0, behavior: "smooth" });
+                        }}
+                        shape="rounded"
+                        size={isMobile ? "small" : "medium"}
+                        sx={{
+                          "& .MuiPaginationItem-root": { fontWeight: 700, borderRadius: "9px", fontSize: 13 },
+                          "& .Mui-selected": { bgcolor: `${COLORS.primary} !important`, color: "#fff" },
+                        }}
+                      />
+                    </Box>
+                  )}
+                </>
+              ) : (
+                <ReelsView contents={pagedItems} />
+              )}
+            </>
+          )}
         </Box>
-      )}
+
+        {/* Desktop sidebar — always visible */}
+        {!isMobile && (
+          <Box sx={{ width: 260, flexShrink: 0, position: "sticky", top: 20 }}>
+            <Box sx={{ bgcolor: COLORS.surface, borderRadius: "16px", p: 2.5, boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
+              <Typography sx={{ fontWeight: 800, fontSize: 15, mb: 2, color: COLORS.primary }}>Filtri</Typography>
+              <FilterPanel
+                inDrawer={false}
+                pendingFilters={pendingFilters}
+                setPendingFilters={setPendingFilters}
+                filters={filters}
+                availableTags={availableTags}
+                availableCategories={availableCategories}
+                onApply={applyFilters}
+                onReset={resetFilters}
+                onClose={() => {}}
+              />
+            </Box>
+          </Box>
+        )}
+      </Box>
 
       {/* Mobile filter drawer */}
       <Drawer
