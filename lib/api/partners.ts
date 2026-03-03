@@ -217,6 +217,7 @@ export async function fetchTransactionHistory() {
 }
 
 export async function fetchContents(params?: {
+  page?: number;
   tag?: string;
   category?: string;
   gender?: string;
