@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import {
   Box,
   Button,
@@ -31,6 +31,7 @@ import {
 } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
 import ChartPreview from "@/components/common/chart-preview";
+import useFetch from "@/components/common/useFetch";
 import {
   fetchEarnings,
   fetchLatestOrders,
@@ -65,7 +66,9 @@ export default function DashboardPartner() {
     earnings: 0,
   });
 
-  const [orders, setOrders] = useState<OrderRow[]>([]);
+  const earningsFetch = useFetch("dashboard/earnings", () => fetchEarnings().then((r) => r.data), { dedupingInterval: 60_000 });
+  const networkFetch = useFetch("dashboard/network", () => fetchNetwork().then((r) => r.data), { dedupingInterval: 60_000 });
+  const ordersFetch = useFetch("dashboard/latest-orders", () => fetchLatestOrders().then((r) => r.data), { dedupingInterval: 60_000 });
 
   const columns = [
     { label: "Nome", field: "name" },
@@ -117,56 +120,42 @@ export default function DashboardPartner() {
   ];
 
   useEffect(() => {
-    const fetch = async () => {
-      fetchEarnings().then((res) => {
-        setEarningsPreview(res.data);
+    if (earningsFetch.data) setEarningsPreview(earningsFetch.data);
+  }, [earningsFetch.data]);
+
+  useEffect(() => {
+    if (networkFetch.data)
+      setNetworkInfo({
+        count: networkFetch.data.orders_count,
+        earnings: networkFetch.data.network_earnings,
       });
+  }, [networkFetch.data]);
 
-      fetchNetwork().then((res) => {
-        setNetworkInfo({
-          count: res.orders_count,
-          earnings: res.network_earnings,
-        });
-      });
+  const mappedOrders = useMemo(() => {
+    if (!ordersFetch.data) return [] as OrderRow[];
+    return (ordersFetch.data as any[]).map((order: Record<string, any>) => {
+      const comms = (order.commissions as Commission[]) ?? [];
+      const earnings = comms.reduce((acc, curr) => acc + (curr.amount || 0), 0);
+      const agent = order.agent as Record<string, string>;
+      const customer = order.customer as Record<string, string>;
 
-      const response = await fetchLatestOrders();
-      console.log(response.data);
-      const mappedOrders = response.data.map(
-        (order: Record<string, unknown>) => {
-          const comms = (order.commissions as Commission[]) ?? [];
-          const earnings = comms.reduce(
-            (acc, curr) => acc + (curr.amount || 0),
-            0,
-          );
-          const agent = order.agent as Record<string, string>;
-          const customer = order.customer as Record<string, string>;
-
-          return {
-            id: order.id as number,
-            name: customer?.name,
-            total: order.amount,
-            earnings: earnings,
-            commissions: comms,
-            agent: `${agent.first_name} ${agent.last_name}`,
-            date: new Date(order.created_at as string).toLocaleDateString(
-              "it-IT",
-              {
-                day: "2-digit",
-                month: "2-digit",
-                year: "numeric",
-                hour: "2-digit",
-                minute: "2-digit",
-              },
-            ),
-          };
-        },
-      );
-
-      setOrders(mappedOrders);
-    };
-
-    if (token) fetch();
-  }, [token]);
+      return {
+        id: order.id as number,
+        name: customer?.name,
+        total: order.amount,
+        earnings: earnings,
+        commissions: comms,
+        agent: `${agent?.first_name ?? ''} ${agent?.last_name ?? ''}`.trim(),
+        date: new Date(order.created_at as string).toLocaleDateString("it-IT", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+      } as OrderRow;
+    });
+  }, [ordersFetch.data]);
 
   function handleOpenShare() {
     const couponCode = profile?.coupon_code || "";
@@ -498,7 +487,7 @@ export default function DashboardPartner() {
             </div>
           </div>
 
-          <DataTable columns={columns} data={orders} showCheckbox={true} />
+          <DataTable columns={columns} data={mappedOrders} showCheckbox={true} />
         </div>
       </div>
     </>

@@ -2,6 +2,7 @@
 
 import {useEffect, useState} from 'react';
 import {Box, Grid, Typography} from "@mui/material";
+import useFetch from "@/components/common/useFetch";
 import {
     ArcElement,
     BarElement,
@@ -40,23 +41,13 @@ export default function StatsPage() {
         affiliates:null
     });
 
+    const earningsFetch = useFetch('charts/earnings', () => fetchEarnings().then(r => r.data), { dedupingInterval: 60_000 });
+    const salesFetch = useFetch('charts/sales', () => fetchSales().then(r => r.data), { dedupingInterval: 60_000 });
+    const affiliatesFetch = useFetch('charts/affiliates', () => fetchAffiliates().then(r => r.data), { dedupingInterval: 60_000 });
+
     useEffect(() => {
-        fetchChartData();
-    },[])
-
-    const fetchChartData = () => {
-        fetchEarnings().then((res) => {
-            setChartsPreview((prev) => ({...prev, earnings: res.data}));
-        });
-
-        fetchSales().then((res) => {
-            setChartsPreview((prev) => ({...prev, sales: res.data}));
-        });
-
-        fetchAffiliates().then((res) => {
-            setChartsPreview((prev) => ({...prev, affiliates: res.data}));
-        });
-    };
+        setChartsPreview({ sales: salesFetch.data ?? null, earnings: earningsFetch.data ?? null, affiliates: affiliatesFetch.data ?? null });
+    }, [salesFetch.data, earningsFetch.data, affiliatesFetch.data]);
 
     const fetchBigChart = (chartType: string, periodType: string, dateRange: { start: Date; end: Date }) => {
         let startDate: Date, endDate: Date;
