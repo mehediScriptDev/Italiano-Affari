@@ -1,20 +1,22 @@
 "use client";
 
 import { useEffect, type ReactNode } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useAuth } from "@/lib/context";
 
 export default function ProtectedRoute({ children }: { children: ReactNode }) {
-  const { token } = useAuth();
+  const { token, isHydrated } = useAuth();
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
-    if (!token) {
-      router.replace("/sign-in");
+    // Only redirect after localStorage has been read and token is confirmed absent
+    if (isHydrated && !token) {
+      router.replace(`/sign-in?callbackUrl=${encodeURIComponent(pathname)}`);
     }
-  }, [token, router]);
+  }, [isHydrated, token, router, pathname]);
 
-  if (!token) return null;
-
+  // Always render children immediately — no white screen, no loader.
+  // The useEffect above handles redirect if truly unauthenticated.
   return <>{children}</>;
 }

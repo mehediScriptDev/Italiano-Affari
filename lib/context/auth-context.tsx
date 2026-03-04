@@ -18,6 +18,7 @@ import type { DecodedToken } from "@/lib/types";
 
 interface AuthContextValue {
   token: string | null;
+  isHydrated: boolean;
   setToken: (t?: string | null) => void;
   getDecodedToken: (t: string) => DecodedToken | null;
   updateProfile: (token: string, secret: string) => void;
@@ -34,6 +35,7 @@ export function useAuth() {
 export default function AuthProvider({ children }: { children: ReactNode }) {
   const router = useRouter();
   const [token, setTokenState] = useState<string | null>(null);
+  const [isHydrated, setIsHydrated] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const { setProfile } = useAppContext();
 
@@ -111,14 +113,15 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
         });
       }
     }
+    setIsHydrated(true);
   }, [setProfile]);
 
   // Note: The 401 refresh interceptor is handled exclusively in lib/api/client.ts
   // to avoid duplicate interceptors causing race conditions.
 
   const contextValue = useMemo(
-    () => ({ token, setToken, getDecodedToken, updateProfile }),
-    [token, setToken, getDecodedToken, updateProfile]
+    () => ({ token, isHydrated, setToken, getDecodedToken, updateProfile }),
+    [token, isHydrated, setToken, getDecodedToken, updateProfile]
   );
 
   return (
