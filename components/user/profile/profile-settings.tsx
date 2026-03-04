@@ -34,14 +34,14 @@ export default function ProfileSettings() {
   return (
     <div className="dash-card p-7">
       {/* Avatar + save header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3.5">
-          <Avatar src={profile?.avatar} className="w-18! h-18! border-2! border-[#e5e7ec]!">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div className="flex items-center gap-3.5 min-w-0">
+          <Avatar src={profile?.avatar} className="w-18! h-18! shrink-0 border-2! border-[#e5e7ec]!">
             {profile?.name?.charAt(0)}
           </Avatar>
-          <div>
-            <p className="text-base font-semibold tracking-tight text-[#13131f] m-0">{profile?.name}</p>
-            <p className="text-[13px] text-slate-500 mt-0.5 mb-0">{profile?.email}</p>
+          <div className="min-w-0">
+            <p className="text-base font-semibold tracking-tight text-[#13131f] m-0 truncate">{profile?.name}</p>
+            <p className="text-[13px] text-slate-500 mt-0.5 mb-0 truncate">{profile?.email}</p>
             <p className="text-xs text-slate-500 mt-1 mb-0">
               Attività: <span className="font-semibold text-[#333]">{profile?.activity}</span>
             </p>
@@ -52,8 +52,7 @@ export default function ProfileSettings() {
           variant="contained"
           startIcon={<Save />}
           color="secondary"
-          sx={{ borderRadius: "8px", textTransform: "none", fontWeight: 600, px: 2.5 }}
-          className="hidden sm:flex"
+          sx={{ borderRadius: "8px", textTransform: "none", fontWeight: 600, px: 2.5, flexShrink: 0, alignSelf: "flex-start" }}
         >
           Salva
         </Button>
