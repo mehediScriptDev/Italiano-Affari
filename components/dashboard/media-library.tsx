@@ -32,6 +32,7 @@ import {
   VolumeUp,
 } from "@mui/icons-material";
 import { fetchContents } from "@/lib/api/partners";
+import useContents from "@/components/common/useContents";
 import { showToast } from "@/lib/utils/notifications";
 
 // ── Types ──────────────────────────────────────────────
@@ -949,38 +950,16 @@ export default function MediaLibrary() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
 
-  const [allItems, setAllItems] = useState<ContentItem[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const _contents = useContents() as { data: ContentItem[]; error: string | null; isLoading: boolean; reload: () => Promise<any> };
+  const { data: allItems = [], error, isLoading, reload } = _contents;
+  const loading = isLoading;
   const [page, setPage] = useState(1);
   const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS);
   const [pendingFilters, setPendingFilters] = useState<Filters>(DEFAULT_FILTERS);
   const [viewMode, setViewMode] = useState<"grid" | "reels">("grid");
   const [filterDrawerOpen, setFilterDrawerOpen] = useState(false);
 
-  const fetchAllItems = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      let all: ContentItem[] = [];
-      let pg = 1, last = 1;
-      do {
-        const r: PaginatedResponse = await fetchContents({ page: pg });
-        all = [...all, ...r.data];
-        last = r.last_page;
-        pg++;
-      } while (pg <= last);
-      setAllItems(all);
-    } catch {
-      setError("Impossibile caricare i contenuti. Riprova più tardi.");
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchAllItems();
-  }, [fetchAllItems]);
+  // data is provided by `useContents` (SWR) which caches and dedupes requests
 
   useEffect(() => {
     if (filterDrawerOpen) setPendingFilters(filters);
@@ -1141,7 +1120,7 @@ export default function MediaLibrary() {
               </Typography>
               <Button
                 variant="outlined"
-                onClick={() => fetchAllItems()}
+                onClick={() => reload()}
                 sx={{ borderColor: COLORS.primary, color: COLORS.primary, borderRadius: "10px", textTransform: "none", fontWeight: 700 }}
               >
                 Riprova
