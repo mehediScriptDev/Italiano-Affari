@@ -103,6 +103,8 @@ export default function SignIn() {
         const response = await checkLoginCode(email, code);
         const newToken = response.data.data.access_token;
         setToken(newToken);
+        // Flag so dashboard shows the welcome modal once
+        localStorage.setItem("showLoginModal", "true");
         try {
           const secretRes = await fetchBackupSecret();
           updateProfile(newToken, secretRes.data.backup_key);
