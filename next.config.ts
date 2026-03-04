@@ -1,10 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: "export",
+  // output: "export",
   distDir: "dist",
   images: {
-    unoptimized: true,
+    // unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",

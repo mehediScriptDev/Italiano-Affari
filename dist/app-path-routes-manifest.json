@@ -1,0 +1,18 @@
+{
+  "/(dashboard)/agent-management/page": "/agent-management",
+  "/(dashboard)/assets/page": "/assets",
+  "/(dashboard)/contacts/page": "/contacts",
+  "/(dashboard)/dashboard/page": "/dashboard",
+  "/(dashboard)/media-library/page": "/media-library",
+  "/(dashboard)/orders/page": "/orders",
+  "/(dashboard)/profile/page": "/profile",
+  "/(dashboard)/report/page": "/report",
+  "/(dashboard)/wallet/page": "/wallet",
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/asset-form/page": "/asset-form",
+  "/favicon.ico/route": "/favicon.ico",
+  "/page": "/",
+  "/reset-password/page": "/reset-password",
+  "/sign-in/page": "/sign-in"
+}
