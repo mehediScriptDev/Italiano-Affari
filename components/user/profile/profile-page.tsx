@@ -49,10 +49,12 @@ export default function ProfilePage({ index = 0 }: ProfilePageProps) {
           onChange={(_, v) => setValue(v)}
           textColor="secondary"
           indicatorColor="secondary"
+          variant="scrollable"
+          scrollButtons="auto"
+          allowScrollButtonsMobile
           sx={{
-            minWidth: "600px",
             px: 1,
-            "& .MuiTab-root": { textTransform: "none", fontWeight: 500, fontSize: "14px", minHeight: "48px" },
+            "& .MuiTab-root": { textTransform: "none", fontWeight: 500, fontSize: "14px", minHeight: "48px", whiteSpace: "nowrap" },
             "& .Mui-selected": { fontWeight: 600 },
           }}
         >
