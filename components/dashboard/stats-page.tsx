@@ -121,7 +121,7 @@ export default function StatsPage() {
             </div>
 
             {/* KPI Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-1.5 mb-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-1.5 lg:gap-[10.3px] mb-3">
                 <ChartPreview
                     label="Vendite Dirette"
                     icon={<ShoppingBag style={{ fontSize: '20px' }} />}

@@ -91,25 +91,41 @@ export default function Orders() {
 
   return (
     <div className="w-100 paddingContainer mt-3">
-      {/* Header row */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-3">
         <div>
           <h1 className="page-title">Ordini / Report</h1>
           <p className="page-subtitle">Storico degli ordini con filtri per data</p>
         </div>
-        <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={it}>
-          <div className="flex flex-wrap items-center gap-1">
-            <div className="flex items-center gap-2">
-              <label className="text-[13px] font-semibold text-slate-500 whitespace-nowrap">Data inizio:</label>
-              <DatePicker value={startDate} onChange={(v) => v && setStartDate(v)} slotProps={{ textField: { size: "small" } }} sx={datePickerSx} />
+      </div>
+
+      {/* Filter card */}
+      <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={it}>
+        <div className="dash-card p-4 mb-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
+            <div className="flex flex-col gap-1.5">
+              <span className="text-xs font-semibold text-[#64748b] uppercase tracking-wide">Data inizio</span>
+              <DatePicker
+                value={startDate}
+                onChange={(v) => v && setStartDate(v)}
+                slotProps={{ textField: { size: "small", fullWidth: true } }}
+                sx={{ ...datePickerSx, width: "100%" }}
+              />
             </div>
-            <div className="flex items-center gap-2">
-              <label className="text-[13px] font-semibold text-slate-500 whitespace-nowrap">Data fine:</label>
-              <DatePicker value={endDate} onChange={(v) => v && setEndDate(v)} slotProps={{ textField: { size: "small" } }} sx={datePickerSx} />
+            <div className="flex flex-col gap-1">
+              <span className="text-xs font-semibold text-[#64748b] uppercase tracking-wide">Data fine</span>
+              <DatePicker
+                value={endDate}
+                onChange={(v) => v && setEndDate(v)}
+                slotProps={{ textField: { size: "small", fullWidth: true } }}
+                sx={{ ...datePickerSx, width: "100%" }}
+              />
             </div>
           </div>
-        </LocalizationProvider>
-      </div>
+        </div>
+      </LocalizationProvider>
+
+      {/* Table */}
       <DataTable columns={columns} data={orders} showCheckbox />
     </div>
   );
