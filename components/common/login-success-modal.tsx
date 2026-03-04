@@ -59,7 +59,7 @@ export default function LoginSuccessModal() {
         {/* Title */}
         <Typography
           variant="h6"
-          sx={{ fontWeight: 700,fontSize: { xs: "24px", lg: "26px" }, color: "#13131f", mb: 1, letterSpacing: "-0.01em" }}
+          sx={{ fontWeight: 700 ,fontSize: { xs: "24px", lg: "26px" }, color: "#13131f", mb: 1, letterSpacing: "-0.01em" }}
         >
           Bentornato!
         </Typography>
