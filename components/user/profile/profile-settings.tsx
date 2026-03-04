@@ -58,11 +58,11 @@ export default function ProfileSettings() {
         </Button>
       </div>
 
-      <hr className="border-0 border-t border-[#eef0f4] my-5" />
+      <hr className="border-0 border-t border-[#eef0f4] my-3 lg:my-5" />
 
       <h3 className="text-lg font-bold tracking-tight text-center mb-3">Informazioni Personali</h3>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 lg:gap-4 mb-3">
         {([
           { key: "name", label: "Nome*", placeholder: "Inserisci nome",
             validate: (v: string) => !v.trim() ? "Il nome è obbligatorio" : v.length < 2 ? "Il nome deve contenere almeno 2 caratteri" : "" },
@@ -95,9 +95,9 @@ export default function ProfileSettings() {
 
       {profile?.activity && Object.keys(activitiesFields).includes(profile.activity) && (
         <>
-          <hr className="border-0 border-t border-[#eef0f4] my-5" />
+          <hr className="border-0 border-t border-[#eef0f4] my-1 lg:my-5" />
           <h3 className="text-lg font-bold tracking-tight text-center mb-3">Attività</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-3 lg:mb-6">
             {activitiesFields[profile.activity].filter((f) => f !== "paragraph").map((field, i) => (
               <div key={i}>
                 <p className="text-[13px] font-semibold text-[#333] mb-1.5">{field}*</p>
