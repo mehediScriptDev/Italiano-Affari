@@ -54,7 +54,7 @@ export default function ProfilePage({ index = 0 }: ProfilePageProps) {
           allowScrollButtonsMobile
           sx={{
             px: 1,
-            "& .MuiTab-root": { textTransform: "none", fontWeight: 500, fontSize: "14px", minHeight: "48px", whiteSpace: "nowrap" },
+            "& .MuiTab-root": { textTransform: "none", fontWeight: 500, fontSize: "16px", minHeight: "48px", whiteSpace: "nowrap" },
             "& .Mui-selected": { fontWeight: 600 },
           }}
         >

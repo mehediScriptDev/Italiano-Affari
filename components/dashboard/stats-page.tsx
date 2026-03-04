@@ -1,7 +1,6 @@
-﻿"use client";
+"use client";
 
 import {useEffect, useState} from 'react';
-import {Box, Grid, Typography} from "@mui/material";
 import useFetch from "@/components/common/useFetch";
 import {
     ArcElement,
@@ -116,75 +115,59 @@ export default function StatsPage() {
     }
 
     return (
-        <Box className="w-100 paddingContainer mt-3" sx={{ backgroundColor: 'transparent' }}>
+        <div className="w-100 paddingContainer mt-3">
             <div className="flex items-center justify-between mb-3">
                 <h1 className="page-title">Statistiche</h1>
             </div>
 
             {/* KPI Cards */}
-            <Grid container spacing={1.5} sx={{ mb: 3 }}>
-                <Grid size={{ xs: 12, md: 4 }}>
-                    <ChartPreview
-                        label="Vendite Dirette"
-                        icon={<ShoppingBag style={{ fontSize: '20px' }} />}
-                        obj={chartsPreview.sales}
-                        iconBg="#6366f1"
-                    />
-                </Grid>
-                <Grid size={{ xs: 12, md: 4 }}>
-                    <ChartPreview
-                        label="Guadagni Maturati"
-                        icon={<AttachMoney style={{ fontSize: '20px' }} />}
-                        obj={chartsPreview.earnings}
-                        iconBg="#10b981"
-                    />
-                </Grid>
-                <Grid size={{ xs: 12, md: 4 }}>
-                    <ChartPreview
-                        label="Co-Partner"
-                        icon={<Handshake style={{ fontSize: '20px' }} />}
-                        obj={chartsPreview.affiliates}
-                        iconBg="#f59e0b"
-                    />
-                </Grid>
-            </Grid>
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-1.5 mb-3">
+                <ChartPreview
+                    label="Vendite Dirette"
+                    icon={<ShoppingBag style={{ fontSize: '20px' }} />}
+                    obj={chartsPreview.sales}
+                    iconBg="#6366f1"
+                />
+                <ChartPreview
+                    label="Guadagni Maturati"
+                    icon={<AttachMoney style={{ fontSize: '20px' }} />}
+                    obj={chartsPreview.earnings}
+                    iconBg="#10b981"
+                />
+                <ChartPreview
+                    label="Co-Partner"
+                    icon={<Handshake style={{ fontSize: '20px' }} />}
+                    obj={chartsPreview.affiliates}
+                    iconBg="#f59e0b"
+                />
+            </div>
 
             {/* Main chart */}
-            <Box sx={{ mb: 3, backgroundColor: '#fff', borderRadius: '8px', border: '1px solid #eef0f4', p: 3 }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
-                    <Box sx={{ width: 4, height: 18, borderRadius: 2, backgroundColor: '#6366f1', flexShrink: 0 }} />
-                    <Typography sx={{ fontWeight: 700, fontSize: '18px', color: '#13131f' }}>
-                        Totale Commissioni Generate
-                    </Typography>
-                </Box>
+            <div className="mb-3 bg-white rounded-lg border border-[#eef0f4] p-4">
+                <div className="flex items-center gap-2 mb-4">
+                    <div className="w-1 h-4.5 rounded-full bg-[#6366f1] shrink-0" />
+                    <h2 className="text-[18px] font-bold text-[#13131f] m-0">Totale Commissioni Generate</h2>
+                </div>
                 <StatsChart label="commissioni" chartType="line" fetchData={fetchBigChart} />
-            </Box>
+            </div>
 
             {/* Bottom two charts */}
-            <Grid container spacing={2} sx={{ mb: 3 }}>
-                <Grid size={{ xs: 12, md: 6 }}>
-                    <Box sx={{ backgroundColor: '#fff', borderRadius: '8px', border: '1px solid #eef0f4', p: 3, height: '100%' }}>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
-                            <Box sx={{ width: 4, height: 18, borderRadius: 2, backgroundColor: '#10b981', flexShrink: 0 }} />
-                            <Typography sx={{ fontWeight: 700, fontSize: '18px', color: '#13131f' }}>
-                                Totale Vendite Dirette
-                            </Typography>
-                        </Box>
-                        <StatsChart label="vendite" chartType="line" fetchData={fetchBigChart} />
-                    </Box>
-                </Grid>
-                <Grid size={{ xs: 12, md: 6 }}>
-                    <Box sx={{ backgroundColor: '#fff', borderRadius: '8px', border: '1px solid #eef0f4', p: 3, height: '100%' }}>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
-                            <Box sx={{ width: 4, height: 18, borderRadius: 2, backgroundColor: '#f59e0b', flexShrink: 0 }} />
-                            <Typography sx={{ fontWeight: 700, fontSize: '18px', color: '#13131f' }}>
-                                Nuovi Affiliati Registrati
-                            </Typography>
-                        </Box>
-                        <StatsChart label="affiliati" chartType="bar" fetchData={fetchBigChart} />
-                    </Box>
-                </Grid>
-            </Grid>
-        </Box>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-1 mb-3">
+                <div className="bg-white rounded-lg border border-[#eef0f4] p-4 h-full">
+                    <div className="flex items-center gap-2 mb-4">
+                        <div className="w-1 h-4.5 rounded-full bg-[#10b981] shrink-0" />
+                        <h2 className="text-[18px] font-bold text-[#13131f] m-0">Totale Vendite Dirette</h2>
+                    </div>
+                    <StatsChart label="vendite" chartType="line" fetchData={fetchBigChart} />
+                </div>
+                <div className="bg-white rounded-lg border border-[#eef0f4] p-4 h-full">
+                    <div className="flex items-center gap-2 mb-4">
+                        <div className="w-1 h-4.5 rounded-full bg-[#f59e0b] shrink-0" />
+                        <h2 className="text-[18px] font-bold text-[#13131f] m-0">Nuovi Affiliati Registrati</h2>
+                    </div>
+                    <StatsChart label="affiliati" chartType="bar" fetchData={fetchBigChart} />
+                </div>
+            </div>
+        </div>
     );
 }

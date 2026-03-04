@@ -57,6 +57,7 @@ export default function DashboardPartner() {
   const [openShareDialog, setOpenShareDialog] = useState(false);
   const [copySuccess, setCopySuccess] = useState(false);
   const [couponToShare, setCouponToShare] = useState("");
+  const [mounted, setMounted] = useState(false);
   const router = useRouter();
   const { token } = useAuth();
   const { profile, isMobile } = useAppContext();
@@ -118,6 +119,8 @@ export default function DashboardPartner() {
     { label: "Agente", field: "agent" },
     { label: "Data di creazione", field: "date" },
   ];
+
+  useEffect(() => { setMounted(true); }, []);
 
   useEffect(() => {
     if (earningsFetch.data) setEarningsPreview(earningsFetch.data);
@@ -222,17 +225,17 @@ export default function DashboardPartner() {
                       flexShrink: 0,
                     }}
                   >
-                    {profile?.name?.charAt(0)}
+                    {mounted ? (profile?.name?.charAt(0) ?? "") : ""}
                   </Avatar>
                   <div>
                     <Typography
                       variant="h6"
                       sx={{ fontWeight: 700, lineHeight: 1.2 }}
                     >
-                      Welcome, {profile?.name}
+                      Welcome, {mounted ? profile?.name : ""}
                     </Typography>
                     <Typography sx={{ color: "#b2b2b2", fontSize: "14px" }}>
-                      {profile?.activity}
+                      {mounted ? profile?.activity : ""}
                     </Typography>
                   </div>
                 </div>

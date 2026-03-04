@@ -876,7 +876,7 @@ function ReelsView({ contents }: { contents: ContentItem[] }) {
               {item.user?.first_name?.[0]}
               {item.user?.last_name?.[0]}
             </Box>
-            <Typography sx={{ color: "rgba(255,255,255,0.8)", fontSize: 12, fontWeight: 600 }}>
+            <Typography sx={{ color: "rgba(255,255,255,0.8)", fontSize: 14, fontWeight: 600 }}>
               @{item.user?.username} · {formatDate(item.created_at)}
             </Typography>
           </Box>
@@ -884,7 +884,7 @@ function ReelsView({ contents }: { contents: ContentItem[] }) {
           <Button
             fullWidth
             variant="contained"
-            startIcon={<Download sx={{ fontSize: 16 }} />}
+            startIcon={<Download sx={{ fontSize: 18 }} />}
             onClick={() => downloadContent(item)}
             sx={{
               bgcolor: COLORS.secondary,
@@ -1014,7 +1014,7 @@ export default function MediaLibrary() {
           <Typography sx={{ fontWeight: 800, fontSize: { xs: 20, md: 24 }, color: COLORS.primary, lineHeight: 1.2 }}>
             Libreria Contenuti
           </Typography>
-          <Typography sx={{ color: COLORS.muted, fontSize: { xs: 12, md: 14 }, mt: 0.3 }}>
+          <Typography sx={{ color: COLORS.muted, fontSize: { xs: 12, md: 16 }, mt: 0.3 }}>
             Sfoglia e scarica i contenuti ufficiali per le tue campagne
           </Typography>
         </Box>
