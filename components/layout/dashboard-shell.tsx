@@ -71,13 +71,10 @@ export default function DashboardShell({
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-  // Prevents hydration mismatch: profile comes from localStorage (client-only).
-  // Server renders empty avatar; client renders the letter — React sees a diff.
-  // mounted ensures both server and client render "" initially, then the letter appears.
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
-  /* Close mobile sidebar on route change */
+  
   useEffect(() => {
     setMobileOpen(false);
   }, [pathname]);
