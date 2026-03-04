@@ -30,14 +30,14 @@ export default function LoginSuccessModal() {
       fullWidth
       PaperProps={{
         sx: {
-          borderRadius: "20px",
+          borderRadius: "8px",
           overflow: "hidden",
           boxShadow: "0 24px 60px rgba(19,19,31,0.18)",
         },
       }}
     >
       {/* Green top accent bar */}
-      <Box sx={{ height: 6, background: "linear-gradient(90deg, #12715b 0%, #1aa382 100%)" }} />
+      {/* <Box sx={{ height: 6, background: "linear-gradient(90deg, #12715b 0%, #1aa382 100%)" }} /> */}
 
       <DialogContent sx={{ px: 4, pt: 4, pb: 4, textAlign: "center", background: "#f6f8fb" }}>
         {/* Icon */}
@@ -59,7 +59,7 @@ export default function LoginSuccessModal() {
         {/* Title */}
         <Typography
           variant="h6"
-          sx={{ fontWeight: 700, color: "#13131f", mb: 1, letterSpacing: "-0.01em" }}
+          sx={{ fontWeight: 700,fontSize: { xs: "24px", lg: "26px" }, color: "#13131f", mb: 1, letterSpacing: "-0.01em" }}
         >
           Bentornato!
         </Typography>
@@ -67,7 +67,12 @@ export default function LoginSuccessModal() {
         {/* Subtitle */}
         <Typography
           variant="body2"
-          sx={{ color: "#6b7280", mb: 3.5, lineHeight: 1.6 }}
+          sx={{
+            color: "#6b7280",
+            mb: 3.5,
+            lineHeight: 1.6,
+            fontSize: { xs: "14px", lg: "16px" },
+          }}
         >
           Accesso effettuato con successo. <br />
           Siamo felici di rivederti nella tua dashboard.
