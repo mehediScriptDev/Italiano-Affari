@@ -19,7 +19,6 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Handle 401 → attempt token refresh, otherwise redirect to sign-in
 api.interceptors.response.use(
   (res) => res,
   async (error) => {
@@ -33,11 +32,9 @@ api.interceptors.response.use(
         original.headers["Authorization"] = `Bearer ${newToken}`;
         return api(original);
       } catch {
-        // Remove stored auth and notify the app to handle logout client-side.
         localStorage.removeItem("token");
         localStorage.removeItem("profile");
         if (typeof window !== "undefined") {
-          // Emit a global event so React can perform a client-side redirect using the router
           window.dispatchEvent(new Event("app:logout"));
         }
       }

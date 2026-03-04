@@ -71,6 +71,11 @@ export default function DashboardShell({
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  // Prevents hydration mismatch: profile comes from localStorage (client-only).
+  // Server renders empty avatar; client renders the letter — React sees a diff.
+  // mounted ensures both server and client render "" initially, then the letter appears.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   /* Close mobile sidebar on route change */
   useEffect(() => {
@@ -145,17 +150,17 @@ export default function DashboardShell({
           onClick={handleProfileOpen}
         >
           <Avatar
-            src={profile?.avatar}
+            src={mounted ? profile?.avatar : undefined}
             sx={{ width: 34, height: 34, fontSize: 14, bgcolor: "#12715b" }}
           >
-            {profile?.name?.charAt(0)}
+            {mounted ? profile?.name?.charAt(0) : ""}
           </Avatar>
           <div className="overflow-hidden whitespace-nowrap">
             <div className="text-sm font-semibold text-white">
-              {profile?.name}
+              {mounted ? profile?.name : ""}
             </div>
             <div className="text-xs text-white/45 truncate">
-              {profile?.email}
+              {mounted ? profile?.email : ""}
             </div>
           </div>
         </div>
@@ -199,7 +204,7 @@ export default function DashboardShell({
         <div className="flex items-center gap-2 ml-auto">
           {/* Avatar */}
           <Avatar
-            src={profile?.avatar}
+            src={mounted ? profile?.avatar : undefined}
             onClick={handleProfileOpen}
             sx={{
               width: 36,
@@ -210,7 +215,7 @@ export default function DashboardShell({
               boxShadow: "0 0 0 2px rgba(0,0,0,0.1)",
             }}
           >
-            {profile?.name?.charAt(0)}
+            {mounted ? profile?.name?.charAt(0) : ""}
           </Avatar>
         </div>
       </div>
@@ -234,15 +239,15 @@ export default function DashboardShell({
         }}
       >
         <div className="flex items-center gap-3 px-4 py-3.5 mb-1">
-          <Avatar src={profile?.avatar} sx={{ width: 36, height: 36 }}>
-            {profile?.name?.charAt(0)}
+          <Avatar src={mounted ? profile?.avatar : undefined} sx={{ width: 36, height: 36 }}>
+            {mounted ? profile?.name?.charAt(0) : ""}
           </Avatar>
           <div>
             <p className="text-sm font-semibold m-0 leading-tight">
-              {profile?.name}
+              {mounted ? profile?.name : ""}
             </p>
             <p className="text-xs text-slate-500 m-0 mt-0.5">
-              {profile?.email}
+              {mounted ? profile?.email : ""}
             </p>
           </div>
         </div>
