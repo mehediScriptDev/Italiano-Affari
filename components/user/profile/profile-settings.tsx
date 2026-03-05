@@ -3,7 +3,7 @@
 import { Button, TextField } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import { Save } from "@mui/icons-material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAppContext } from "@/lib/context/app-context";
 import { updateProfile } from "@/lib/api/partners";
 import { showToast } from "@/lib/utils/notifications";
@@ -11,8 +11,11 @@ import type { UserProfile } from "@/lib/types";
 
 export default function ProfileSettings() {
   const [error, setError] = useState<Record<string, string>>({});
+  const [mounted, setMounted] = useState(false);
   const { profile, setProfile } = useAppContext();
   const [tempProfile, setTempProfile] = useState<UserProfile>(profile ?? {} as UserProfile);
+
+  useEffect(() => { setMounted(true); }, []);
 
   const handleSubmit = () => {
     const hasNoErrors = Object.values(error).every((e) => e === "");
@@ -36,14 +39,14 @@ export default function ProfileSettings() {
       {/* Avatar + save header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div className="flex items-center gap-3.5 min-w-0">
-          <Avatar src={profile?.avatar} className="w-18! h-18! shrink-0 border-2! border-[#e5e7ec]!">
-            {profile?.name?.charAt(0)}
+          <Avatar src={mounted ? (profile?.avatar ?? undefined) : undefined} className="w-18! h-18! shrink-0 border-2! border-[#e5e7ec]!">
+            {mounted ? (profile?.name?.charAt(0) ?? "") : ""}
           </Avatar>
           <div className="min-w-0">
-            <p className="text-base font-semibold tracking-tight text-[#13131f] m-0 truncate">{profile?.name}</p>
-            <p className="text-[13px] text-slate-500 mt-0.5 mb-0 truncate">{profile?.email}</p>
-            <p className="text-xs text-slate-500 mt-1 mb-0">
-              Attività: <span className="font-semibold text-[#333]">{profile?.activity}</span>
+            <p className="text-base lg:text-lg xl:text-xl font-semibold tracking-tight text-[#13131f] m-0 truncate">{mounted ? profile?.name : ""}</p>
+            <p className="text-sm lg:text-base text-slate-500 mt-0.5 mb-0 truncate">{mounted ? profile?.email : ""}</p>
+            <p className="text-xs lg:text-sm text-slate-500  mb-0">
+              Attività: <span className="font-semibold text-[#333]">{mounted ? profile?.activity : ""}</span>
             </p>
           </div>
         </div>
@@ -60,7 +63,7 @@ export default function ProfileSettings() {
 
       <hr className="border-0 border-t border-[#eef0f4] my-3 lg:my-5" />
 
-      <h3 className="text-lg font-bold tracking-tight text-center mb-3">Informazioni Personali</h3>
+      <h3 className="text-lg lg:text-xl font-bold tracking-tight text-center mb-3">Informazioni Personali</h3>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 lg:gap-4 mb-3">
         {([
@@ -74,7 +77,7 @@ export default function ProfileSettings() {
             validate: (v: string) => v && !/^[0-9\s]{5,15}$/.test(v) ? "Inserisci un numero di telefono valido" : "" },
         ] as { key: keyof UserProfile; label: string; placeholder: string; validate: (v: string) => string }[]).map(({ key, label, placeholder, validate }) => (
           <div key={key}>
-            <p className="text-[13px] font-semibold text-[#333] mb-1.5">{label}</p>
+            <p className="text-sm xl:text-base font-semibold text-[#333] mb-1.5">{label}</p>
             <TextField
               fullWidth
               variant="outlined"

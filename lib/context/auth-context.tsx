@@ -90,28 +90,53 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     if (savedToken) {
       axios.defaults.headers.common["Authorization"] = `Bearer ${savedToken}`;
       setTokenState(savedToken);
-      const decoded = jwtDecode<DecodedToken>(savedToken);
-      if (decoded?.user) {
-        const storedProfile = (() => {
-          try { return JSON.parse(localStorage.getItem("profile") ?? "null"); } catch { return null; }
-        })();
-        setProfile({
-          id: decoded.user.id,
-          email: decoded.user.email,
-          name: `${decoded.user.first_name} ${decoded.user.last_name}`,
-          activity: decoded.user.activity,
-          mobile: decoded.user.phone,
-          avatar: decoded.user.avatar,
-          coupon_code: decoded.user.coupon_code,
-          percentage: decoded.user.percentage,
-          secret: storedProfile?.secret ?? "",
-          secure: storedProfile?.secure ?? false,
-          business_info: JSON.parse(decoded.user.info_business),
-        });
+      try {
+        const decoded = jwtDecode<DecodedToken>(savedToken);
+        if (decoded?.user) {
+          // Prefer values the user already edited & saved (storedProfile).
+          // Fall back to JWT claims only when nothing is stored yet.
+          const storedProfile = (() => {
+            try { return JSON.parse(localStorage.getItem("profile") ?? "null"); } catch { return null; }
+          })();
+          const infoBusiness = (() => {
+            // May already be an object (decoded twice) or missing — guard both
+            if (storedProfile?.business_info) return storedProfile.business_info;
+            try { return JSON.parse(decoded.user.info_business ?? "{}"); } catch { return {}; }
+          })();
+          setProfile({
+            id: decoded.user.id,
+            email: storedProfile?.email ?? decoded.user.email,
+            name: storedProfile?.name ?? `${decoded.user.first_name} ${decoded.user.last_name}`,
+            activity: decoded.user.activity,
+            mobile: storedProfile?.mobile ?? decoded.user.phone,
+            avatar: storedProfile?.avatar ?? decoded.user.avatar,
+            coupon_code: decoded.user.coupon_code,
+            percentage: decoded.user.percentage,
+            secret: storedProfile?.secret ?? "",
+            secure: storedProfile?.secure ?? false,
+            business_info: infoBusiness,
+          });
+        }
+      } catch {
+        // Token is corrupt / undecodable — treat as unauthenticated
+        localStorage.removeItem("token");
+        localStorage.removeItem("profile");
+        setTokenState(null);
       }
     }
     setIsHydrated(true);
-  }, [setProfile]);
+
+    // Handle token expiry / forced logout dispatched by the Axios interceptor
+    const handleLogout = () => {
+      setTokenState(null);
+      setProfile(null);
+      try { router.replace("/sign-in"); } catch {
+        if (typeof window !== "undefined") window.location.href = "/sign-in";
+      }
+    };
+    window.addEventListener("app:logout", handleLogout);
+    return () => window.removeEventListener("app:logout", handleLogout);
+  }, [setProfile, router]);
 
   const contextValue = useMemo(
     () => ({ token, isHydrated, setToken, getDecodedToken, updateProfile }),

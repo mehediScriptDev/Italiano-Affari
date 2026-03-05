@@ -48,14 +48,14 @@ export default function TransactionHistory() {
 
   return (
     <div className="dash-card p-7 min-h-120">
-      <h2 className="text-xl font-bold tracking-tight text-center text-[#13131f] mb-1">Storico Pagamenti</h2>
-      <p className="text-sm text-slate-500 text-center mb-3">
+      <h2 className="text-xl lg:text-2xl font-bold tracking-tight text-center text-[#13131f] mb-1">Storico Pagamenti</h2>
+      <p className="text-sm lg:text-base text-slate-500 text-center mb-3">
         In questa sezione puoi visualizzare i tuoi pagamenti, aggiungere un nuovo metodo di pagamento e gestire i tuoi asset
       </p>
 
       <hr className="border-0 border-t border-[#eef0f4] my-5" />
 
-      <h3 className="text-base font-bold text-[#13131f] mb-3">Storico Pagamenti</h3>
+      <h3 className="text-base font-bold lg:text-xl text-[#13131f] mb-3">Storico Pagamenti</h3>
 
       {loading ? (
         <div className="flex justify-center py-8">

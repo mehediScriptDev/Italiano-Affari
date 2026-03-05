@@ -159,22 +159,22 @@ export default function Discounts() {
 
   return (
     <div className="dash-card p-7 min-h-120 relative">
-      <h2 className="text-xl font-bold tracking-tight text-center text-[#13131f] mb-1">Promozioni</h2>
-      <p className="text-sm text-slate-500 text-center mb-3">
+      <h2 className="text-xl lg:text-2xl font-bold tracking-tight text-center text-[#13131f] mb-1">Promozioni</h2>
+      <p className="text-sm lg:text-base text-slate-500 text-center mb-3">
         In questa sezione puoi visualizzare o creare le promozioni per i tuoi clienti
       </p>
 
       <hr className="border-0 border-t border-[#eef0f4] my-5" />
 
       <div className="flex items-center justify-between mb-3">
-        <h3 className="text-base font-bold text-[#13131f] m-0">Codici Promozionali</h3>
+        <h3 className="text-base lg:text-xl font-bold text-[#13131f] m-0">Codici Promozionali</h3>
         <Button variant="contained" color="secondary" onClick={handleOpenDialog} sx={{ borderRadius: "8px", textTransform: "none", fontWeight: 600, px: 2.5 }}>Aggiungi</Button>
         <DiscountDialog open={openDialog} onAdd={handleSubmit} onClose={() => setOpenDialog(false)} freePercentage={freePercentage} />
       </div>
 
       {discounts.length === 0 ? (
         <div className="flex items-center justify-center h-48">
-          <p className="text-slate-400 text-sm">Non hai registrato ancora nessuna promozione</p>
+          <p className="text-slate-400 text-sm lg:text-base">Non hai registrato ancora nessuna promozione</p>
         </div>
       ) : (
         <div className="flex flex-wrap gap-2">{discounts.map(renderDiscount)}</div>

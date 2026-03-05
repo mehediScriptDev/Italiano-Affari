@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Psicopatici Partners — Frontend (Partner Dashboard)
 
-## Getting Started
+This repository contains the Partner Dashboard frontend application for Psicopatici Partners. It's built with Next.js (App Router), React, TypeScript and Material UI.
 
-First, run the development server:
+> IMPORTANT: This project does not accept external contributions. All rights reserved — no external contributions or pull requests will be accepted.
+
+---
+
+## Quick Overview
+
+- Purpose: Partner dashboard to manage media assets, affiliates, coupons, orders, reports and wallet.
+- Main stack: Next.js, React, TypeScript, Material UI, Axios, SWR.
+- API: The frontend communicates with the partner API (see `lib/api/client.ts`).
+
+## Features
+
+- Dashboard with charts and KPIs
+- Media library with preview and downloads
+- Agent & contact management
+- Coupon generation and wallet operations
+- Reports: earnings, sales and affiliates
+
+## Prerequisites
+
+- Node.js 16 or newer
+- npm (or yarn/pnpm)
+
+## Local Development
+
+Install dependencies:
+
+```bash
+cd dani0421_1200_frontend
+npm install
+```
+
+Start dev server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 (or the port printed by the dev server).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Build / Production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+## Notable Files
 
-To learn more about Next.js, take a look at the following resources:
+- `app/` — Next.js App Router pages
+- `components/` — UI components (dashboard, common, data, headers)
+- `lib/api/` — API wrappers and axios client
+- `public/` — static assets, fonts and icon styles
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## No Contributions — All Rights Reserved
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This repository is closed to external contributions. No outside pull requests, forks or patches will be accepted. All rights reserved by the project owner. For access, collaboration requests or questions, contact an authorized maintainer.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+© Psicopatici Partners — All rights reserved.
