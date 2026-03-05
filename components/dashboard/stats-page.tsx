@@ -143,7 +143,7 @@ export default function StatsPage() {
             </div>
 
             {/* Main chart */}
-            <div className="mb-3 bg-white rounded-lg border border-[#eef0f4] p-4">
+            <div className="mb-3 bg-white rounded-sm border border-[#eef0f4] p-4">
                 <div className="flex items-center gap-2 mb-4">
                     <div className="w-1 h-4.5 rounded-full bg-[#6366f1] shrink-0" />
                     <h2 className="text-[18px] font-bold text-[#13131f] m-0">Totale Commissioni Generate</h2>
@@ -153,14 +153,14 @@ export default function StatsPage() {
 
             {/* Bottom two charts */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-1 mb-3">
-                <div className="bg-white rounded-lg border border-[#eef0f4] p-4 h-full">
+                <div className="bg-white rounded-sm border border-[#eef0f4] p-4 h-full">
                     <div className="flex items-center gap-2 mb-4">
                         <div className="w-1 h-4.5 rounded-full bg-[#10b981] shrink-0" />
                         <h2 className="text-[18px] font-bold text-[#13131f] m-0">Totale Vendite Dirette</h2>
                     </div>
                     <StatsChart label="vendite" chartType="line" fetchData={fetchBigChart} />
                 </div>
-                <div className="bg-white rounded-lg border border-[#eef0f4] p-4 h-full">
+                <div className="bg-white rounded-sm border border-[#eef0f4] p-4 h-full">
                     <div className="flex items-center gap-2 mb-4">
                         <div className="w-1 h-4.5 rounded-full bg-[#f59e0b] shrink-0" />
                         <h2 className="text-[18px] font-bold text-[#13131f] m-0">Nuovi Affiliati Registrati</h2>
