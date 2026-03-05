@@ -49,8 +49,6 @@ npm run build
 npm start
 ```
 
-
-
 ## Notable Files
 
 - `app/` — Next.js App Router pages
