@@ -16,7 +16,7 @@ import {
     Tooltip
 } from 'chart.js';
 import StatsChart from "@/components/common/stats-chart";
-import {AttachMoney, Handshake, ShoppingBag} from "@mui/icons-material";
+import {EuroSymbol, Handshake, ShoppingBag} from "@mui/icons-material";
 import ChartPreview from "@/components/common/chart-preview";
 import {fetchAffiliates, fetchEarnings, fetchSales} from "@/lib/api/partners";
 
@@ -130,7 +130,7 @@ export default function StatsPage() {
                 />
                 <ChartPreview
                     label="Guadagni Maturati"
-                    icon={<AttachMoney style={{ fontSize: '20px' }} />}
+                    icon={<EuroSymbol style={{ fontSize: '20px' }} />}
                     obj={chartsPreview.earnings}
                     iconBg="#10b981"
                 />

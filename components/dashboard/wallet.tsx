@@ -5,7 +5,7 @@ import {
   Button, IconButton,
   Dialog, DialogTitle, DialogContent, DialogActions, Slider, CircularProgress,
 } from "@mui/material";
-import { Delete, MonetizationOn, Savings, MoneyOff } from "@mui/icons-material";
+import { Delete, EuroSymbol, Savings, MoneyOff } from "@mui/icons-material";
 import ChartPreview from "@/components/common/chart-preview";
 import DataTable from "@/components/data/data-table";
 import { getAllCredits, generateCoupon, getCoupons, deleteCoupon } from "@/lib/api/partners";
@@ -141,7 +141,7 @@ export default function Wallet() {
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-1 mb-3 lg:mb-6">
           <ChartPreview label="Saldo attuale disponibile" icon={<Savings style={{ color: "#13131f", fontSize: "22px" }} />} obj={chartsPreview.sales} />
           <ChartPreview label="Saldo utilizzato" icon={<MoneyOff style={{ color: "#13131f", fontSize: "22px" }} />} obj={chartsPreview.earnings} />
-          <ChartPreview label="Saldo totale" icon={<MonetizationOn style={{ color: "#13131f", fontSize: "22px" }} />} obj={chartsPreview.affiliates} />
+          <ChartPreview label="Saldo totale" icon={<EuroSymbol style={{ color: "#13131f", fontSize: "22px" }} />} obj={chartsPreview.affiliates} />
         </div>
 
         {/* Coupon table */}

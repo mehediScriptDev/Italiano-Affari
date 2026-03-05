@@ -19,7 +19,7 @@ import { useAppContext } from "@/lib/context/app-context";
 import PaymentAssets from "@/components/user/profile/payment-assets";
 import Avatar from "@mui/material/Avatar";
 import {
-  AttachMoney,
+  EuroSymbol,
   Close,
   ContentCopyOutlined,
   ContentCopy,
@@ -429,7 +429,7 @@ export default function DashboardPartner() {
               <ChartPreview
                 label={"Guadagno Netto"}
                 icon={
-                  <AttachMoney style={{ color: "white", fontSize: "24px" }} />
+                  <EuroSymbol style={{ color: "white", fontSize: "24px" }} />
                 }
                 obj={earningsPreview}
                 iconBg="#12715b"

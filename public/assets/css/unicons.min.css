@@ -530,7 +530,13 @@
   content: "\e963";
 }
 .unicon-currency-dollar:before {
-  content: "\e964";
+  content: "€";
+  font-family: inherit;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
 }
 .unicon-currency:before {
   content: "\e965";
