@@ -137,16 +137,32 @@ const formatDate = (d: string) => {
 const countActiveFilters = (f: Filters) =>
   [f.tag, f.category, f.gender, f.mediaType].filter(Boolean).length;
 
-async function downloadContent(item: ContentItem) {
+async function downloadContent(
+  item: ContentItem,
+  onProgress?: (pct: number) => void,
+) {
   try {
-    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
-    const headers: Record<string, string> = {};
-    if (token) headers["Authorization"] = `Bearer ${token}`;
-
-    const res = await fetch(item.canva_url, { headers });
+    const res = await fetch(item.canva_url);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
-    const blob = await res.blob();
+    const contentLength = res.headers.get("Content-Length");
+    const total = contentLength ? parseInt(contentLength, 10) : 0;
+    let received = 0;
+
+    const reader = res.body!.getReader();
+    const chunks: Uint8Array[] = [];
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      chunks.push(value);
+      received += value.length;
+      if (total > 0 && onProgress) {
+        onProgress(Math.min(99, Math.round((received / total) * 100)));
+      }
+    }
+
+    const blob = new Blob(chunks as BlobPart[], { type: res.headers.get("Content-Type") || "" });
     const url = URL.createObjectURL(blob);
     const ext = blob.type.split("/")[1]?.split("+")[0] ?? "";
     const filename = item.title.includes(".") ? item.title : `${item.title}.${ext}`;
@@ -159,8 +175,10 @@ async function downloadContent(item: ContentItem) {
     anchor.remove();
     URL.revokeObjectURL(url);
 
-    showToast("Download avviato!", "success");
+    onProgress?.(100);
+    showToast("Download completato!", "success");
   } catch {
+    onProgress?.(-1);
     showToast("Errore durante il download", "error");
   }
 }
@@ -359,6 +377,8 @@ function GridCard({ item }: { item: ContentItem }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const [prog, setProg] = useState(0);
+  // null = idle, 0–99 = downloading (% or indeterminate), 100 = done
+  const [dlProgress, setDlProgress] = useState<number | null>(null);
 
   const vid = isVideo(item);
 
@@ -439,8 +459,17 @@ function GridCard({ item }: { item: ContentItem }) {
           fullWidth
           variant="contained"
           size="small"
-          startIcon={<Download sx={{ fontSize: 14 }} />}
-          onClick={() => downloadContent(item)}
+          disabled={dlProgress !== null}
+          startIcon={
+            dlProgress !== null
+              ? <CircularProgress size={13} color="inherit" />
+              : <Download sx={{ fontSize: 14 }} />
+          }
+          onClick={async () => {
+            setDlProgress(0);
+            await downloadContent(item, (pct) => setDlProgress(pct));
+            setTimeout(() => setDlProgress(null), 600);
+          }}
           sx={{
             mt: 0.8,
             bgcolor: COLORS.secondary,
@@ -451,10 +480,14 @@ function GridCard({ item }: { item: ContentItem }) {
             fontSize: 14,
             textTransform: "none",
             "&:hover": { bgcolor: COLORS.secondaryDark, transform: "translateY(-1px)" },
+            "&.Mui-disabled": { bgcolor: COLORS.secondaryDark, color: "#fff", opacity: 0.9 },
             transition: "all 0.18s",
           }}
         >
-          Scarica <span className="hidden xl:block ml-2"> Contenuto</span>
+          {dlProgress !== null && dlProgress >= 0
+            ? (dlProgress > 0 ? `${dlProgress}%` : "Avvio...")
+            : <> Scarica <span className="hidden xl:block ml-2">Contenuto</span></>
+          }
         </Button>
       </Box>
     </Box>
@@ -631,6 +664,7 @@ function ReelsView({ contents }: { contents: ContentItem[] }) {
   const [reelPlaying, setReelPlaying] = useState(true);
   const [reelMuted, setReelMuted] = useState(true);
   const [reelProgress, setReelProgress] = useState(0);
+  const [dlProgress, setDlProgress] = useState<number | null>(null);
 
   useEffect(() => {
     setReelIdx(0);
@@ -884,8 +918,17 @@ function ReelsView({ contents }: { contents: ContentItem[] }) {
           <Button
             fullWidth
             variant="contained"
-            startIcon={<Download sx={{ fontSize: 18 }} />}
-            onClick={() => downloadContent(item)}
+            disabled={dlProgress !== null}
+            startIcon={
+              dlProgress !== null
+                ? <CircularProgress size={16} color="inherit" />
+                : <Download sx={{ fontSize: 18 }} />
+            }
+            onClick={async () => {
+              setDlProgress(0);
+              await downloadContent(item, (pct) => setDlProgress(pct));
+              setTimeout(() => setDlProgress(null), 600);
+            }}
             sx={{
               bgcolor: COLORS.secondary,
               color: "#fff",
@@ -895,11 +938,15 @@ function ReelsView({ contents }: { contents: ContentItem[] }) {
               fontSize: 14,
               textTransform: "none",
               "&:hover": { bgcolor: COLORS.secondaryDark, transform: "translateY(-1px)" },
+              "&.Mui-disabled": { bgcolor: COLORS.secondaryDark, color: "#fff", opacity: 0.9 },
               transition: "all 0.18s",
               backdropFilter: "blur(4px)",
             }}
           >
-            Scarica Contenuto
+            {dlProgress !== null && dlProgress >= 0
+              ? (dlProgress > 0 ? `${dlProgress}%` : "Avvio...")
+              : "Scarica Contenuto"
+            }
           </Button>
         </Box>
       </Box>
