@@ -40,9 +40,9 @@ export default function StatsPage() {
         affiliates:null
     });
 
-    const earningsFetch = useFetch('charts/earnings', () => fetchEarnings().then(r => r.data), { dedupingInterval: 60_000 });
-    const salesFetch = useFetch('charts/sales', () => fetchSales().then(r => r.data), { dedupingInterval: 60_000 });
-    const affiliatesFetch = useFetch('charts/affiliates', () => fetchAffiliates().then(r => r.data), { dedupingInterval: 60_000 });
+    const earningsFetch = useFetch('charts/earnings', () => fetchEarnings().then(r => r?.data ?? null).catch(() => null), { dedupingInterval: 60_000 });
+    const salesFetch = useFetch('charts/sales', () => fetchSales().then(r => r?.data ?? null).catch(() => null), { dedupingInterval: 60_000 });
+    const affiliatesFetch = useFetch('charts/affiliates', () => fetchAffiliates().then(r => r?.data ?? null).catch(() => null), { dedupingInterval: 60_000 });
 
     useEffect(() => {
         setChartsPreview({ sales: salesFetch.data ?? null, earnings: earningsFetch.data ?? null, affiliates: affiliatesFetch.data ?? null });
@@ -97,7 +97,8 @@ export default function StatsPage() {
 
 
         return fetchFunction(startDate, endDate).then((res) => {
-            let labels = Object.keys(res.data.data);
+            const chartData = res?.data?.data ?? {};
+            let labels = Object.keys(chartData);
 
             if(periodType !== "today") {
                 labels = labels.map((label) => {
@@ -110,8 +111,8 @@ export default function StatsPage() {
                 });
             }
 
-            return [{ labels, label: chartType, data: Object.values(res.data.data) as number[] }];
-        });
+            return [{ labels, label: chartType, data: Object.values(chartData) as number[] }];
+        }).catch(() => []);
     }
 
     return (

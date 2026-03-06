@@ -59,19 +59,24 @@ export default function Orders() {
     const endUtc = formatInTimeZone(endDate, tz, "yyyy-MM-dd'T'HH:mm:ssXXX");
 
     fetchLatestOrders(startUtc, endUtc).then((response) => {
+      const rows = response?.data ?? [];
       setOrders(
-        response.data.map((order: Record<string, unknown>) => {
-          const comms = (order.commissions as Commission[]) ?? [];
-          const earnings = comms.reduce((acc, c) => acc + (c.amount || 0), 0);
-          const agent = order.agent as Record<string, string>;
-          const customer = order.customer as Record<string, string>;
-          return {
-            id: order.id as number, name: customer?.name, total: order.amount,
-            earnings, commissions: comms, agent: `${agent.first_name} ${agent.last_name}`,
-            date: new Date(order.created_at as string).toLocaleDateString("it-IT", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" }),
-          };
-        })
+        Array.isArray(rows)
+          ? rows.map((order: Record<string, unknown>) => {
+              const comms = (order.commissions as Commission[]) ?? [];
+              const earnings = comms.reduce((acc, c) => acc + (c.amount || 0), 0);
+              const agent = order.agent as Record<string, string>;
+              const customer = order.customer as Record<string, string>;
+              return {
+                id: order.id as number, name: customer?.name, total: order.amount,
+                earnings, commissions: comms, agent: `${agent?.first_name ?? ''} ${agent?.last_name ?? ''}`,
+                date: new Date(order.created_at as string).toLocaleDateString("it-IT", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" }),
+              } as OrderRow;
+            })
+          : []
       );
+    }).catch(() => {
+      setOrders([]);
     });
   }, [startDate, endDate]);
 
