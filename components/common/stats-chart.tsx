@@ -151,10 +151,16 @@ const StatsChart = ({ label, chartType, fetchData }: StatsChartProps) => {
 
     useEffect(() => {
         setLoading(true);
-        fetchData(label, period, dateRange).then((data) => {
-            setDatasets(data);
-            setLoading(false);
-        });
+        fetchData(label, period, dateRange)
+            .then((data) => {
+                setDatasets(data);
+            })
+            .catch(() => {
+                setDatasets([]);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [period, dateRange]);
 
