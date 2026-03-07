@@ -51,7 +51,7 @@ export default function Orders() {
       ),
     },
     { label: "Agente", field: "agent" },
-    { label: "Data di creazione", field: "date" },
+    { label: "Data di creazione", field: "date" } ,
   ];
 
   useEffect(() => {
