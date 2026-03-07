@@ -36,9 +36,10 @@ export default function Orders() {
           <Tooltip
             title={
               <div>
-                {row.commissions?.filter((c) => c.amount !== 0).map((c, i) => {
-                  const tipo = { direct: "Vendita Diretta", affiliate: "Affiliazione", level2: "Livello 2" }[c.type] ?? "Livello 3+";
-                  return <div key={i}>{tipo}: {c.amount.toFixed(2)}€</div>;
+                {row.commissions?.map((c, i) => {
+                  const tipo: Record<string, string> = { direct: "Vendita Diretta", affiliate: "Affiliazione", level2: "Livello 2" };
+                  const label = tipo[c.type] ?? c.type;
+                  return <div key={i}>{label}: {c.amount.toFixed(2)}€</div>;
                 })}
               </div>
             }
