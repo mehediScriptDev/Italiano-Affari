@@ -498,11 +498,20 @@ function RegistrationComplete({ formData }: { formData: FormData }) {
       </Typography>
       <Typography variant="body1" sx={{ mb: 2 }}>
         Grazie <b>{formData.firstName}</b> per esserti registrato.<br />
-        Attualmente stiamo verificando le informazioni del tuo account, riceverai una risposta entro 24h via e-mail.
+        Ora puoi effettuare il login
       </Typography>
-      <Typography variant="body1">
+      <Typography variant="body1" sx={{ mb: 4 }}>
         Attività selezionata: <strong>{formData.activity}</strong>
       </Typography>
+      <Button
+        variant="contained"
+        color="secondary"
+        size="large"
+        href="/sign-in"
+        sx={{ py: 1.5, px: 5 }}
+      >
+        Vai al Login
+      </Button>
     </Box>
   );
 }
