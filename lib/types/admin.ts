@@ -1,4 +1,4 @@
-// ─── Admin API Types ─────────
+// ─── Admin API Types ─── 
 
 export interface AdminAgent {
   id: number;
@@ -65,14 +65,18 @@ export interface AdminAgentsResponse {
   };
 }
 
-// ─── Content Types ────────────────────────────────────────────────────────
+// ─── Content Types ───
 
 export interface AdminContent {
   id: number;
   title: string;
   description?: string;
-  file_url: string;
+  file_path: string;
   gender: "male" | "female" | "all";
+  // API returns nested arrays (same shape as partner media library)
+  categories?: { id: number; name: string }[];
+  filters?: { id: number; name: string }[];
+  // flat fallbacks (some endpoints may return these instead)
   category?: string;
   tags?: string[];
   user_id: number;

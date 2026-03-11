@@ -105,3 +105,23 @@ export async function deleteContent(id: number): Promise<void> {
   const res = await fetch(`${BASE}/contents/${id}`, { method: "DELETE" });
   await handleResponse<{ message: string }>(res);
 }
+
+// ─── Meta (categories & filters for form dropdowns) ─────────────────────────
+
+export async function fetchAdminCategories(): Promise<{ id: number; name: string }[]> {
+  const res = await fetch(`${BASE}/categories`, { cache: "no-store" });
+  if (!res.ok) return [];
+  const data = await res.json().catch(() => []);
+  if (Array.isArray(data)) return data;
+  if (Array.isArray(data?.data)) return data.data;
+  return [];
+}
+
+export async function fetchAdminFilters(): Promise<{ id: number; name: string }[]> {
+  const res = await fetch(`${BASE}/filters`, { cache: "no-store" });
+  if (!res.ok) return [];
+  const data = await res.json().catch(() => []);
+  if (Array.isArray(data)) return data;
+  if (Array.isArray(data?.data)) return data.data;
+  return [];
+}

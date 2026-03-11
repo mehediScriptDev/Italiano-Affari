@@ -25,6 +25,7 @@ import {
   Tooltip,
   Avatar,
   Pagination,
+  Autocomplete,
 } from "@mui/material";
 import {
   Add,
@@ -59,6 +60,88 @@ const EMPTY_FORM = {
 
 type FormMode = "create" | "edit";
 
+// ── Drag & Drop Upload Zone ────────────────────────────────────────────────
+function DropZone({
+  file,
+  mode,
+  fileInputRef,
+  onFileChange,
+}: {
+  file: File | null;
+  mode: FormMode;
+  fileInputRef: React.RefObject<HTMLInputElement | null>;
+  onFileChange: (f: File) => void;
+}) {
+  const [dragging, setDragging] = useState(false);
+
+  const handleDrop = useCallback(
+    (e: React.DragEvent<HTMLDivElement>) => {
+      e.preventDefault();
+      setDragging(false);
+      const dropped = e.dataTransfer.files?.[0];
+      if (dropped) onFileChange(dropped);
+    },
+    [onFileChange]
+  );
+
+  return (
+    <Box>
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*,video/*"
+        style={{ display: "none" }}
+        onChange={(e) => { const f = e.target.files?.[0]; if (f) onFileChange(f); }}
+      />
+      <Box
+        onClick={() => fileInputRef.current?.click()}
+        onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
+        onDragLeave={() => setDragging(false)}
+        onDrop={handleDrop}
+        sx={{
+          border: `2px dashed ${dragging ? "#12715b" : "#cbd5e1"}`,
+          borderRadius: "12px",
+          bgcolor: dragging ? "#f0fdf4" : "#fafbfc",
+          cursor: "pointer",
+          py: 3.5,
+          px: 2,
+          textAlign: "center",
+          transition: "border-color 0.2s, background-color 0.2s",
+          "&:hover": { borderColor: "#12715b", bgcolor: "#f0fdf4" },
+        }}
+      >
+        {file ? (
+          <>
+            <CloudUpload sx={{ fontSize: 36, color: "#12715b", mb: 0.5 }} />
+            <Typography sx={{ fontWeight: 600, fontSize: 13, color: "#12715b" }}>
+              {file.name}
+            </Typography>
+            <Typography sx={{ fontSize: 12, color: "#94a3b8", mt: 0.25 }}>
+              {(file.size / 1024).toFixed(1)} KB — clicca per cambiare
+            </Typography>
+          </>
+        ) : (
+          <>
+            <CloudUpload sx={{ fontSize: 36, color: "#94a3b8", mb: 0.5 }} />
+            <Typography sx={{ fontSize: 13, color: "#475569" }}>
+              <Box component="span" sx={{ fontWeight: 700, color: "#12715b" }}>
+                Browse your device
+              </Box>
+              {" "}or{" "}
+              <Box component="span" sx={{ fontWeight: 700, color: "#12715b" }}>
+                drag &apos;n drop
+              </Box>
+            </Typography>
+            <Typography sx={{ fontSize: 12, color: "#94a3b8", mt: 0.5 }}>
+              {mode === "edit" ? "Optional — replaces existing file" : "Maximum file size is 2 MB"}
+            </Typography>
+          </>
+        )}
+      </Box>
+    </Box>
+  );
+}
+
 export default function AdminContentsPage() {
   const [contents, setContents] = useState<AdminContent[]>([]);
   const [loading, setLoading] = useState(true);
@@ -73,6 +156,27 @@ export default function AdminContentsPage() {
   const [saving, setSaving] = useState(false);
   const [formError, setFormError] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [categoryOptions, setCategoryOptions] = useState<string[]>([]);
+  const [filterOptions, setFilterOptions] = useState<string[]>([]);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+
+  // Extract available category + tag names from all loaded content items
+  const extractOptions = useCallback((items: AdminContent[]) => {
+    const catSet = new Set<string>();
+    const tagSet = new Set<string>();
+    items.forEach((item) => {
+      item.categories?.forEach((c) => catSet.add(c.name));
+      item.filters?.forEach((f) => tagSet.add(f.name));
+    });
+    setCategoryOptions((prev) => {
+      const merged = new Set([...prev, ...catSet]);
+      return [...merged].sort();
+    });
+    setFilterOptions((prev) => {
+      const merged = new Set([...prev, ...tagSet]);
+      return [...merged].sort();
+    });
+  }, []);
 
   const load = async (p = page) => {
     setLoading(true);
@@ -80,6 +184,7 @@ export default function AdminContentsPage() {
       const res = await fetchAdminContents(p, 20);
       setContents(res.data);
       setLastPage(res.last_page);
+      extractOptions(res.data);
     } catch (e) {
       console.error(e);
     } finally {
@@ -87,11 +192,29 @@ export default function AdminContentsPage() {
     }
   };
 
+  // Build full option lists by scanning all pages once on mount
+  useEffect(() => {
+    (async () => {
+      try {
+        const all: AdminContent[] = [];
+        let pg = 1;
+        while (pg <= 10) { // safety cap
+          const res = await fetchAdminContents(pg, 100);
+          all.push(...res.data);
+          if (pg >= res.last_page) break;
+          pg++;
+        }
+        extractOptions(all);
+      } catch { /* ignore */ }
+    })();
+  }, [extractOptions]);
+
   useEffect(() => { load(page); }, [page]);
 
   const openCreate = () => {
     setMode("create");
     setForm(EMPTY_FORM);
+    setSelectedTags([]);
     setFile(null);
     setFormError("");
     setSelectedId(null);
@@ -101,23 +224,17 @@ export default function AdminContentsPage() {
   const openEdit = (c: AdminContent) => {
     setMode("edit");
     setSelectedId(c.id);
-    // API returns nested categories/filters; fall back to flat fields if present
-    const catName =
-      (c as unknown as { categories?: { name: string }[] }).categories?.[0]?.name ??
-      c.category ?? "";
-    const tagNames = (
-      (c as unknown as { filters?: { name: string }[] }).filters?.map((f) => f.name) ??
-      c.tags ??
-      []
-    ).join(", ");
+    const catName = c.categories?.[0]?.name ?? c.category ?? "";
+    const tagArr = c.filters?.map((f) => f.name) ?? c.tags ?? [];
     setForm({
       user_id: String(c.user_id),
       title: c.title,
       description: c.description ?? "",
       gender: c.gender,
       category: catName,
-      tags: tagNames,
+      tags: tagArr.join(", "),
     });
+    setSelectedTags(tagArr);
     setFile(null);
     setFormError("");
     setDialogOpen(true);
@@ -141,10 +258,7 @@ export default function AdminContentsPage() {
 
     setSaving(true);
     try {
-      const tags = form.tags
-        .split(",")
-        .map((t) => t.trim())
-        .filter(Boolean);
+      const tags = selectedTags;
 
       if (mode === "create") {
         const payload: CreateContentPayload = {
@@ -156,7 +270,9 @@ export default function AdminContentsPage() {
           category: form.category,
           tags,
         };
-        await createContent(payload);
+        const created = await createContent(payload);
+        // Use the API response directly (includes eager-loaded categories/filters)
+        setContents((prev) => [created, ...prev]);
       } else if (selectedId !== null) {
         const payload: UpdateContentPayload = {
           title: form.title,
@@ -166,11 +282,12 @@ export default function AdminContentsPage() {
           tags,
           file: file ?? undefined,
         };
-        await updateContent(selectedId, payload);
+        const updated = await updateContent(selectedId, payload);
+        // Replace the item in the list with the full response
+        setContents((prev) => prev.map((c) => (c.id === selectedId ? updated : c)));
       }
 
       setDialogOpen(false);
-      await load(page);
     } catch (e: unknown) {
       setFormError(e instanceof Error ? e.message : "Errore durante il salvataggio.");
     } finally {
@@ -183,8 +300,8 @@ export default function AdminContentsPage() {
     setSaving(true);
     try {
       await deleteContent(selectedId);
+      setContents((prev) => prev.filter((c) => c.id !== selectedId));
       setDeleteDialogOpen(false);
-      await load(page);
     } catch (e) {
       console.error(e);
     } finally {
@@ -221,7 +338,15 @@ export default function AdminContentsPage() {
         {/* Table */}
         <div className="dash-card p-5 mb-6">
           <TableContainer component={Paper} sx={{ borderRadius: "8px", boxShadow: "none", border: "1px solid #e5e7ec" }}>
-            <Table>
+            <Table sx={{ tableLayout: "fixed", minWidth: 700 }}>
+              <colgroup>
+                <col style={{ width: "72px" }} />
+                <col style={{ width: "30%" }} />
+                <col style={{ width: "18%" }} />
+                <col style={{ width: "10%" }} />
+                <col style={{ width: "22%" }} />
+                <col style={{ width: "10%" }} />
+              </colgroup>
               <TableHead sx={{ backgroundColor: "#f8f9fb" }}>
                 <TableRow>
                   {["Anteprima", "Titolo", "Categoria", "Genere", "Tag", "Azioni"].map((label) => (
@@ -251,27 +376,27 @@ export default function AdminContentsPage() {
                 ) : (
                   contents.map((c) => (
                     <TableRow key={c.id} sx={{ transition: "background-color 0.15s ease", "&:hover": { backgroundColor: "#f8f9fb" }, "&:last-child td": { borderBottom: 0 } }}>
-                      <TableCell sx={{ borderBottom: "1px solid #eef0f4", py: 1.5, fontSize: 14, color: "#333" }}>
+                      <TableCell sx={{ borderBottom: "1px solid #eef0f4", py: 1.5 }}>
                         <Avatar
-                          src={c.file_url}
+                          src={c.file_path}
                           variant="rounded"
-                          sx={{ width: 52, height: 52, borderRadius: "8px", bgcolor: "#f6f8fb" }}
+                          sx={{ width: 44, height: 44, borderRadius: "8px", bgcolor: "#f6f8fb" }}
                         >
-                          <PhotoLibrary sx={{ color: "#ccc" }} />
+                          <PhotoLibrary sx={{ color: "#ccc", fontSize: 20 }} />
                         </Avatar>
                       </TableCell>
-                      <TableCell sx={{ borderBottom: "1px solid #eef0f4", py: 1.5, fontSize: 14, color: "#333" }}>
-                        <Typography sx={{ fontWeight: 600, fontSize: 14, color: "#333" }} noWrap>
+                      <TableCell sx={{ borderBottom: "1px solid #eef0f4", py: 1.5, fontSize: 14, color: "#333", overflow: "hidden" }}>
+                        <Typography sx={{ fontWeight: 600, fontSize: 14, color: "#333", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                           {c.title}
                         </Typography>
                         {c.description && (
-                          <Typography sx={{ fontSize: 12, color: "#94a3b8", mt: 0.25 }} noWrap>
+                          <Typography sx={{ fontSize: 12, color: "#94a3b8", mt: 0.25, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                             {c.description}
                           </Typography>
                         )}
                       </TableCell>
                       <TableCell sx={{ borderBottom: "1px solid #eef0f4", py: 1.5, fontSize: 14, color: "#333" }}>
-                        {(c as unknown as { categories?: { name: string }[] }).categories?.[0]?.name ?? c.category ?? "—"}
+                        {c.categories?.[0]?.name ?? c.category ?? "—"}
                       </TableCell>
                       <TableCell sx={{ borderBottom: "1px solid #eef0f4", py: 1.5 }}>
                         <Chip label={c.gender} size="small" sx={{ ...genderColor(c.gender), fontWeight: 600, fontSize: 11 }} />
@@ -279,16 +404,12 @@ export default function AdminContentsPage() {
                       <TableCell sx={{ borderBottom: "1px solid #eef0f4", py: 1.5, fontSize: 14, color: "#333" }}>
                         <Box display="flex" gap={0.5} flexWrap="wrap" maxWidth={200}>
                           {(
-                            (c as unknown as { filters?: { name: string }[] }).filters?.map((f) => f.name) ??
-                            c.tags ?? []
+                            c.filters?.map((f) => f.name) ?? c.tags ?? []
                           ).slice(0, 3).map((t) => (
                             <Chip key={t} label={t} size="small" sx={{ bgcolor: "#f1f5f9", color: "#475569", fontSize: 11 }} />
                           ))}
-                          {(
-                            (c as unknown as { filters?: { name: string }[] }).filters?.length ??
-                            c.tags?.length ?? 0
-                          ) > 3 && (
-                            <Chip label={`+${((c as unknown as { filters?: { name: string }[] }).filters?.length ?? c.tags?.length ?? 0) - 3}`} size="small" sx={{ bgcolor: "#f1f5f9", fontSize: 11 }} />
+                          {(c.filters?.length ?? c.tags?.length ?? 0) > 3 && (
+                            <Chip label={`+${(c.filters?.length ?? c.tags?.length ?? 0) - 3}`} size="small" sx={{ bgcolor: "#f1f5f9", fontSize: 11 }} />
                           )}
                         </Box>
                       </TableCell>
@@ -397,22 +518,44 @@ export default function AdminContentsPage() {
               ))}
             </TextField>
 
-            <TextField
-              label="Categoria *"
-              size="small"
+            <Autocomplete
+              freeSolo
+              options={categoryOptions}
               value={form.category}
-              onChange={(e) => setForm((f) => ({ ...f, category: e.target.value }))}
-              helperText="Nome esatto della categoria"
-              sx={{ "& .MuiOutlinedInput-root": { borderRadius: "8px" } }}
+              onInputChange={(_, val) => setForm((f) => ({ ...f, category: val }))}
+              onChange={(_, val) => setForm((f) => ({ ...f, category: val ?? "" }))}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Categoria *"
+                  size="small"
+                  helperText={categoryOptions.length ? "Scegli o digita il nome esatto" : "Digita il nome esatto della categoria"}
+                  sx={{ "& .MuiOutlinedInput-root": { borderRadius: "8px" } }}
+                />
+              )}
             />
 
-            <TextField
-              label="Tag"
-              size="small"
-              value={form.tags}
-              onChange={(e) => setForm((f) => ({ ...f, tags: e.target.value }))}
-              helperText="Separati da virgola — es: Tag1, Tag2"
-              sx={{ "& .MuiOutlinedInput-root": { borderRadius: "8px" } }}
+            <Autocomplete
+              multiple
+              freeSolo
+              options={filterOptions}
+              value={selectedTags}
+              onChange={(_, val) => setSelectedTags(val as string[])}
+              renderTags={(value, getTagProps) =>
+                value.map((option, index) => {
+                  const { key, ...tagProps } = getTagProps({ index });
+                  return <Chip key={key} label={option} size="small" {...tagProps} sx={{ bgcolor: "#f1f5f9", color: "#475569" }} />;
+                })
+              }
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Tag"
+                  size="small"
+                  helperText={filterOptions.length ? "Scegli o digita e premi Invio" : "Digita e premi Invio per aggiungere"}
+                  sx={{ "& .MuiOutlinedInput-root": { borderRadius: "8px" } }}
+                />
+              )}
             />
 
             {/* File upload — drag & drop zone */}
