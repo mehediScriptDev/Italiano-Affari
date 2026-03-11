@@ -75,8 +75,8 @@ export default function AdminDashboardPage() {
   }, [searchInput]);
 
   const agents = data?.data ?? [];
-  const total = data?.meta?.total ?? 0;
-  const totalPages = Math.max(1, Math.ceil(total / rowsPerPage));
+  const total = data?.pagination?.total ?? 0;
+  const totalPages = Math.max(1, data?.pagination?.last_page ?? 1);
   const totalCommissions = agents.reduce((s, a) => s + (a.total_commissions ?? 0), 0);
   const totalOrders = agents.reduce((s, a) => s + (a.orders_count ?? 0), 0);
 

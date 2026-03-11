@@ -21,18 +21,20 @@ export async function GET() {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const url = `${ADMIN_API}/categories`;
+  const url = `${ADMIN_API}/content-categories?per_page=100`;
   try {
     const resp = await fetch(url, {
       headers: adminAuthHeaders(),
       cache: "no-store",
     });
     const text = await resp.text();
-    let data: unknown;
-    try { data = JSON.parse(text); } catch {
+    let parsed: unknown;
+    try { parsed = JSON.parse(text); } catch {
       return NextResponse.json([], { status: 200 });
     }
-    return NextResponse.json(data, { status: resp.status });
+    // Backend returns paginated { data: [...] } — extract the data array
+    const arr = (parsed as { data?: unknown[] })?.data ?? (Array.isArray(parsed) ? parsed : []);
+    return NextResponse.json(arr, { status: 200 });
   } catch {
     return NextResponse.json([], { status: 200 });
   }

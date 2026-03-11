@@ -57,7 +57,7 @@ export interface AdminCommissionDetail {
 
 export interface AdminAgentsResponse {
   data: AdminAgent[];
-  meta: {
+  pagination: {
     current_page: number;
     last_page: number;
     per_page: number;

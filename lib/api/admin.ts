@@ -112,6 +112,7 @@ export async function fetchAdminCategories(): Promise<{ id: number; name: string
   const res = await fetch(`${BASE}/categories`, { cache: "no-store" });
   if (!res.ok) return [];
   const data = await res.json().catch(() => []);
+  // Proxy already extracts the data array
   if (Array.isArray(data)) return data;
   if (Array.isArray(data?.data)) return data.data;
   return [];
