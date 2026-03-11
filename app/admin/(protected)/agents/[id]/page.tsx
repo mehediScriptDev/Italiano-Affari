@@ -16,6 +16,7 @@ import {
   CircularProgress,
   Avatar,
   Button,
+  IconButton,
   Tabs,
   Tab,
   useMediaQuery,
@@ -25,12 +26,13 @@ import {
   Groups,
   ShoppingCart,
   EuroSymbol,
+  OpenInNew,
   Person,
   ReceiptLong,
   AccountBalanceWallet,
 } from "@mui/icons-material";
-import { fetchAdminAgentDetail } from "@/lib/api/admin";
-import type { AdminAgentDetail } from "@/lib/types/admin";
+import { fetchAdminAgentDetail, fetchAdminAgents } from "@/lib/api/admin";
+import type { AdminAgent, AdminAgentDetail } from "@/lib/types/admin";
 
 interface TabPanelProps {
   value: number;
@@ -48,12 +50,19 @@ export default function AgentDetailPage() {
   const [data, setData] = useState<AdminAgentDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState(0);
+  const [otherAgents, setOtherAgents] = useState<AdminAgent[]>([]);
 
   useEffect(() => {
     fetchAdminAgentDetail(Number(id))
       .then(setData)
       .catch(console.error)
       .finally(() => setLoading(false));
+  }, [id]);
+
+  useEffect(() => {
+    fetchAdminAgents({ per_page: 50 })
+      .then((res) => setOtherAgents(res.data.filter((a) => a.id !== Number(id))))
+      .catch(console.error);
   }, [id]);
 
   if (loading) {
@@ -238,7 +247,7 @@ export default function AgentDetailPage() {
                       <TableRow>
                         {["ID", "Nome", "Email", "Data registrazione"].map((label) => (
                           <TableCell key={label} sx={{ borderBottom: "1px solid #eef0f4", py: 1.5 }}>
-                            <span className="text-[14px] whitespace-nowrap font-semibold text-slate-500 uppercase tracking-wide">{label}</span>
+                            <span className="text-[15px] whitespace-nowrap font-semibold text-slate-500 uppercase tracking-wide">{label}</span>
                           </TableCell>
                         ))}
                       </TableRow>
@@ -254,10 +263,10 @@ export default function AgentDetailPage() {
                         customers.map((c) => (
                           <TableRow key={c.id} sx={{ transition: "background-color 0.15s ease", "&:hover": { backgroundColor: "#f8f9fb" }, "&:last-child td": { borderBottom: 0 } }}>
                             <TableCell sx={{ borderBottom: "1px solid #eef0f4", py: 1.5, fontSize: 14, color: "#94a3b8" }}>{c.id}</TableCell>
-                            <TableCell sx={{ borderBottom: "1px solid #eef0f4", py: 1.5, fontSize: 14, color: "#333", fontWeight: 500 }}>
+                            <TableCell sx={{ borderBottom: "1px solid #eef0f4", py: 1.5, fontSize: 15, color: "#333", fontWeight: 500 }}>
                               {c.name ?? `${c.first_name ?? ""} ${c.last_name ?? ""}`.trim()}
                             </TableCell>
-                            <TableCell sx={{ borderBottom: "1px solid #eef0f4", py: 1.5, fontSize: 14, color: "#333" }}>{c.email}</TableCell>
+                            <TableCell sx={{ borderBottom: "1px solid #eef0f4", py: 1.5, fontSize: 15, color: "#333" }}>{c.email}</TableCell>
                             <TableCell sx={{ borderBottom: "1px solid #eef0f4", py: 1.5, fontSize: 14, color: "#333" }}>
                               {c.created_at ? new Date(c.created_at).toLocaleDateString("it-IT") : "—"}
                             </TableCell>
@@ -428,6 +437,134 @@ export default function AgentDetailPage() {
               )}
             </TabPanel>
           </Box>
+        </div>
+
+        {/* ── Altri Agenti ── */}
+        <div className="mb-6">
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
+            <div>
+              <h2 style={{ fontSize: 18, fontWeight: 700, color: "#1e293b", margin: 0 }}>Altri Agenti</h2>
+              <p style={{ fontSize: 13, color: "#94a3b8", margin: "2px 0 0" }}>Naviga rapidamente tra gli altri agenti</p>
+            </div>
+            {/* <Button
+              variant="outlined"
+              size="small"
+              onClick={() => router.push("/admin/dashboard")}
+              sx={{ textTransform: "none", fontSize: 13, fontWeight: 600, borderColor: "#e5e7ec", color: "#64748b", borderRadius: "8px", "&:hover": { borderColor: "#12715b", color: "#12715b", bgcolor: "transparent" } }}
+            >
+              Vedi tutti
+            </Button> */}
+          </div>
+
+          {otherAgents.length === 0 ? null : isMobile ? (
+            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              {otherAgents.slice(0, 6).map((a) => (
+                <div
+                  key={a.id}
+                  onClick={() => router.push(`/admin/agents/${a.id}`)}
+                  style={{
+                    background: "#fff",
+                    borderRadius: 14,
+                    padding: "16px 18px",
+                    boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
+                    borderLeft: "4px solid #12715b",
+                    cursor: "pointer",
+                    transition: "box-shadow 0.2s",
+                  }}
+                >
+                  {/* Top: name + open icon */}
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
+                    <span style={{ fontSize: 16, fontWeight: 700, color: "#1e293b", lineHeight: 1.3 }}>
+                      {a.first_name} {a.last_name}
+                    </span>
+                    <IconButton size="small" onClick={(e) => { e.stopPropagation(); router.push(`/admin/agents/${a.id}`); }} sx={{ color: "#64748b" }}>
+                      <OpenInNew sx={{ fontSize: 18 }} />
+                    </IconButton>
+                  </div>
+
+                  {/* Email */}
+                  <span style={{ fontSize: 13, color: "#64748b", wordBreak: "break-word", lineHeight: 1.4 }}>
+                    {a.email}
+                  </span>
+
+                  {/* Divider */}
+                  <div style={{ height: 1, background: "#f1f5f9", margin: "12px 0" }} />
+
+                  {/* Stats row */}
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <div style={{ display: "flex", gap: 20 }}>
+                      <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                        <span style={{ fontSize: 11, fontWeight: 600, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.04em" }}>Clienti</span>
+                        <span style={{ fontSize: 15, fontWeight: 600, color: "#1e293b" }}>{a.customers_count ?? 0}</span>
+                      </div>
+                      <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                        <span style={{ fontSize: 11, fontWeight: 600, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.04em" }}>Ordini</span>
+                        <span style={{ fontSize: 15, fontWeight: 600, color: "#1e293b" }}>{a.orders_count ?? 0}</span>
+                      </div>
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 2 }}>
+                      <span style={{ fontSize: 11, fontWeight: 600, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.04em" }}>Commissioni</span>
+                      <span style={{ fontSize: 16, fontWeight: 700, color: "#12715b" }}>€ {(a.total_commissions ?? 0).toFixed(2)}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="dash-card" style={{ overflow: "hidden" }}>
+              <TableContainer component={Paper} sx={{ borderRadius: "8px", boxShadow: "none" }}>
+                <Table>
+                  <TableHead sx={{ backgroundColor: "#f8f9fb" }}>
+                    <TableRow>
+                      {["Agente", "Email", "Clienti", "Ordini", "Commissioni", "Azioni"].map((label) => (
+                        <TableCell key={label} sx={{ borderBottom: "1px solid #eef0f4", py: 1.5 }}>
+                          <span className="text-[13px] whitespace-nowrap font-semibold text-slate-500 uppercase tracking-wide">{label}</span>
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {otherAgents.slice(0, 8).map((a) => (
+                      <TableRow
+                        key={a.id}
+                        sx={{ cursor: "pointer", transition: "background-color 0.15s ease", "&:hover": { backgroundColor: "#f8f9fb" }, "&:last-child td": { borderBottom: 0 } }}
+                        onClick={() => router.push(`/admin/agents/${a.id}`)}
+                      >
+                        <TableCell sx={{ borderBottom: "1px solid #eef0f4", py: 1.5 }}>
+                          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                            <Avatar sx={{ width: 32, height: 32, bgcolor: "#12715b", fontSize: 12 }}>
+                              {a.first_name?.charAt(0)}{a.last_name?.charAt(0)}
+                            </Avatar>
+                            <span style={{ fontSize: 14, fontWeight: 600, color: "#1e293b" }}>{a.first_name} {a.last_name}</span>
+                          </div>
+                        </TableCell>
+                        <TableCell sx={{ borderBottom: "1px solid #eef0f4", py: 1.5, fontSize: 14, color: "#64748b" }}>{a.email}</TableCell>
+                        <TableCell sx={{ borderBottom: "1px solid #eef0f4", py: 1.5 }}>
+                          <Chip label={a.customers_count ?? 0} size="small" sx={{ bgcolor: "#f0fdf4", color: "#12715b", fontWeight: 700, fontSize: 12 }} />
+                        </TableCell>
+                        <TableCell sx={{ borderBottom: "1px solid #eef0f4", py: 1.5 }}>
+                          <Chip label={a.orders_count ?? 0} size="small" sx={{ bgcolor: "#ede9fe", color: "#6366f1", fontWeight: 700, fontSize: 12 }} />
+                        </TableCell>
+                        <TableCell sx={{ borderBottom: "1px solid #eef0f4", py: 1.5, fontSize: 14, fontWeight: 700, color: "#12715b" }}>
+                          € {(a.total_commissions ?? 0).toFixed(2)}
+                        </TableCell>
+                        <TableCell sx={{ borderBottom: "1px solid #eef0f4", py: 1.5 }}>
+                          <Button
+                            size="small"
+                            variant="outlined"
+                            onClick={(e) => { e.stopPropagation(); router.push(`/admin/agents/${a.id}`); }}
+                            sx={{ textTransform: "none", fontSize: 12, fontWeight: 600, borderColor: "#e5e7ec", color: "#64748b", borderRadius: "8px", minWidth: 80, "&:hover": { borderColor: "#12715b", color: "#12715b", bgcolor: "transparent" } }}
+                          >
+                            Dettagli
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </div>
+          )}
         </div>
       </div>
     </div>
