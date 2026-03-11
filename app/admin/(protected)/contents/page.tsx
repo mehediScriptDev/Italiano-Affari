@@ -64,7 +64,7 @@ const EMPTY_FORM = {
 
 type FormMode = "create" | "edit";
 
-// ── Drag & Drop Upload Zone ────────────────────────────────────────────────
+// ── Drag & Drop Upload Zone ──
 function DropZone({
   file,
   mode,
@@ -334,18 +334,18 @@ export default function AdminContentsPage() {
             color="secondary"
             startIcon={<Add />}
             onClick={openCreate}
-            sx={{ textTransform: "none", fontWeight: 600, fontSize: "12px", borderRadius: "8px" }}
+            sx={{ textTransform: "none", fontWeight: 600, fontSize: "14px", borderRadius: "8px" }}
           >
             Nuovo contenuto
           </Button>
         </div>
 
         {/* Table / Cards */}
-        <div className="dash-card p-5 mb-6">
+        <div className={isMobile ? "mb-6" : "dash-card p-4 mb-6"}>
 
           {/* ── Mobile card view ── */}
           {isMobile && (
-            <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 4 }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
               {loading ? (
                 <Box display="flex" justifyContent="center" py={6}>
                   <CircularProgress size={32} sx={{ color: "#12715b" }} />
@@ -357,51 +357,58 @@ export default function AdminContentsPage() {
                 </Box>
               ) : (
                 contents.map((c) => (
-                  <div key={c.id} style={{ background: "#fff", border: "1px solid #eef0f4", borderRadius: 12, padding: "14px 16px", boxShadow: "0 1px 6px rgba(0,0,0,0.05)" }}>
-                    <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 8 }}>
-                      <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 6, minWidth: 0 }}>
-                        <div>
-                          <Typography sx={{ fontWeight: 700, fontSize: 15, color: "#1e293b", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                            {c.title}
-                          </Typography>
-                          {c.description && (
-                            <Typography sx={{ fontSize: 13, color: "#94a3b8", mt: 0.25, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                              {c.description}
-                            </Typography>
-                          )}
+                  <div
+                    key={c.id}
+                    style={{
+                      background: "#fff",
+                      borderRadius: 14,
+                      padding: "16px 18px",
+                      boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
+                      borderLeft: "4px solid #12715b",
+                    }}
+                  >
+                    {/* Top: title + actions */}
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 8, marginBottom: 4 }}>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ fontSize: 16, fontWeight: 700, color: "#1e293b", lineHeight: 1.3, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                          {c.title}
                         </div>
-                        <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-                          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                            <span style={{ fontSize: 12, fontWeight: 700, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.05em", minWidth: 80 }}>Categoria</span>
-                            <span style={{ fontSize: 13, color: "#1e293b" }}>{c.categories?.[0]?.name ?? c.category ?? "—"}</span>
+                        {c.description && (
+                          <div style={{ fontSize: 13, color: "#64748b", marginTop: 2, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", lineHeight: 1.4 }}>
+                            {c.description}
                           </div>
-                          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                            <span style={{ fontSize: 12, fontWeight: 700, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.05em", minWidth: 80 }}>Genere</span>
-                            <Chip label={c.gender} size="small" sx={{ ...genderColor(c.gender), fontWeight: 600, fontSize: 11 }} />
-                          </div>
-                          <div style={{ display: "flex", alignItems: "flex-start", gap: 6 }}>
-                            <span style={{ fontSize: 12, fontWeight: 700, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.05em", minWidth: 80, paddingTop: 2 }}>Tag</span>
-                            <Box display="flex" gap={0.5} flexWrap="wrap">
-                              {(c.filters?.map((f) => f.name) ?? c.tags ?? []).map((t) => (
-                                <Chip key={t} label={t} size="small" sx={{ bgcolor: "#f1f5f9", color: "#475569", fontSize: 11 }} />
-                              ))}
-                              {(c.filters?.length ?? c.tags?.length ?? 0) === 0 && <span style={{ fontSize: 13, color: "#94a3b8" }}>—</span>}
-                            </Box>
-                          </div>
+                        )}
+                      </div>
+                      <div style={{ flexShrink: 0, display: "flex", gap: 4 }}>
+                        <IconButton size="small" onClick={() => openEdit(c)} sx={{ color: "#64748b", bgcolor: "#f1f5f9", borderRadius: "8px", "&:hover": { bgcolor: "#e2e8f0" } }}>
+                          <Edit sx={{ fontSize: 16 }} />
+                        </IconButton>
+                        <IconButton size="small" onClick={() => openDelete(c.id)} sx={{ color: "#ef4444", bgcolor: "#fef2f2", borderRadius: "8px", "&:hover": { bgcolor: "#fee2e2" } }}>
+                          <Delete sx={{ fontSize: 16 }} />
+                        </IconButton>
+                      </div>
+                    </div>
+
+                    {/* Divider */}
+                    <div style={{ height: 1, background: "#f1f5f9", margin: "10px 0" }} />
+
+                    {/* Meta: category + gender + tags */}
+                    <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                          <span style={{ fontSize: 11, fontWeight: 600, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.04em" }}>Categoria</span>
+                          <span style={{ fontSize: 14, color: "#1e293b" }}>{c.categories?.[0]?.name ?? c.category ?? "—"}</span>
                         </div>
+                        <Chip label={c.gender} size="small" sx={{ ...genderColor(c.gender), fontWeight: 600, fontSize: 11, height: 22 }} />
                       </div>
-                      <div style={{ flexShrink: 0, display: "flex", flexDirection: "column", gap: 4 }}>
-                        <Tooltip title="Modifica">
-                          <IconButton size="small" onClick={() => openEdit(c)}>
-                            <Edit fontSize="small" />
-                          </IconButton>
-                        </Tooltip>
-                        <Tooltip title="Elimina">
-                          <IconButton size="small" onClick={() => openDelete(c.id)} sx={{ color: "#ef4444" }}>
-                            <Delete fontSize="small" />
-                          </IconButton>
-                        </Tooltip>
-                      </div>
+                      {((c.filters?.length ?? c.tags?.length ?? 0) > 0) && (
+                        <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
+                          <span style={{ fontSize: 11, fontWeight: 600, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.04em" }}>Tag</span>
+                          {(c.filters?.map((f) => f.name) ?? c.tags ?? []).map((t) => (
+                            <Chip key={t} label={t} size="small" sx={{ bgcolor: "#f1f5f9", color: "#475569", fontSize: 11, height: 22 }} />
+                          ))}
+                        </div>
+                      )}
                     </div>
                   </div>
                 ))
@@ -429,7 +436,7 @@ export default function AdminContentsPage() {
                     "Azioni",
                   ].map((label) => (
                     <TableCell key={label} sx={{ borderBottom: "1px solid #eef0f4", py: 1.5 }}>
-                      <span className="text-[14px] whitespace-nowrap font-semibold text-slate-500 uppercase tracking-wide">{label}</span>
+                      <span className="text-[15px] whitespace-nowrap font-semibold text-slate-500 uppercase tracking-wide">{label}</span>
                     </TableCell>
                   ))}
                 </TableRow>
@@ -454,8 +461,8 @@ export default function AdminContentsPage() {
                 ) : (
                   contents.map((c) => (
                     <TableRow key={c.id} sx={{ transition: "background-color 0.15s ease", "&:hover": { backgroundColor: "#f8f9fb" }, "&:last-child td": { borderBottom: 0 } }}>
-                      <TableCell sx={{ borderBottom: "1px solid #eef0f4", py: 1.5, fontSize: 14, color: "#333", overflow: "hidden" }}>
-                        <Typography sx={{ fontWeight: 600, fontSize: 14, color: "#333", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                      <TableCell sx={{ borderBottom: "1px solid #eef0f4", py: 1.5, fontSize: 16, color: "#333", overflow: "hidden" }}>
+                        <Typography sx={{ fontWeight: 600, fontSize: 16, color: "#333", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                           {c.title}
                         </Typography>
                         {c.description && (
