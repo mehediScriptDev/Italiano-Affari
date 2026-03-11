@@ -1,0 +1,6 @@
+import AdminShell from "@/components/admin/admin-shell";
+
+// All routes inside (protected)/ get the sidebar shell
+export default function AdminProtectedLayout({ children }: { children: React.ReactNode }) {
+  return <AdminShell>{children}</AdminShell>;
+}

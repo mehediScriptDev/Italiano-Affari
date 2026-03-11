@@ -1,6 +1,10 @@
 import axios from "axios";
 
-export const API_URL = "https://api.psicopatici.com/api";
+export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "";
+
+if (!API_URL) {
+  console.warn("[client] NEXT_PUBLIC_API_URL is not set in .env.local");
+}
 
 const api = axios.create({
   baseURL: API_URL,

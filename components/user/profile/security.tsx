@@ -8,7 +8,7 @@ import { Check, Close, ContentCopy, Download } from "@mui/icons-material";
 import { ReactQRCode } from "@lglab/react-qr-code";
 import { useAppContext } from "@/lib/context/app-context";
 
-const API_URL = "https://api.psicopatici.com/api";
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "";
 
 export default function SecurityComponent() {
   const isMobile = useMediaQuery((theme: { breakpoints: { down: (b: string) => string } }) => theme.breakpoints.down("sm"));
