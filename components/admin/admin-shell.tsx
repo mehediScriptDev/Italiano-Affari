@@ -19,7 +19,7 @@ import { adminLogout } from "@/lib/api/admin";
 
 const NAV_ITEMS = [
   { id: "dashboard", label: "Dashboard", href: "/admin/dashboard", icon: <Dashboard fontSize="small" /> },
-  { id: "agents", label: "Agenti", href: "/admin/agents", icon: <Groups fontSize="small" /> },
+  { id: "agents", label: "Dettagli agente", href: "/admin/agents", icon: <Groups fontSize="small" /> },
   { id: "contents", label: "Contenuti", href: "/admin/contents", icon: <PhotoLibrary fontSize="small" /> },
 ];
 

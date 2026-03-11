@@ -420,11 +420,11 @@ export default function AdminContentsPage() {
           {!isMobile && <TableContainer component={Paper} sx={{ borderRadius: "8px", boxShadow: "none", border: "1px solid #e5e7ec" }}>
             <Table sx={{ tableLayout: "fixed", minWidth: 700 }}>
               <colgroup>
-                <col style={{ width: "30%" }} />
-                <col style={{ width: "18%" }} />
-                <col style={{ width: "10%" }} />
-                <col style={{ width: "22%" }} />
-                <col style={{ width: "10%" }} />
+                <col style={{ width: "20%" }} />
+                <col style={{ width: "20%" }} />
+                <col style={{ width: "20%" }} />
+                <col style={{ width: "20%" }} />
+                <col style={{ width: "20%" }} />
               </colgroup>
               <TableHead sx={{ backgroundColor: "#f8f9fb" }}>
                 <TableRow>
